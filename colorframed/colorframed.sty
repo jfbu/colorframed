@@ -10,4 +10,45 @@
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter
   {\expandafter\color@endgroup\endMakeFramed}
+% This is downgraded from a much more general framing macro, hence the code
+% skeleton has perhaps under-efficient aspects as a legacy.
+% It was easier for the author to recycle his earlier work (which perhaps
+% he may include here in a fuller way, but he doesn't want to spend too much
+% time on providing a customizing interface) than to think the matter again.
+% Regarding pagebreaks the important thing here is to draw the frame first
+% as the \@tempboxa may well contain an unpaired color push.  And we need
+% to reset the colour when drawing the frame else the frame on top of next
+% page may be under influence of a color push from the box contents on
+% previous page.
+% TODO: do actually test this does work as expected with \@iframebox.
+\def\colorframedbordercolorcommand{\normalcolor}
+\def\@frameb@x#1{\hbox{%
+    \ht\@tempboxa
+       \dimexpr\ht\@tempboxa+\fboxrule+\fboxsep\relax
+    \dp\@tempboxa
+       \dimexpr\dp\@tempboxa+\fboxrule+\fboxsep\relax
+    % BOX BORDER
+    \vbox{%
+        \colorframedbordercolorcommand
+        \hrule\@height\fboxrule\kern-\fboxrule
+        \setbox\z@\hb@xt@\wd\@tempboxa
+                  {\vrule\@width\fboxrule
+                   #1%
+                   \hss
+                   #1%
+                   \vrule\@width\fboxrule}%
+            \ht\z@\ht\@tempboxa
+            \dp\z@\dp\@tempboxa
+        \box\z@
+        \kern-\fboxrule
+        \hrule\@height\fboxrule
+        \kern-\dp\@tempboxa
+       }% attention this vbox has zero depth due to \hrule at bottom
+    % step back to horizontal reference point
+    \kern-\wd\@tempboxa
+    % CONTENTS
+    \box\@tempboxa
+  }%
+}
+
 \endinput
