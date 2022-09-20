@@ -1,0 +1,13 @@
+% colorframed.sty    v0.9    2022/09/20 
+% Copyright (c) 2022 Jean-François B.
+% Distributed under the terms of the LPPL 1.3c, see README.md
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{colorframed}
+    [2022/09/20 v0.9 colour aware framed and pict2e breakable boxes (JFB)]
+\RequirePackage{framed}
+\RequirePackage{color}
+\expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
+  {\MakeFramed{#1}\color@begingroup}
+\expandafter\def\expandafter\endMakeFramed\expandafter
+  {\expandafter\color@endgroup\endMakeFramed}
+\endinput
