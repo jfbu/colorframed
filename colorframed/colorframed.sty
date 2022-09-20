@@ -50,5 +50,13 @@
     \box\@tempboxa
   }%
 }
-\AtBeginDocument{\let\@frameb@x\colorframed@frameb@x}
+\AtBeginDocument{\let\@frameb@x\colorframed@frameb@x
+                 \PackageInfo{colorframed}
+                 {framed.sty macros \string\MakeFramed\space and 
+                                    \string\endMakeFramed\space\MessageBreak
+                  have been modified for colour safety matters.\MessageBreak
+                  The LaTeX internal \string\@frameb@x\space has been
+                  overwritten\MessageBreak
+                  to fix colour issues with breakable boxes.\MessageBreak
+                  Works with all engines (no extra `color stack')\@gobble}}
 \endinput
