@@ -14,15 +14,14 @@ aaa
 
 bbb
 
-\sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
+colorframed: \sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
 
 \makeatletter\let\@frameb@x\saved@frameb@x
 
-\sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
+original: \sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
 
 %\thispagestyle{empty}
 %\showoutput
 
-This is 4 times 0.4 pt more.
 
 \end{document}

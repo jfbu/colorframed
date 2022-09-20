@@ -4,6 +4,7 @@
 %\usepackage{color}
 
 \usepackage{colorframed}
+\makeatletter\let\saved@frameb@x\@frameb@x\makeatother
 \begin{document}
 
 \color{blue}
@@ -18,4 +19,12 @@ inside
 \end{framed}
 
 after
+
+\makeatletter\let\@frameb@x\saved@frameb@x
+
+\begin{framed}
+\color{red}
+\smash{\rule{1pt}{4cm}}\kern-1pt inside
+\end{framed}
+
 \end{document}
