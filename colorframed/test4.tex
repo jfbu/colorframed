@@ -1,0 +1,28 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+%\usepackage{framed}
+\usepackage{color}
+
+\usepackage{colorframed}
+
+\makeatletter\let\saved@frameb@x\@frameb@x\makeatother
+\begin{document}
+
+aaa
+
+\fbox{hello} world \fbox{hello} world.
+
+bbb
+
+\sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
+
+\makeatletter\let\@frameb@x\saved@frameb@x
+
+\sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
+
+%\thispagestyle{empty}
+%\showoutput
+
+This is 4 times 0.4 pt more.
+
+\end{document}
