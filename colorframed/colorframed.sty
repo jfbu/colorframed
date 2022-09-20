@@ -22,7 +22,7 @@
 % previous page.
 % TODO: do actually test this does work as expected with \@iframebox.
 \def\colorframedbordercolorcommand{\normalcolor}
-\def\@frameb@x#1{\hbox{%
+\def\colorframed@frameb@x#1{\hbox{%
     \ht\@tempboxa
        \dimexpr\ht\@tempboxa+\fboxrule+\fboxsep\relax
     \dp\@tempboxa
@@ -50,5 +50,5 @@
     \box\@tempboxa
   }%
 }
-
+\AtBeginDocument{\let\@frameb@x\colorframed@frameb@x}
 \endinput
