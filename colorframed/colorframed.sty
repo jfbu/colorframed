@@ -10,17 +10,25 @@
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter
   {\expandafter\color@endgroup\endMakeFramed}
-% This is downgraded from a much more general framing macro, hence the code
-% skeleton has quite probably under-efficient aspects as a legacy.
+% This is expanded by framed.sty only in local scopes and with argument a
+% box, so it has no impact on the user \fbox or \framebox.
+\def\FrameCommand{\let\@frameb@x\colorframed@frameb@x
+    \setlength\fboxrule{\FrameRule}\setlength\fboxsep{\FrameSep}\fbox}
+% This is downgraded from a much more general framing macro, which was
+% designed to add the framing in a way not modifying horizontal dimensions
+% of contents.  So I needed to do both trimming and modifications which
+% accumulate to some certainly sub-optimal final result.
 % (perhaps this will be revisited at a later date)
-% *the original code added the framing around contents with no horizontal
-%  displacement; this was modified to behave like \fbox*
+%
 % Regarding pagebreaks the important thing here is to draw the frame first
 % as the \@tempboxa may well contain an unpaired color push.  And we need
 % to reset the colour when drawing the frame else the frame on top of next
 % page may be under influence of a color push from the box contents on
 % previous page.
-% TODO: do actually test this does work as expected with \@iframebox.
+%
+% TODO: do actually test this does work as expected with \@iframebox, but
+% as we inject this only in the \fbox used by the framed.sty default
+% \FrameCommand, the support code here is not strictly speaking necessary.
 \def\colorframedbordercolorcommand{\normalcolor}
 \def\colorframed@frameb@x#1{\hbox{%
     \ht\@tempboxa
@@ -54,13 +62,11 @@
     \kern\fboxrule
   }%
 }
-\AtBeginDocument{\let\@frameb@x\colorframed@frameb@x
-                 \PackageInfo{colorframed}
-                 {framed.sty macros \string\MakeFramed\space and 
-                                    \string\endMakeFramed\space\MessageBreak
-                  have been modified for colour safety matters.\MessageBreak
-                  The LaTeX internal \string\@frameb@x\space has been
-                  overwritten\MessageBreak
-                  to fix colour issues with breakable boxes.\MessageBreak
-                  Works with all engines (no extra `color stack')\@gobble}}
+\AtBeginDocument{\PackageInfo{colorframed}
+  {framed.sty macros \string\MakeFramed\space and \string\endMakeFramed,\MessageBreak
+   as well as the default \string\FrameCommand\space (`framed') and\MessageBreak
+   the internal \string\CustomFBox\space (`oframed', `titled-frame')\MessageBreak
+   have been modified to fix colour leaks issues.\MessageBreak
+   This works with all engines,\MessageBreak
+   as no extra `color stack' is needed\@gobble}}
 \endinput

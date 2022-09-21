@@ -5,7 +5,6 @@
 
 \usepackage{colorframed}
 
-\makeatletter\let\saved@frameb@x\@frameb@x\makeatother
 \begin{document}
 
 aaa
@@ -14,11 +13,11 @@ aaa
 
 bbb
 
-colorframed: \sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
-
-\makeatletter\let\@frameb@x\saved@frameb@x
-
 original: \sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
+
+\makeatletter\let\@frameb@x\colorframed@frameb@x
+
+colorframed: \sbox0{\fbox{hello} world \fbox{hello} world.}\the\wd0
 
 %\thispagestyle{empty}
 %\showoutput

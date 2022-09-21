@@ -1,30 +1,35 @@
 \documentclass{article}
 
-%\usepackage{framed}
+\usepackage{framed}
 %\usepackage{color}
 
+\let\originalFrameCommand\FrameCommand
+\let\originalMakeFramed\MakeFramed
+\let\originalendMakeFramed\endMakeFramed
 \usepackage{colorframed}
-\makeatletter\let\saved@frameb@x\@frameb@x\makeatother
 \begin{document}
 
 \color{blue}
 
 \FrameRule5pt
 
-before
+before fixed
 
 \begin{framed}
 \color{red}
-inside
+Inside fixed
 \end{framed}
 
-after
+after fixed
 
-\makeatletter\let\@frameb@x\saved@frameb@x
+\let\FrameCommand\originalFrameCommand
+\let\MakeFramed\originalMakeFramed
+\let\endMakeFramed\originalendMakeFramed
 
 \begin{framed}
 \color{red}
-\smash{\rule{1pt}{4cm}}\kern-1pt inside
+\smash{\rule{1pt}{4cm}}\kern-1pt Inside original
 \end{framed}
 
+after original
 \end{document}
