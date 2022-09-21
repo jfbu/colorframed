@@ -43,63 +43,21 @@
 %   snugshade  - \colorbox
 %   snugshade* - \colorbox
 %   leftbar    - <none>
+% The \fbox would need a rewrite of \@frameb@x but we rather replace
+% usage of \fbox by framed environement by a specialization of \CustomFBox.
 %
 % First we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter
   {\expandafter\color@endgroup\endMakeFramed}
-% This is expanded by framed.sty only in local scopes and with argument a
-% box, so it has no impact on the user \fbox or \framebox.
-\def\FrameCommand{\let\@frameb@x\colorframed@frameb@x
-    \setlength\fboxrule{\FrameRule}\setlength\fboxsep{\FrameSep}\fbox}
-% This is downgraded from a much more general framing macro.  So I needed
-% to do both trimming and modifications which accumulate to some certainly
-% sub-optimal final result.  (the original did not incorporate into the
-% widths the added separation and border thickness)
-%
-% Regarding pagebreaks the important thing here is to draw the frame first
-% as the \@tempboxa may well contain an unpaired color push.  And we need
-% to reset the colour when drawing the frame else the frame on top of next
-% page may be under influence of a color push from the box contents on
-% previous page.
-%
-% TODO: do actually test this does work as expected with \@iframebox, but
-% as we inject this only in the \fbox used by the framed.sty default
-% \FrameCommand, the support code here is not strictly speaking necessary.
-\def\colorframedbordercolorcommand{\normalcolor}
-\def\colorframed@frameb@x#1{\hbox{%
-    \ht\@tempboxa
-       \dimexpr\ht\@tempboxa+\fboxrule+\fboxsep\relax
-    \dp\@tempboxa
-       \dimexpr\dp\@tempboxa+\fboxrule+\fboxsep\relax
-    % BOX BORDER
-        \setbox\z@\hbox
-                  {\vrule\@width\fboxrule
-                   #1%
-                   \kern\wd\@tempboxa
-                   #1%
-                   \vrule\@width\fboxrule
-                  }%
-            \ht\z@\ht\@tempboxa
-            \dp\z@\dp\@tempboxa
-    \vbox{%
-        \colorframedbordercolorcommand
-        \hrule\@height\fboxrule\kern-\fboxrule
-        \copy\z@
-        \kern-\fboxrule
-        \hrule\@height\fboxrule
-        \kern-\dp\@tempboxa
-       }%
-    \kern-\wd\z@
-    \kern\fboxrule
-    #1% either \relax or \kern-\fboxrule
-    % CONTENTS
-    \box\@tempboxa
-    #1%
-    \kern\fboxrule
-  }%
+% This handles the framed environment.
+\def\FrameCommand{%
+    \setlength\fboxrule{\FrameRule}\setlength\fboxsep{\FrameSep}%
+    \CustomFBox{}{}\fboxrule\fboxrule\fboxrule\fboxrule % replaces \fbox
 }
+% The frame colour can be set via modifying this macro.
+\def\colorframedbordercolorcommand{\normalcolor}
 % Rewrite of \CustomFBox (involved in oframed and titled-frame).
 % Refer to framed.sty for significance of the parameters.
 % We have not wrapped #3, #4, #5, #6 thicknesses in \dimexpr.
@@ -148,7 +106,7 @@
 % whose original in framed.sty has various colour problems.
 % We have indicated the modifications, additionally to using
 % our modified \CustomFBox.
-% Original let the continuation lable use same colour as frame.
+% Original let the continuation label use same colour as frame.
 % Let make this customizable.
 \let\colorframedTFconlabcolorcommand\empty
 \renewcommand\TitleBarFrame[3][]{\begingroup
