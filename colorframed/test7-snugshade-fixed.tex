@@ -1,0 +1,36 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{framed}
+\usepackage{color}
+\usepackage{colorframed}
+\definecolor{shadecolor}{gray}{0.95}
+\begin{document}
+
+\noindent\hrulefill test of \string\color\space versus page break\hrulefill
+
+\vspace{17cm}
+
+\begin{itemize}
+\item This is a list
+
+  \begin{itemize}
+  \item A deeper list
+
+  \item
+    before
+
+    \begin{snugshade}
+
+      aaa
+
+      \color{red}
+
+      am I red?  am I red?  am I red?  am I red?  am I red?  am I red?  am I
+      red?  am I red?  am I red?  am I red?  am I red?  am I red?  am I red?
+      am I red?  am I red?  am I red?  am I red?  am I red?
+    \end{snugshade}
+
+    after
+  \end{itemize}
+\end{itemize}
+\end{document}
