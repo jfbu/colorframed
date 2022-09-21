@@ -36,14 +36,15 @@
 % and allowing rounded corners and shadows developped overthere.
 %
 % Here is a list of the framed.sty environments and the boxing
-% macros they are based upon
+% macros they are based upon:
+%
 %   framed     - \fbox         (the colorframed variant will use \CustomFBox)
 %   oframed      - \CustomFBox (colorframed has its own \CustomFbox)
 %   titled-frame - \CustomFbox
-%   shaded     - \colorbox     (to be handled)
-%   shaded*    - \colorbox
-%   snugshade  - \colorbox
-%   snugshade* - \colorbox
+%   shaded     - \colorbox     (replaced by \colorframedcolorbox)
+%   shaded*    - \colorbox     (idem)
+%   snugshade  - \colorbox     (idem)
+%   snugshade* - \colorbox     (idem)
 %   leftbar    - <none>
 %
 % Notes:
@@ -60,14 +61,76 @@
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter
   {\expandafter\color@endgroup\endMakeFramed}
-% This handles the framed environment.
+%
+% `framed'
 \def\FrameCommand{%
     \setlength\fboxrule{\FrameRule}\setlength\fboxsep{\FrameSep}%
     \CustomFBox{}{}\fboxrule\fboxrule\fboxrule\fboxrule % replaces \fbox
 }
 % The frame colour can be set via modifying this macro.
 \def\colorframedbordercolorcommand{\normalcolor}
-% Rewrite of \CustomFBox (involved in oframed and titled-frame).
+%
+% `shaded', `shaded*', `snugshade', `snugshade*'
+% The \colorbox in \FrameCommand is replaced by \colorframedcolorbox
+\renewenvironment{shaded}{%
+  \def\FrameCommand{\fboxsep=\FrameSep 
+                    \colorframedcolorbox{shadecolor}}%<<<< MODIFIED
+  \MakeFramed {\FrameRestore}}%
+ {\endMakeFramed}
+\renewenvironment{shaded*}{%
+  \def\FrameCommand{\fboxsep=\FrameSep
+                    \colorframedcolorbox{shadecolor}}%<<<< MODIFIED
+  \MakeFramed {\advance\hsize-\width \FrameRestore}}%
+ {\endMakeFramed}
+\renewenvironment{snugshade}{%
+  \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+  \colorframedcolorbox{shadecolor}{##1}%<<<< MODIFIED
+      \hskip-\fboxsep
+      % There is no \@totalrightmargin, so:
+      \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+  \MakeFramed {\advance\hsize-\width 
+    \@totalleftmargin\z@ \linewidth\hsize
+    \@setminipage}%
+ }{\par\unskip\@minipagefalse\endMakeFramed}
+\renewenvironment{snugshade*}{%
+  \def\FrameCommand##1{\hskip\@totalleftmargin 
+  \colorframedcolorbox{shadecolor}{##1}%<<<< MODIFIED
+      % There is no \@totalrightmargin, so:
+      \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+  \MakeFramed {\advance\hsize-\width 
+    \@totalleftmargin\z@ \linewidth\hsize
+    \advance\labelsep\fboxsep
+    \@setminipage}%
+ }{\par\unskip\@minipagefalse\endMakeFramed}
+% The \colorframedcolorbox was obtained via a process of trimming from some
+% far more capable box, hence some possibly strange looking or sub-optimal
+% code; but we did not want to keep extra capabilities and have to provide
+% interface for that...
+\def\colorframedcolorbox#1#2{%
+  % #1 is in our usage always "shadecolor" (which has to be defined by user)
+  % #2 is in our usage always a box or rule
+  \leavevmode% this is not needed in our usage
+  \hbox{%
+    \setbox\@tempboxa\hbox{\kern\fboxsep{#2}\kern\fboxsep}%
+    \ht\@tempboxa
+       \dimexpr\ht\@tempboxa+\fboxsep\relax
+    \dp\@tempboxa
+       \dimexpr\dp\@tempboxa+\fboxsep\relax
+    % BACKGROUND
+    % draw background and move back to reference point
+    {\color{#1}%
+     \vrule\@height\ht\@tempboxa
+           \@depth\dp\@tempboxa
+           \@width\wd\@tempboxa
+     \kern-\wd\@tempboxa
+    }%
+    % CONTENTS
+    \box\@tempboxa
+  }%
+}
+%
+% `oframed' and `titled-frame'
+% The \CustomFBox redefinition.
 % Refer to framed.sty for significance of the parameters.
 % We have not wrapped #3, #4, #5, #6 thicknesses in \dimexpr.
 % Generally speaking, no attempt here to make this macro more
