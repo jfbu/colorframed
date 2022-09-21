@@ -13,9 +13,10 @@
 % internal macros which are involved with \fbox and \colorbox.
 %
 % I am aware tcolorbox.sty package documentation explains at
-% least one similar looking colour issues as are fixed here in
-% framed.sty context, and that the fix overthere uses an extra
-% colour stack, hence is not xelatex compatible currently.
+% least one colour issue which looks similar to those fixed
+% here in framed.sty context, and that the fix overthere uses
+% an extra colour stack, hence is not xelatex compatible
+% currently.
 %
 % The problems are solved here without involving an extra
 % colour stack, hence they work also with xelatex.
@@ -36,15 +37,23 @@
 %
 % Here is a list of the framed.sty environments and the boxing
 % macros they are based upon
-%   framed     - \fbox
-%   oframed    - \CustomFBox
-%   shaded     - \colorbox
+%   framed     - \fbox         (the colorframed variant will use \CustomFBox)
+%   oframed      - \CustomFBox (colorframed has its own \CustomFbox)
+%   titled-frame - \CustomFbox
+%   shaded     - \colorbox     (to be handled)
 %   shaded*    - \colorbox
 %   snugshade  - \colorbox
 %   snugshade* - \colorbox
 %   leftbar    - <none>
-% The \fbox would need a rewrite of \@frameb@x but we rather replace
-% usage of \fbox by framed environement by a specialization of \CustomFBox.
+%
+% Notes:
+% - The \fbox would need a rewrite of \@frameb@x but we rather replaced
+%   its usage by a specialization of our custom \CustomFBox.
+% - The original titled-frame output is impacted by LaTeX having made
+%   \smash do \leavevmode; we fix this as part of the rewrite of
+%   \TitleBarFrame which is needed anyhow to fix colour problems.
+% - The titled-frame environment uses \blacktriangleright which afaik
+%   requires amssymb, but it is up to user to load amssymb.
 %
 % First we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
