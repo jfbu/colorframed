@@ -6,6 +6,45 @@
     [2022/09/20 v0.9 coloured `framed' and `pict2e' based breakable boxes (JFB)]
 \RequirePackage{framed}
 \RequirePackage{color}
+% This package fixes various colour leaks one encounters using
+% framed.sty environments.  The most challenging colour leaks
+% arise at pagebreaks and their fixes require modifications
+% not only fo some framed.sty macros but also to some LaTeX
+% internal macros which are involved with \fbox and \colorbox.
+%
+% I am aware tcolorbox.sty package documentation explains at
+% least one similar looking colour issues as are fixed here in
+% framed.sty context, and that the fix overthere uses an extra
+% colour stack, hence is not xelatex compatible currently.
+%
+% The problems are solved here without involving an extra
+% colour stack, hence they work also with xelatex.
+%
+% The analysis and original workarounds for using framed.sty
+% with colours were developed by me in some contributions I made
+% to the Sphinx project (https://github.com/sphinx-doc/sphinx)
+% and I am transferring here the general idea.
+%
+% The key thing is that the boxes handled by framed.sty may
+% contain isolated colour push or colour pop.  We must make
+% sure an isolated colour push, if followed by colour changes,
+% is always followed by paired ones, and never by a colour pop
+% from a colour command originated "prior".
+%
+% TODO: transfer also the breakable box environment based on pict2e
+% and allowing rounded corners and shadows developped overthere.
+%
+% Here is a list of the framed.sty environments and the boxing
+% macros they are based upon
+%   framed     - \fbox
+%   oframed    - \CustomFBox
+%   shaded     - \colorbox
+%   shaded*    - \colorbox
+%   snugshade  - \colorbox
+%   snugshade* - \colorbox
+%   leftbar    - <none>
+%
+% First we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter
@@ -14,11 +53,10 @@
 % box, so it has no impact on the user \fbox or \framebox.
 \def\FrameCommand{\let\@frameb@x\colorframed@frameb@x
     \setlength\fboxrule{\FrameRule}\setlength\fboxsep{\FrameSep}\fbox}
-% This is downgraded from a much more general framing macro, which was
-% designed to add the framing in a way not modifying horizontal dimensions
-% of contents.  So I needed to do both trimming and modifications which
-% accumulate to some certainly sub-optimal final result.
-% (perhaps this will be revisited at a later date)
+% This is downgraded from a much more general framing macro.  So I needed
+% to do both trimming and modifications which accumulate to some certainly
+% sub-optimal final result.  (the original did not incorporate into the
+% widths the added separation and border thickness)
 %
 % Regarding pagebreaks the important thing here is to draw the frame first
 % as the \@tempboxa may well contain an unpaired color push.  And we need
@@ -62,11 +100,77 @@
     \kern\fboxrule
   }%
 }
-\AtBeginDocument{\PackageInfo{colorframed}
-  {framed.sty macros \string\MakeFramed\space and \string\endMakeFramed,\MessageBreak
-   as well as the default \string\FrameCommand\space (`framed') and\MessageBreak
-   the internal \string\CustomFBox\space (`oframed', `titled-frame')\MessageBreak
-   have been modified to fix colour leaks issues.\MessageBreak
-   This works with all engines,\MessageBreak
-   as no extra `color stack' is needed\@gobble}}
+% Rewrite of \CustomFBox (involved in oframed and titled-frame).
+% Refer to framed.sty for significance of the parameters.
+% We have not wrapped #3, #4, #5, #6 thicknesses in \dimexpr.
+% Generally speaking, no attempt here to make this macro more
+% versatile than is the original.
+% Our version tries to let #1 and #2 have same effect as in original
+% (where they are only used for titled-frame environment, and
+%  it thus seems to be sort of a convention that #2 has no height.)
+\long\def\CustomFBox#1#2#3#4#5#6#7{%
+  \leavevmode\begingroup
+  \setbox\@tempboxa\hbox{%
+    \color@begingroup
+      \kern\fboxsep{#7}\kern\fboxsep
+    \color@endgroup}%
+  \hbox{%
+    \ht\@tempboxa
+       \dimexpr\ht\@tempboxa+\fboxsep+#3\relax % cf "overlap" remark below
+    \dp\@tempboxa
+       \dimexpr\dp\@tempboxa+\fboxsep+#4\relax
+        \setbox\z@\hbox
+                  {\vrule\@width#5\relax
+                   \kern\wd\@tempboxa
+                   \vrule\@width#6\relax
+                  }%
+            \ht\z@\ht\@tempboxa
+            \dp\z@\dp\@tempboxa
+    \vbox{%
+        \colorframedbordercolorcommand % defaults to \normalcolor
+        \hrule\@height#3\relax
+        \kern-#3\relax
+        #1%
+        \copy\z@ % deliberate overlap hrules+vrules to avoid anti-aliasing artefacts
+        \kern-#4\relax
+        #2%
+        \hrule\@height#4\relax
+        \kern-\dp\@tempboxa
+       }%
+    \kern-\wd\z@
+    \kern#5\relax
+    \box\@tempboxa
+    \kern#6\relax
+  }%
+  \endgroup
+}
+% The titled-frame environment depends in part on this macro,
+% whose original in framed.sty has various colour problems.
+% We have indicated the modifications, additionally to using
+% our modified \CustomFBox.
+% Original let the continuation lable use same colour as frame.
+% Let make this customizable.
+\let\colorframedTFconlabcolorcommand\empty
+\renewcommand\TitleBarFrame[3][]{\begingroup
+  \ifx\delimiter#1\delimiter
+    \let\TF@conlab\@empty
+  \else
+    \def\TF@conlab{%
+     \nointerlineskip
+     \hbox{%<<<< ADDED (needed due to \smash doing \leavevmode nowadays)
+           \colorframedTFconlabcolorcommand%<<<< ADDED
+     \smash{\rlap{\kern\wd\@tempboxa\kern\fboxrule\kern\fboxsep #1}}}%
+          }%<<<< ADDED
+  \fi
+  %\let\TF@savecolor\current@color%<<<< REMOVED
+  %\textcolor{TFFrameColor}{%      <<<< REMOVED
+  \def\colorframedbordercolorcommand{\color{TFFrameColor}}%<<<< ADDED
+  \CustomFBox
+    {\TF@Title{#2}}{\TF@conlab}%
+    \fboxrule\fboxrule\fboxrule\fboxrule
+    {%\let\current@color\TF@savecolor\set@color%<<<< REMOVED
+    #3}%
+  %}%                              <<<< REMOVED
+  \endgroup
+}
 \endinput

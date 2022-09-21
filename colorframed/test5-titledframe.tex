@@ -1,0 +1,65 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{framed}
+\usepackage{color}
+\definecolor{TFFrameColor}{gray}{0.9}
+\definecolor{TFTitleColor}{rgb}{1,0,0}
+\usepackage{amssymb}% needed for \blacktriangleright used by framed.sty's titled-frame 
+
+\makeatletter
+% since a few years \smash does \leavevmode, and this modifies
+% output of framed.sty titled-frame environment
+% MEMO: the continuation label \blacktriangleright is rendered using the
+% frame colour.  Here the added \color{} command in the framed contents
+% will let it be rendered black as part of the frame.
+\renewcommand\TitleBarFrame[3][]{\begingroup
+  \ifx\delimiter#1\delimiter
+    \let\TF@conlab\@empty
+  \else
+    \def\TF@conlab{% continuation label
+     \nointerlineskip
+     \hbox{\smash{\rlap{\kern\wd\@tempboxa\kern\fboxrule\kern\fboxsep #1}}}}%
+  \fi
+  \let\TF@savecolor\current@color
+  \textcolor{TFFrameColor}{%
+  \CustomFBox
+    {\TF@Title{#2}}{\TF@conlab}%
+    \fboxrule\fboxrule\fboxrule\fboxrule
+    {\let\current@color\TF@savecolor\set@color #3}%
+  }\endgroup
+}
+\makeatother
+\begin{document}
+
+% $\blacktriangleright$
+
+\vspace*{18cm}
+
+\hrule
+
+before
+
+\begin{titled-frame}{Test de titre}
+  inside
+
+  \color{blue}
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+  this is blue
+\end{titled-frame}
+
+after
+
+\end{document}

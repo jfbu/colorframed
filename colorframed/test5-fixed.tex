@@ -1,0 +1,83 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{letltxmacro}
+\usepackage{framed}
+\let\originalCustomFBox\CustomFBox
+\LetLtxMacro\originalTitleBarFrame\TitleBarFrame
+\usepackage{color}
+\definecolor{TFFrameColor}{gray}{0.9}
+\definecolor{TFTitleColor}{rgb}{1,0,0}
+\usepackage{amssymb}% needed for \blacktriangleright used by framed.sty's titled-frame 
+
+\usepackage{colorframed}
+% since a few years \smash does \leavevmode, and this modifies
+% output of framed.sty titled-frame environment
+\makeatletter
+\def\colorframedTFconlabcolorcommand{\color{green}}
+\makeatother
+
+%\let\colorframedbordercolorcommand\relax
+\begin{document}
+
+% $\blacktriangleright$
+
+\vspace*{18cm}
+
+\hrule
+
+before
+
+\begin{titled-frame}{Avec les patches de colorframed.sty}
+  inside
+
+  \color{blue}
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+\end{titled-frame}
+
+after
+\vspace*{15.8cm}
+
+\let\CustomFBox\originalCustomFBox
+\LetLtxMacro\TitleBarFrame\originalTitleBarFrame
+\begin{titled-frame}{Avec framed.sty sans patch}
+  inside
+
+  \color{blue}
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+  is this blue
+\end{titled-frame}
+
+after
+\end{document}
+
+
+% Local variables:
+% TeX-engine: xetex
+% End:
