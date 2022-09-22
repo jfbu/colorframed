@@ -1,4 +1,3 @@
-# -*- fill-column: 66 -*-
 docfiles    = README.md
 sourcefiles = colorframed-doc.tex colorframed.sty
 TEST = 
