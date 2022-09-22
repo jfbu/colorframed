@@ -14,5 +14,7 @@ auto/
 *.ps
 *.html
 *.zip
+README
 ctanbuild/*
+!ctanbuild/private.sh
 !CTAN/colorframed.zip
