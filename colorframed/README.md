@@ -43,7 +43,7 @@ This Work has the LPPL maintenance status author-maintained.
 
 The Author of this Work is Jean-François B.
 
-This Work consists of the package files `colorframed.sty`, the
+This Work consists of the package file `colorframed.sty`, the
 documentation source `colorframed-doc.tex` and its conversion
 `colorframed-doc.pdf`, as well as this `README.md`.
 
