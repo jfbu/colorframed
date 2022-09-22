@@ -1,4 +1,4 @@
-# -*- fill-column: 66; sentence-end-double-space: t -*-
+# -*- fill-column: 66 -*-
 docfiles    = README.md
 sourcefiles = colorframed-doc.tex colorframed.sty
 TEST = 
@@ -16,7 +16,7 @@ colorframed-doc.pdf: colorframed-doc.dvi
 
 # ATTENTION à un truc comme ctanbuild/$(sourcefiles) !
 # le ctanbuild/ ne s'applique qu'au premier !
-colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh
+colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh ctanbuild/makepdf.sh
 	@echo 'Removing CTAN/colorframed.zip if it exists!'
 	rm -fr CTAN/colorframed.zip
 	rm -fr                ctanbuild/colorframed
