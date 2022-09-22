@@ -18,4 +18,4 @@ README
 ctanbuild/*
 !ctanbuild/private.sh
 !ctanbuild/makepdf.sh
-!CTAN/colorframed.zip
+CTAN
