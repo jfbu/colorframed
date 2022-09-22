@@ -1,12 +1,12 @@
 #!/bin/sh
-aaa="Bu"
-dir="colorframed"
-bubu=" B\."
+aaa="çois Bu"
+dir="."
+bubu="çois B\."
 bbb="rn"
 ccc="ol"
-jfbu=" ${aaa}${bbb}${ccc}"
+jfbu="${aaa}${bbb}${ccc}"
 
-echo "Blowing up jfbu cover in README.md colorframed-doc.tex colorframed.sty ..."
+echo "Blowing up privacy cover in README.md colorframed-doc.tex colorframed.sty ..."
 sed -i "s/$bubu/$jfbu/g" "$dir/README.md"
 sed -i "s/$bubu/$jfbu/g" "$dir/colorframed-doc.tex"
 sed -i "s/$bubu/$jfbu/g" "$dir/colorframed.sty"

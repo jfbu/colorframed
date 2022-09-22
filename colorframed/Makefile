@@ -1,5 +1,5 @@
 # -*- fill-column: 66; sentence-end-double-space: t -*-
-docfiles    = README.md colorframed-doc.pdf
+docfiles    = README.md
 sourcefiles = colorframed-doc.tex colorframed.sty
 TEST = 
 
@@ -23,10 +23,14 @@ colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh
 	rm -f                 ctanbuild/colorframed.zip
 	mkdir -p              ctanbuild/colorframed
 	chmod ugo+rwx         ctanbuild/colorframed
-	cp -a $(docfiles)     ctanbuild/colorframed
-	cp -a $(sourcefiles)  ctanbuild/colorframed
-	cd ctanbuild && ./private.sh
+	cp -a $(docfiles)     ctanbuild
+	cp -a $(sourcefiles)  ctanbuild
+	cd ctanbuild && ./private.sh && ./makepdf.sh
+	cd ctanbuild && mv $(docfiles) $(sourcefiles) colorframed
+	mv ctanbuild/colorframed-doc.pdf ctanbuild/colorframed
+	cd ctanbuild && rm colorframed-doc*
 	chmod -R ugo+r        ctanbuild/colorframed
+	@echo 'Listing submission files'
 	ls -al                ctanbuild/colorframed
 	umask 0022 && cd ctanbuild && zip -r colorframed.zip colorframed
 	@echo 'The colorframed.zip is ready'
