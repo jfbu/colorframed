@@ -5,6 +5,15 @@ http://www.latex-project.org/lppl.txt
 
 Repository creation date: September 20, 2022.
 
+## CTAN package build instructions ##
+
+Releases (see the [tags](https://github.com/jfbu/colorframed/tags)) are pushed
+to [CTAN](https://ctan.org).
+
+To build: `cd` to `colorframed/` and execute there `make ctan`.  This produces
+`colorframed.zip` to be found in the `CTAN/` sub-directory, the files
+included into the archive being in the `ctanbuild/` sub-directory.
+
 ## Opening a new issue ##
 
 This is what this repo is for, so don't hesitate doing it.
