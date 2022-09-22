@@ -22,11 +22,11 @@ colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh ctanbuild/makep
 	rm -f                 ctanbuild/colorframed.zip
 	mkdir -p              ctanbuild/colorframed
 	chmod ugo+rwx         ctanbuild/colorframed
-	cp -a $(docfiles)     ctanbuild
-	cp -a $(sourcefiles)  ctanbuild
+	cp -a $(docfiles)     ctanbuild/
+	cp -a $(sourcefiles)  ctanbuild/
 	cd ctanbuild && ./private.sh && ./makepdf.sh
-	cd ctanbuild && mv $(docfiles) $(sourcefiles) colorframed
-	mv ctanbuild/colorframed-doc.pdf ctanbuild/colorframed
+	cd ctanbuild && mv $(docfiles) $(sourcefiles) colorframed/
+	mv ctanbuild/colorframed-doc.pdf ctanbuild/colorframed/
 	cd ctanbuild && rm colorframed-doc*
 	chmod -R ugo+r        ctanbuild/colorframed
 	@echo 'Listing submission files'
