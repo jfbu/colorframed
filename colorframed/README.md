@@ -46,10 +46,3 @@ The Author of this Work is Jean-François B.
 This Work consists of the package file `colorframed.sty`, the
 documentation source `colorframed-doc.tex` and its conversion
 `colorframed-doc.pdf`, as well as this `README.md`.
-
-<!--
-%! Local variables:
-%! sentence-end-double-space: t
-%! fill-column: 72
-%! End:
--->
