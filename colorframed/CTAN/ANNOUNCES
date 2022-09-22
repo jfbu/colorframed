@@ -1,0 +1,14 @@
+Release 0.9 du jeudi 22 septembre 2022
+
+Téléversé sur CTAN vers 16h30 le 22 septembre
+
+Annonce :
+
+The initial release fixes colour leak issues which one
+encounters with the environments provided by the framed package.
+
+It is planned to extend colorframed with one more environment, based
+upon pict2e, which will provide breakable boxes with possibly rounded
+corners, optional background colour, external or inset shadow, separate
+customizability of the padding separations and border widths in the four
+directions, …
