@@ -241,12 +241,26 @@ The author has developed based upon usage of
 \ctanpackage{pict2e} breakable boxes with round corners,
 background colour, optional shadow, and other goodies and is
 planning on incorporating this environment into the package.
-
+%
 Of course, it will remain limited in comparison to the fully
 customizable boxes provided by package \ctanpackage{tcolorbox}
 but our testing showed significant speed-up in build time, which
 may matter for long documents.
 
 Hopefully this addition will be done when time will permit.
+
+\thispagestyle{empty}
+\enlargethispage{3\baselineskip}
+
+\footnotesize After initial release made it to CTAN on 2022/09/22
+I became aware of \ctanpackage{longfbox} which provides already
+such \ctanpackage{pict2e} breakable boxes with rounded corners
+(even elliptical arcs), and furthermore with a CSS-like interface
+which is exactly what I had done on my side too... I need to check
+more \ctanpackage{longfbox} before a decision is made here!
+Perhaps it is best to actually keep \colorframed as it is and do
+another package for extras.
+
+\centerline{\hrulefill documentation ends here\hrulefill}
 
 \end{document}
