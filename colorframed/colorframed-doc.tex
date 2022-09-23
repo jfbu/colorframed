@@ -15,7 +15,9 @@
 \colorlet{shadecolor}{orange!20}
 % framed
 \FrameRule5pt\relax
-\FrameSep9pt\relax
+\FrameSep9pt\relax % this is framed.sty default anyhow, 3\fboxsep
+% attention that \FrameSep influences framed but also shaded, shaded* and
+% oframed, which is not so clear from reading only framed documentation
 \def\colorframedbordercolorcommand{\color{red!20}}
 
 \title{The \colorframed package%
@@ -210,6 +212,13 @@ example above we did:
 \setlength{\FrameSep}{9pt}
 \renewcommand\colorframedbordercolorcommand{\color{red!20}}
 \end{verbatim}
+\begin{footnotesize}\normalcolor
+  The length |\FrameSep| influences also `oframed', `shaded', and `shaded*',
+  but `snugshade' and `snugshade*' employ |\fboxsep| rather.
+
+  As per |\FrameRule|, it influences `framed' and `oframed' but not
+  `titled-frame' which simply uses |\fboxrule| for its border width.\par
+\end{footnotesize}
   The text colour induced from a |\color{blue}|
   will not leak out to the frame or to the text following this
   environment, even in case of a pagebreak.
