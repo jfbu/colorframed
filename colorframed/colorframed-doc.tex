@@ -135,7 +135,8 @@ colour stack, hence the fixes work also with xelatex.
   further one will need to renew the environment definition,
   which is left untouched by \colorframed (which modifies
   rather |\TitleBarFrame| and |\CustomFBox|).  Here is
-  how this environment is defined:
+  how this environment is defined:\par
+\begin{footnotesize}
 \begin{verbatim}
 % A particular type of titled frame with continuation marks.  
 % Parameter #1 is the title, repeated on each page.
@@ -154,10 +155,14 @@ colour stack, hence the fixes work also with xelatex.
  {\endMakeFramed}
 \end{verbatim}
 % pas de \footnote dans les environnements de framed...
-\begin{footnotesize}\normalcolor
+\normalcolor
 As a side note, this `titled-frame' environment was partly
 broken in recent \LaTeX\ which has modified how |\smash|
 behaves; \colorframed fixes it in passing.\par
+
+\emph{(this box is an example of \emph{`shaded*'} environment, next one is with
+\emph{`snugshade*'}, both use a \emph{shadecolor} which must be defined by user)}
+\par
 \end{footnotesize}
 \end{shaded*}
 % jeudi 22 septembre 2022 à 14:37:08
@@ -170,8 +175,8 @@ behaves; \colorframed fixes it in passing.\par
 % Ce n'est pas induit par colorframed j'ai vérifié sans lui.
 %\begin{enumerate}
 %\item\relax% {\footnotesize Now testing the `snugshade*' environment.}
-\begin{snugshade*}\textcolor{ForestGreen}{% using textcolor to
-                                % avoid extra vspace from \color
+\begin{snugshade*}
+\leavevmode\color{ForestGreen}
   One does not need to dive into the details of the macros
   used above to understand intuitively how they are supposed
   to influence the final output.  To modify this output,
@@ -179,11 +184,7 @@ behaves; \colorframed fixes it in passing.\par
   Notice in particular that \expandafter|\string\blacktriangleright| requires to
   the best of my knowledge loading of \ctanpackage{amssymb} or
   other math symbols package and it is up to user to do it, if
-  its usage is kept.}
-%\end{snugshade*}
-%\item\relax% {\footnotesize It appears to have a bug of not being
-%    usable directly after |\item|.\par}
-%\begin{snugshade*}
+  its usage is kept.
 
 The original environment gives to the continuation label at
 bottom right of the first part of a broken box the same colour
@@ -194,7 +195,6 @@ example above we did:
 \renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
 \end{verbatim}
 \end{snugshade*}
-%\end{enumerate}
 
 \begin{framed}
   This is an example of usage of the environment `framed'.
