@@ -1,4 +1,5 @@
-\documentclass[a4paper,dvipdfmx,11pt]{article}
+\documentclass[a4paper,dvipdfmx,11pt,english]{article}
+\usepackage{babel}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage[straightquotes,ttzdefault]{newtxtt}
@@ -162,13 +163,13 @@ behaves; \colorframed fixes this infelicity in passing.\par
 %\begin{enumerate}
 %\item\relax% {\footnotesize Now testing the `snugshade*' environment.}
 \begin{snugshade*}
-\leavevmode\color{ForestGreen}
+\leavevmode\color{OliveGreen}
   One does not need to dive into the details of the macros
   used above to understand intuitively how they are supposed
   to influence the final output.  To modify this output,
   simply redefine this environment with suitable changes.
 
-  Notice in particular that |\blacktriangleright|
+  Notice in particular that |$\blacktriangleright$|
   (which produces $\blacktriangleright$ and acquires thus a colour
   despite its name) requires to
   the best of my knowledge loading \ctanpackage{amssymb} or
@@ -176,9 +177,13 @@ behaves; \colorframed fixes this infelicity in passing.\par
   its usage is kept.
 %
   The original environment gives to this continuation label the
-  same colour as the frame.  The \colorframed variant adds the
+  same colour as the frame.  \colorframed adds the
   possibility to customize this colour via suitably defining a
-  macro, in the example above we did:
+  macro, like this for example:% le % pour éviter un bug lorsqu'un caractère
+                               % espace est à la fin d'une ligne quasi-pleine,
+                               % je soupçonne bug de TeX que j'ai déjà
+                               % rencontré plusieurs fois, ou peut-être ici un
+                               % problème du \trivlist de verbatim
 \begin{verbatim}
 \renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
 \end{verbatim}
@@ -215,38 +220,43 @@ behaves; \colorframed fixes this infelicity in passing.\par
   environment, even in case of a pagebreak.
 \end{framed}
 
-As indicated the aim of \colorframed is not to modify the
-existing environments of \ctanpackage{framed}.sty into
-acquiring more capabilities and customizability, and we have
-indicated already the two sole customization additions. The aim
-was strictly to fix the colour leak issues.
+The aim of \colorframed regarding \ctanpackage{framed} existing
+code base is strictly limited to fixing the colour leak issues,
+there is not intent to extend the existing environments of
+\ctanpackage{framed} with additional capabilities and
+customizability: we have mentioned already the two sole
+customization additions.
 
 \section{TODO}
 
-The author has developed based upon usage of
-\ctanpackage{pict2e} breakable boxes with round corners,
-background colour, optional shadow, and other goodies and is
-planning on incorporating this environment into the package.
+The author has developed based upon usage of \ctanpackage{pict2e}
+breakable boxes with round corners, background colour, optional
+shadow (possibly inset), and other goodies and is planning on
+incorporating this environment into the package.
 %
 Of course, it will remain limited in comparison to the fully
 customizable boxes provided by package \ctanpackage{tcolorbox}
 but our testing showed significant speed-up in build time, which
 may matter for long documents.
 
-Hopefully this addition will be done when time will permit.
+% Hopefully this addition will be done when time will permit.
 
 \thispagestyle{empty}
-\enlargethispage{3\baselineskip}
+\enlargethispage{2\baselineskip}
 
-\footnotesize After initial release made it to CTAN on 2022/09/22
-I became aware of \ctanpackage{longfbox} which provides already
-such \ctanpackage{pict2e} breakable boxes with rounded corners
-(even elliptical arcs), and furthermore with a CSS-like interface
-which is exactly what I had done on my side too... I need to check
-more \ctanpackage{longfbox} before a decision is made here!
-Perhaps it is best to actually keep \colorframed as it is and do
-another package for extras.
-
+\colorlet{shadecolor}{lightgray!50}
+\footnotesize
+\begin{snugshade}
+  After initial release made it to CTAN on
+  2022/09/22 I became aware of \ctanpackage{longfbox} which
+  provides already such \ctanpackage{pict2e} breakable boxes with
+  rounded corners (even elliptical arcs), and furthermore with a
+  CSS-like interface which is exactly what I had done on my side
+  too... I need to check more \ctanpackage{longfbox} before a
+  decision is made here!  Perhaps it will be better to keep
+  \colorframed as it is currently and produce another package for
+  extras such as \ctanpackage{pict2e}-based boxes or a key-value
+  interface to `inline' or `display' box macros and environments.
+\end{snugshade}
 \centerline{\hrulefill documentation ends here\hrulefill}
-
 \end{document}
