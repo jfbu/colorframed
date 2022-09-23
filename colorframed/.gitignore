@@ -12,6 +12,8 @@ auto/
 *.out.ps
 *.toc
 *.ps
+*.fdb_latexmk
+*.fls
 *.html
 *.zip
 README
