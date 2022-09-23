@@ -135,7 +135,7 @@ colour stack, hence the fixes work also with xelatex.
   further one will need to renew the environment definition,
   which is left untouched by \colorframed (which modifies
   rather |\TitleBarFrame| and |\CustomFBox|).  Here is
-  how this environment is defined:\par
+  how this environment is defined inside \ctanpackage{framed}.sty: (code and comments by Donald Arseneau)\par
 \begin{footnotesize}
 \begin{verbatim}
 % A particular type of titled frame with continuation marks.  
@@ -156,11 +156,11 @@ colour stack, hence the fixes work also with xelatex.
 \end{verbatim}
 % pas de \footnote dans les environnements de framed...
 \normalcolor
-As a side note, this `titled-frame' environment was partly
+Side note: this `titled-frame' environment was in effect
 broken in recent \LaTeX\ which has modified how |\smash|
-behaves; \colorframed fixes it in passing.\par
+behaves; \colorframed fixes this infelicity in passing.\par
 
-\emph{(this box is an example of \emph{`shaded*'} environment, next one is with
+\emph{(the current box is an example of \emph{`shaded*'} environment, next one is with
 \emph{`snugshade*'}, both use a \emph{shadecolor} which must be defined by user)}
 \par
 \end{footnotesize}
