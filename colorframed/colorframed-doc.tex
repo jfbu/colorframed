@@ -103,13 +103,13 @@ colour stack, hence the fixes work also with xelatex.
 % preamble does not work)
 \halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
 %
-  framed & |\fbox| & Replaced by specialization of own \rlap{\string\CustomFBox}\cr
+  framed & |\fbox| & Replaced by specialization of own \rlap{\string\CustomFBox.}\cr
 %
-  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|\cr
+  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|.\cr
 %
   titled-frame & |\CustomFBox| & \emph{id.}\cr
 %
-  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|\cr
+  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|.\cr
 %
   shaded* & |\colorbox| & \emph{id.}\cr
 %
@@ -117,7 +117,7 @@ colour stack, hence the fixes work also with xelatex.
 %
   snugshade* & |\colorbox| & \emph{id.}\cr
 %
-  leftbar & none & This one does not use any boxing macro\cr
+  leftbar & none & This one does not use any boxing macro.\cr
 }
 \end{titled-frame}
 
