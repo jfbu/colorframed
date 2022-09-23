@@ -181,16 +181,17 @@ behaves; \colorframed fixes it in passing.\par
   used above to understand intuitively how they are supposed
   to influence the final output.  To modify this output,
   simply redefine this environment with suitable changes.
-  Notice in particular that \expandafter|\string\blacktriangleright| requires to
-  the best of my knowledge loading of \ctanpackage{amssymb} or
-  other math symbols package and it is up to user to do it, if
-  its usage is kept.
 
-The original environment gives to the continuation label at
-bottom right of the first part of a broken box the same colour
-as the frame.  The \colorframed variant adds the possibility
-to customize this colour via suitably defining a macro, in the
-example above we did:
+  Notice in particular that |\blacktriangleright|
+  (which produces $\blacktriangleright$) requires to
+  the best of my knowledge loading \ctanpackage{amssymb} or
+  some other math symbols package and it is up to user to do it, if
+  its usage is kept.
+%
+  The original environment gives to this continuation label the
+  same colour as the frame.  The \colorframed variant adds the
+  possibility to customize this colour via suitably defining a
+  macro, in the example above we did:
 \begin{verbatim}
 \renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
 \end{verbatim}
