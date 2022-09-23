@@ -80,20 +80,6 @@ currently.
 The problems are solved here without involving an extra
 colour stack, hence the fixes work also with xelatex.
 
-% The analysis and original workarounds for using framed.sty
-% with colours were developed by me in some contributions I made
-% to the Sphinx project (\url{https://github.com/sphinx-doc/sphinx})
-% and I am transferring here the general idea.
-
-% The key thing is that the boxes handled by framed.sty may
-% contain isolated colour push or colour pop.  We must make
-% sure an isolated colour push, if followed by colour changes,
-% is always followed by paired ones, and never by a colour pop
-% from a colour command originated "prior".
-
-% TODO: transfer also the breakable box environment based on pict2e
-% and allowing rounded corners and shadows developped overthere.
-
 \section{The environments from \ctanpackage{framed}}
 
 \begin{titled-frame}{A list of the environments from package \ctanpackage{framed}}

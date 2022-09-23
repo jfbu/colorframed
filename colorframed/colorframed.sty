@@ -4,7 +4,23 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{colorframed}
     [2022/09/23 v0.9a fix `framed' breakable boxes colour leaks (JFB)]
-% This is actually same as 0.9 release of 2022/09/22 apart from comments.
+% This is actually same as 0.9 release of 2022/09/22 apart from these
+% comments:
+
+% The analysis and original workarounds for using framed.sty
+% with colours were developed by me in some contributions I made
+% to the Sphinx project (\url{https://github.com/sphinx-doc/sphinx})
+% and I am transferring here the general idea.
+
+% The key thing is that the boxes handled by framed.sty may
+% contain isolated colour push or colour pop.  We must make
+% sure an isolated colour push, if followed by colour changes,
+% is always followed by paired ones, and never by a colour pop
+% from a colour command originated "prior".
+
+% TODO: transfer also the breakable box environment based on pict2e
+% and allowing rounded corners and shadows developped overthere.
+
 \RequirePackage{framed}
 \RequirePackage{color}
 % First we must make \MakeFramed/\endMakeFramed colour safe.
