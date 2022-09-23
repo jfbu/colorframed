@@ -20,3 +20,4 @@ ctanbuild/*
 !ctanbuild/makepdf.sh
 CTAN/*
 !CTAN/ANNOUNCES
+!CTAN/*.zip
