@@ -97,25 +97,28 @@ colour stack, hence the fixes work also with xelatex.
 \section{The environments from \ctanpackage{framed}}
 
 \begin{titled-frame}{A list of the environments from package \ctanpackage{framed}}
-  This indicates the boxing macros they are
-  based upon originally, and what this package does as replacement:
-  \begin{description}
-  \item[framed] (|\fbox|) The \colorframed variant uses own |\CustomFBox| rather.
-
-  \item[oframed] (|\CustomFBox|) \colorframed replaces it with own version.
-
-  \item[titled-frame] (|\CustomFBox|) Replaced by own version.
-
-  \item[shaded] (|\colorbox|) Replaced by |\colorframedcolorbox|.
-
-  \item[shaded*] (|\colorbox|) Idem.
-
-  \item[snugshade] (|\colorbox|) Idem.
-
-  \item[snugshade*] (|\colorbox|) Idem.
-
-  \item[leftbar] This one does not use any boxing macro.
-  \end{description}
+  This list indicates which boxing macros are
+  used in the original, and their replacement.
+% (investigate later why something such as shortverb |#| in
+% preamble does not work)
+\halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
+%
+  framed & |\fbox| & Replaced by specialization of own \rlap{\string\CustomFBox}\cr
+%
+  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|\cr
+%
+  titled-frame & |\CustomFBox| & \emph{id.}\cr
+%
+  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|\cr
+%
+  shaded* & |\colorbox| & \emph{id.}\cr
+%
+  snugshade & |\colorbox| & \emph{id.}\cr
+%
+  snugshade* & |\colorbox| & \emph{id.}\cr
+%
+  leftbar & none & This one does not use any boxing macro\cr
+}
 \end{titled-frame}
 
 \begin{shaded*}
