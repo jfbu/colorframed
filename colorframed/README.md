@@ -1,6 +1,6 @@
-% colorframed 0.9
+% colorframed 0.9a
 % Jean-François B.
-% 2022/09/22
+% 2022/09/23
 
 ## Usage
 
@@ -11,8 +11,8 @@ For reporting issues, use the
 
 ## Purpose
 
-The initial release `0.9` of `2022/09/22` fixes colour leak issues
-which one encounters with the environments provided by the
+The initial release fixes colour leak issues which one encounters
+with the environments provided by the
 [framed](https://ctan.org/pkg/framed) package.
 
 It is planned to extend `colorframed` with one more environment,
