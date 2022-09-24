@@ -224,10 +224,11 @@ behaves; \colorframed fixes this infelicity in passing.\par
 \end{verbatim}
 \begin{footnotesize}\normalcolor
   The length |\FrameSep| influences also `oframed', `shaded', and `shaded*',
-  but `snugshade' and `snugshade*' employ |\fboxsep| rather.
+  but `snugshade' and `snugshade*' employ |\fboxsep| rather.  As per `titled-frame'
+  it uses a hard-coded 8pt separation from contents (see its definition).
 
   As per |\FrameRule|, it influences `framed' and `oframed' but not
-  `titled-frame' which simply uses |\fboxrule| for its border width.\par
+  `titled-frame' which uses a hard-coded 2pt for its border width.\par
 \end{footnotesize}
   The text colour induced from a |\color{blue}|
   will not leak out to the frame or to the text following this
