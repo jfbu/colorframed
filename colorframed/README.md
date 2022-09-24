@@ -1,6 +1,6 @@
-% colorframed 0.9a
+% colorframed 0.9b
 % Jean-François B.
-% 2022/09/23
+% 2022/10/01
 
 ## Usage
 
