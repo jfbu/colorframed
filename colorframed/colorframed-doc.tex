@@ -49,8 +49,22 @@
      \def\verbatimpopcolor{\special{color pop}}
 \AddToHook{env/verbatim/before}{\verbatimpushcolor}
 \AddToHook{env/verbatim/end}{\verbatimpopcolor}
+
+\def\ghissue#1{\href{https://github.com/jfbu/colorframed/issues/#1}{\##1}}
+
 \begin{document}
 \maketitle
+
+\vskip-1.75\baselineskip
+
+{\footnotesize
+\halign{\tabskip1em\bfseries#\unskip&\hfil(#\unskip)\hfil&#\unskip\hfil\cr
+0.9  & 2022/09/22 & initial release\cr
+0.9a & 2022/09/23 & doc fixes, mention \ctanpackage{longfbox}\cr
+0.9b & 2022/10/01 & fix \ghissue{2}, improve doc (\ghissue{1})\cr
+}}
+
+\vskip-\baselineskip\vskip0pt\relax
 
 \section{Description}
 
