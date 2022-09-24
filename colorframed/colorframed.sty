@@ -4,9 +4,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{colorframed}
     [2022/10/01 v0.9b fix `framed' breakable boxes colour leaks (JFB)]
-% This is actually same as 0.9 release of 2022/09/22 apart from these
-% comments:
-%
 % The analysis and original workarounds for using framed.sty
 % with colours were developed by me in some contributions I made
 % to the Sphinx project (\url{https://github.com/sphinx-doc/sphinx})
@@ -123,8 +120,8 @@
     \vbox{%
         \colorframedbordercolorcommand % defaults to \normalcolor
         \hrule\@height#3\relax
-        \kern-#3\relax
         #1%
+        \kern-#3\relax % see discussion of issue #2
         \copy\z@ % deliberate overlap hrules+vrules to avoid anti-aliasing artefacts
         \kern-#4\relax
         #2%
