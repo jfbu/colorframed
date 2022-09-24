@@ -11,16 +11,9 @@ For reporting issues, use the
 
 ## Purpose
 
-The initial release fixes colour leak issues which one encounters
+The package fixes colour leak issues which one encounters
 with the environments provided by the
 [framed](https://ctan.org/pkg/framed) package.
-
-It is planned to extend `colorframed` with one more environment,
-based upon [pict2e](https://ctan.org/pkg/pict2e), which will
-provide breakable boxes with possibly rounded corners, optional
-background colour, external or inset shadow, separate
-customizability of the padding separations and border widths in
-the four directions, ...
 
 ## Copyright and License
 
