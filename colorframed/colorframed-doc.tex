@@ -37,6 +37,11 @@
 
 \usepackage{parskip}
 \usepackage{xspace}
+\usepackage{metalogo}
+\setlogokern{La}{-0.258em}
+\setlogokern{aT}{-0.08em}
+\setlogokern{eL}{-0.1em}
+%\setlogokern{X2}{0em}
 
 \definecolor{joli}{RGB}{225,95,0}
 \definecolor{JOLI}{RGB}{225,95,0}
@@ -79,9 +84,9 @@ This latter type of colour leak (or colour disappearance) is the
 more challenging one as the fix requires modifications or
 replacements not only of some of the \ctanpackage{framed}.sty
 macros (such as its |\CustomFBox|, which \colorframed overwrites)
-but also to some \LaTeX2e internals, as some environments of
+but also to some \LaTeX{} internals, as some environments of
 \ctanpackage{framed}.sty rely on usage of |\fbox| or |\colorbox|.
-Rather than overwriting internal \LaTeX2e macros such as
+Rather than overwriting internal \LaTeX{} macros such as
 |\@frameb@x| or |\color@b@x|, \colorframed simply replaces |\fbox|
 and |\colorbox| in the \ctanpackage{framed}.sty environments by
 appropriate substitutes.
@@ -89,11 +94,11 @@ appropriate substitutes.
 I am aware \ctanpackage{tcolorbox} package documentation explains at
 least one colour issue which looks similar to those fixed
 here in \ctanpackage{framed} context, and that the fix overthere uses
-an extra colour stack, hence is not xelatex compatible
+an extra colour stack, hence is not \XeLaTeX{} compatible
 currently.
 
 The problems are solved here without involving an extra
-colour stack, hence the fixes work also with xelatex.
+colour stack, hence the fixes work also with \XeLaTeX.
 
 \section{The environments from \ctanpackage{framed}}
 
