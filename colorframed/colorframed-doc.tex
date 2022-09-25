@@ -59,7 +59,7 @@
 \AddToHook{env/verbatim/before}{\verbatimpushcolor}
 \AddToHook{env/verbatim/end}{\verbatimpopcolor}
 
-\def\ghissue#1{\href{https://github.com/jfbu/colorframed/issues/#1}{\##1}}
+\newcommand\ghissue[2][]{\href{https://github.com/jfbu/colorframed/issues/#2}{#1\##2}}
 
 \begin{document}
 \maketitle
@@ -166,8 +166,9 @@ colour stack, hence the fixes work also with \XeLaTeX.
 \end{verbatim}
 % pas de \footnote dans les environnements de framed...
   \normalcolor \emph{(the current box is an example of \emph{`shaded*'}
-    environment; next we use \emph{`snugshade'} to wrap some list items. Both
-    use a \emph{shadecolor} which must have been defined by user)}
+    environment; next we use \emph{`snugshade'} to wrap some list items
+    see the \ghissue[repository issue ]{5} for some comments about this. The
+    \emph{shadecolor} must have been defined by user)}
 \par
 \end{footnotesize}
 \end{shaded*}
