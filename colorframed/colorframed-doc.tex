@@ -42,6 +42,7 @@
 \setlogokern{aT}{-0.08em}
 \setlogokern{eL}{-0.1em}
 %\setlogokern{X2}{0em}
+\usepackage{enumitem}
 
 \definecolor{joli}{RGB}{225,95,0}
 \definecolor{JOLI}{RGB}{225,95,0}
@@ -128,6 +129,7 @@ colour stack, hence the fixes work also with \XeLaTeX.
 \end{titled-frame}
 
 \begin{shaded*}
+\begin{footnotesize}
   We refer the reader to \ctanpackage{framed} documentation
   and provide here only a few additional details, particularly
   regarding the `titled-frame' environment as it is described
@@ -142,7 +144,6 @@ colour stack, hence the fixes work also with \XeLaTeX.
   which is left untouched by \colorframed (which modifies
   rather |\TitleBarFrame| and |\CustomFBox|).  Here is
   how this environment is defined inside \ctanpackage{framed}.sty: (code and comments by Donald Arseneau)\par
-\begin{footnotesize}
 \begin{verbatim}
 % A particular type of titled frame with continuation marks.  
 % Parameter #1 is the title, repeated on each page.
@@ -162,32 +163,34 @@ colour stack, hence the fixes work also with \XeLaTeX.
 \end{verbatim}
 % pas de \footnote dans les environnements de framed...
 \normalcolor
-Side note: this `titled-frame' environment was in effect
-broken in recent \LaTeX\ which has modified how |\smash|
-behaves; \colorframed fixes this infelicity in passing.\par
-
 \emph{(the current box is an example of \emph{`shaded*'} environment, next one is with
 \emph{`snugshade*'}, both use a \emph{shadecolor} which must be defined by user)}
 \par
 \end{footnotesize}
 \end{shaded*}
-% jeudi 22 septembre 2022 à 14:37:08
-% Il se passe des choses très bizarres avec snugshade* ou
-% framed en premier après un \item qui me semblent être des
-% bugs de framed.  Dans Sphinx, je n'ai pas eu ces problèmes,
-% au contraire je suis sûr que ça fonctionne avec les
-% environnements que j'y ai définis reposant sur framed (et un
-% \trivlist en général), j'ai testé plusieurs fois.
-% Ce n'est pas induit par colorframed j'ai vérifié sans lui.
-%\begin{enumerate}
-%\item\relax% {\footnotesize Now testing the `snugshade*' environment.}
-\begin{snugshade*}
-\leavevmode\color{OliveGreen}
+% cf issue #5 on how one uses framed environments such as snugshade
+% with such list items
+%
+% j'utilise enumitem+noitemsep sinon je vois dans la partie ombrée
+% de l'espace supplémentaire au début de l'item (peut-être aussi
+% lié à l'emploi du package parskip)
+\begin{enumerate}[noitemsep,font=\normalcolor]
+\item
+Side note: this `titled-frame' environment was in effect
+broken in recent \LaTeX\ which has modified how |\smash|
+behaves; \colorframed fixes this infelicity in passing.\par
+
+%\begin{snugshade}
+\item
   One does not need to dive into the details of the macros
   used above to understand intuitively how they are supposed
   to influence the final output.  To modify this output,
   simply redefine this environment with suitable changes.
+%\end{snugshade}
 
+\color{OliveGreen}
+\begin{snugshade}
+\item
   Notice in particular that |$\blacktriangleright$|
   (which produces $\blacktriangleright$ and acquires thus a colour
   despite its name) requires to
@@ -206,7 +209,8 @@ behaves; \colorframed fixes this infelicity in passing.\par
 \begin{verbatim}
 \renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
 \end{verbatim}
-\end{snugshade*}
+\end{snugshade}
+\end{enumerate}
 
 \begin{framed}
   This is an example of usage of the environment `framed'.
