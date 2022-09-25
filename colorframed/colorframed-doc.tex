@@ -50,9 +50,12 @@
         \texorpdfstring{{\color{joli}\bfseries colorframed}}{colorframed}\xspace}
 
 
-{\makeatletter\sbox0{\color{RawSienna}\xdef\foo{\current@color}}}
-     \edef\verbatimpushcolor{\special{color push \foo}}
-     \def\verbatimpopcolor{\special{color pop}}
+% ATTENTION: dvipdfmx syntax here!
+{\makeatletter
+     \sbox0{\color{RawSienna}%
+            \xdef\verbatimpushcolor{\special{color push \current@color}}}%
+}
+\def\verbatimpopcolor{\special{color pop}}
 \AddToHook{env/verbatim/before}{\verbatimpushcolor}
 \AddToHook{env/verbatim/end}{\verbatimpopcolor}
 
@@ -162,9 +165,9 @@ colour stack, hence the fixes work also with \XeLaTeX.
  {\endMakeFramed}
 \end{verbatim}
 % pas de \footnote dans les environnements de framed...
-\normalcolor
-\emph{(the current box is an example of \emph{`shaded*'} environment, next one is with
-\emph{`snugshade*'}, both use a \emph{shadecolor} which must be defined by user)}
+  \normalcolor \emph{(the current box is an example of \emph{`shaded*'}
+    environment; next we use \emph{`snugshade'} to wrap some list items. Both
+    use a \emph{shadecolor} which must have been defined by user)}
 \par
 \end{footnotesize}
 \end{shaded*}
@@ -174,11 +177,15 @@ colour stack, hence the fixes work also with \XeLaTeX.
 % j'utilise enumitem+noitemsep sinon je vois dans la partie ombrée
 % de l'espace supplémentaire au début de l'item (peut-être aussi
 % lié à l'emploi du package parskip)
+\colorlet{shadecolor}{lightgray!25}
+
 \begin{enumerate}[noitemsep,font=\normalcolor]
+\begin{snugshade}
 \item
 Side note: this `titled-frame' environment was in effect
 broken in recent \LaTeX\ which has modified how |\smash|
 behaves; \colorframed fixes this infelicity in passing.\par
+\end{snugshade}
 
 %\begin{snugshade}
 \item
@@ -188,7 +195,7 @@ behaves; \colorframed fixes this infelicity in passing.\par
   simply redefine this environment with suitable changes.
 %\end{snugshade}
 
-\color{OliveGreen}
+\color{RawSienna}
 \begin{snugshade}
 \item
   Notice in particular that |$\blacktriangleright$|
@@ -268,7 +275,7 @@ may matter for long documents.
 \thispagestyle{empty}
 \enlargethispage{2\baselineskip}
 
-\colorlet{shadecolor}{lightgray!50}
+%\colorlet{shadecolor}{lightgray!50}
 \footnotesize
 \begin{snugshade}
   After initial release made it to CTAN on
