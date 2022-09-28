@@ -13,7 +13,9 @@
 \colorlet{TFTitleColor}{purple}
 \def\colorframedTFconlabcolorcommand{\color{purple}}
 % shaded
-\colorlet{shadecolor}{orange!10}
+%\colorlet{shadecolor}{orange!10}
+\colorlet{shadecolor}{lightgray!25}
+
 % framed
 \FrameRule5pt\relax
 \FrameSep9pt\relax % this is framed.sty default anyhow, 3\fboxsep
@@ -24,7 +26,7 @@
 \title{The \colorframed package%
 \vadjust{\vtop to 0pt{\hbox
     to\linewidth{\strut\footnotesize Release 0.9b of
-      2022/10/01\hss report issues at \url{https://github.com/jfbu/colorframed}}\vss}}%
+      2022/10/01\hss report issues at \url{https://github.com/jfbu/colorframed/issues}}\vss}}%
 }
 \author{Jean-François B.}
 \date{}
@@ -70,7 +72,12 @@
 \halign{\tabskip1em\bfseries#\unskip&\hfil(#\unskip)\hfil&#\unskip\hfil\cr
 0.9  & 2022/09/22 & initial release\cr
 0.9a & 2022/09/23 & doc fixes, mention \ctanpackage{longfbox}\cr
-0.9b & 2022/10/01 & fix \ghissue{2}, improve doc (\ghissue{1})\cr
+0.9b & 2022/10/01 & - fix "placement of titled-frame title
+                                  is not backwards compatible" (\ghissue{2})\cr
+\omit&\omit& - |\colorframedTitleBarFrame| as work around to native issues with titled-frame
+               (\ghissue{3}, \ghissue{4})\cr
+\omit&\omit& - link user to \ghissue{5} for usage with list items, other doc improvements
+                (such as \ghissue{1})\cr
 }}
 
 \vskip-\baselineskip\vskip0pt\relax
@@ -106,16 +113,12 @@ colour stack, hence the fixes work also with \XeLaTeX.
 
 \section{The environments from \ctanpackage{framed}}
 
-  We refer the reader to \ctanpackage{framed} documentation
-  and provide here only a few additional details, particularly
-  regarding the `titled-frame' environment as it is described
+  We refer the reader to \ctanpackage{framed} for the official
+  documentation and provide here only a few relevant details,
+  particularly
+  regarding the `titled-frame' environment which is described
   in \ctanpackage{framed} documentation more as being a
-  template than a user-level finalized environment.  The next
-  box gives an example of its use.  It is an environment with
-  one mandatory argument which provides the title of the
-  frame, which is repeated after a page break with |(cont)|
-  appended.  The colours |TFFrameColor| and
-  |TFTitleColor| must be defined by user.  
+  template than a user-level finalized environment.
 \begin{titled-frame}{A list of the environments from package \ctanpackage{framed}}
   This list indicates which boxing macros are
   used in the original, and their replacement.
@@ -140,16 +143,61 @@ colour stack, hence the fixes work also with \XeLaTeX.
   leftbar & none & This one does not use any boxing macro.\cr
 }
 \end{titled-frame}
-\begin{shaded*}
+The previous box gives an example of use of `titled-frame' environment.
+  It is an environment with
+  one mandatory argument which provides the title of the
+  frame, which is repeated after a page break with |(cont)|
+  appended.  The colours |TFFrameColor| and
+  |TFTitleColor| must have been defined by the user.
+  \colorframed add the possibility to colorize separately the continuation
+  label (else it inherits the colour of the frame).  For example we used
+\begin{verbatim}
+\renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
+\end{verbatim}
+  and the default definition of this macro is to do nothing.
+
+\medskip
+% check why topsep influences separation of item 1 and 2
+% it shouldn't? hmm... ah yes I think framed itself uses \topsep...
+%\begin{enumerate}[noitemsep,topsep=6pt,font=\normalcolor]
+% j'utilise enumitem+noitemsep sinon je vois dans la partie ombrée
+% de l'espace supplémentaire au début de l'item (peut-être aussi
+% lié à l'emploi du package parskip)
+% \colorlet{shadecolor}{lightgray!25}
+
 \begin{footnotesize}
-\emph{The current box is an example of \emph{`shaded*'}
+\begin{itemize}[noitemsep,topsep=3pt,% influences strangely item separation
+                         parsep=3pt]
+\begin{shaded}
+\item
+\emph{The current box is an example of \emph{`shaded'}
     environment; The
-    \emph{shadecolor} must have been defined by user.}
-\par  To customize
-  further usage of `titled-frame' one will need to renew its definition,
+    \emph{shadecolor} must have been defined by user. See the
+    \ghissue[repository issue ]{5} for some comments about how to use
+    such environment with list items, if the environment is to start
+    at start of the item. }
+\end{shaded}
+
+\begin{snugshade}
+\item \emph{This is an example of \emph{`snugshade'}
+    environment. It shares with \emph{`shaded'} the usage of \emph{shadecolor}.}
+\end{snugshade}
+
+\begin{snugshade*}
+\item \emph{This is an example of \emph{`snugshade*'}.}
+%
+  The `titled-frame' environment was in effect broken in recent \LaTeX\ which
+  has modified how |\smash| behaves (the continuation label created a blank
+  line interrupting the framing); \colorframed fixes this infelicity in
+  passing.
+\end{snugshade*}
+
+\begin{snugshade}
+\item  To customize
+  further usage of `titled-frame' one must renew its definition,
   which is left untouched by \colorframed.
   Here is its source from \ctanpackage{framed}.sty: (code and
-  comments by Donald Arseneau)% don't ask why the % (TeX bug in my opinion)
+  comments by Donald Arseneau)%
 \begin{verbatim}
 % A particular type of titled frame with continuation marks.  
 % Parameter #1 is the title, repeated on each page.
@@ -167,142 +215,128 @@ colour stack, hence the fixes work also with \XeLaTeX.
 %  could interfere with the width measurement.
  {\endMakeFramed}
 \end{verbatim}
-  This `titled-frame' environment was in effect broken in recent \LaTeX\ which
-  has modified how |\smash| behaves (the continuation label created a blank
-  line interrupting the framing); \colorframed fixes this infelicity in
-  passing.
+  The continuation label used in the `titled-frame' environment
+  is |$\blacktriangleright$|
+  (which despite its name reacts to current text colour setting).
+  It requires to
+  the best of the author knowledge loading \ctanpackage{amssymb} or
+  some other math symbols package and it is up to user to do it, if
+  its usage is kept.
+\end{snugshade}
 
-  One does not need to dive into the details of the macros
-  used above to understand intuitively how they are supposed
-  to influence the final output.  To modify this output,
-  simply redefine this environment with suitable changes.
+% \begin{shaded} % nesting does not work
+\begin{framed}
+\item
+\emph{(one can not nest environments of \ctanpackage{framed}.sty, else we would
+  have done so here.)}
 
-  There are actually some layout problems which one discovers with a higher
-  |\fboxrule| setting such as setting it to |10pt| (see on this the
-  \ghissue[repository issue ]{3} and also \ghissue[repository issue ]{4}).  So
-  release |0.9b| provides |\colorframedTitleBarFrame|, which can be used as a
-  replacement to |\TitleBarFrame|.  Check the source file for some more
-  information.  This is provided as an exception that this package should take
-  care only of fixing colour problems.
+\textcolor{blue}{(Here is an attempt to use the {`framed'} environment
+  around a list item; we can see an unexpected
+  induced indentation of the
+  paragraph. And, by the way, there is no {`snugframe'} environment which would
+  let the border fit not the whole width but only the indented item.)}
+\end{framed}
+% \end{shaded} % nesting does not work
 
+\begin{snugshade}
+\item To customize the `titled-frame' output, one may simply redefine the
+  environment via suitable changes e.g. to the setting of |\fboxsep| and
+  |\fboxrule|.  But doing so, one quickly discovers that the layout from
+  |\TitleBarFrame| has problems (see on this the repository issues \ghissue{3}
+  and \ghissue{4}).  So \colorframed |0.9b| provides
+  |\colorframedTitleBarFrame|, which can be used as a replacement to
+  |\TitleBarFrame|.  Check the source file for some more information.  This is
+  provided as an exception to the general rule that this package should take
+  care only of fixing colour problems (addition of new environments
+  may be considered in future).
+
+\end{snugshade}
+\end{itemize}
 \end{footnotesize}
-\end{shaded*}
 
 
 The aim of \colorframed regarding \ctanpackage{framed} existing
 code base is strictly limited to fixing the colour leak issues,
-there is not intent to extend the existing environments of
-\ctanpackage{framed} with additional capabilities and
-customizability.  Two customization macros have been added
-though which are described below.
+there is no general intent to modify the existing environments of
+\ctanpackage{framed} for them to acquire additional capabilities and
+customizability.
 
+\begin{footnotesize}
+  The alternative |\colorframedTitleBarFrame| was added only because the
+  |\TitleBarFrame| has clear problems, notwisthstanding the fact already
+  mentioned that anyhow `titled-frame' had been broken some years ago by an
+  upstream \LaTeX\ change.\par
+\end{footnotesize}
+% \color{RawSienna}
 
-% cf issue #5 on how one uses framed environments such as snugshade
-% with such list items
-%
-% j'utilise enumitem+noitemsep sinon je vois dans la partie ombrée
-% de l'espace supplémentaire au début de l'item (peut-être aussi
-% lié à l'emploi du package parskip)
-\colorlet{shadecolor}{lightgray!25}
-
-% check why topsep influences separation of item 1 and 2
-% it shouldn't? hmm... I think framed itself uses \topsep...
-\begin{enumerate}[noitemsep,topsep=6pt,font=\normalcolor]
-\begin{snugshade}
-\item {This item is wrapped in a {`snugshade'}; see the
-    \ghissue[repository issue ]{5} for some comments about this.  As for
-    {`shaded'} the {shadecolor} must have been defined by user.}
-\end{snugshade}
-
-%\color{RawSienna}
-\begin{snugshade}
-\item
-  The |$\blacktriangleright$| used in the `titled-frame' environement
-  (which despite its name obeys current text colour setting)
-  requires to
-  the best of my knowledge loading \ctanpackage{amssymb} or
-  some other math symbols package and it is up to user to do it, if
-  its usage is kept.
-%
-  The original environment gives to this continuation label the
-  same colour as the frame.  \colorframed adds the
-  possibility to customize this colour via suitably defining a
-  macro, like this for example:% le % pour éviter un bug lorsqu'un caractère
-                               % espace est à la fin d'une ligne quasi-pleine,
-                               % je soupçonne bug de TeX que j'ai déjà
-                               % rencontré plusieurs fois, ou peut-être ici un
-                               % problème du \trivlist de verbatim
+Already we have mentioned
 \begin{verbatim}
-\renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
+\colorframedTFconlabcolorcommand
 \end{verbatim}
-\end{snugshade}
-\end{enumerate}
+which expands by default to nothing at all (meaning the continuation label
+inherits the TFFrameColor colour).  There is also
+\begin{verbatim}
+\colorframedbordercolorcommand
+\end{verbatim}
+which expands by default to |\normalcolor|.  It influences the colour
+of the framing done by environment `framed',
+the original having no such customizability.  Do not redefine it to do nothing, it always should set a colour, else the colour of some borders may be lost.
 
-\begin{framed}
-  This is an example of usage of the environment `framed'.
-
-  This environment allows customization of the border width
-  and of the separation with contents, via |\FrameRule| and
-  |\FrameSep|, but not of the colour of the border.  The
-  \colorframed version adds this possibility: it is simply a
-  matter of redefining the |\colorframedbordercolorcommand|
-  macro, which defaults to |\normalcolor|.
-
-\footnotesize (|\color{blue}| in source)
-\normalsize
-\color{blue}
-  So the current frame was configured using:
+For example
 \begin{verbatim}
 \setlength{\FrameRule}{5pt}
 \setlength{\FrameSep}{9pt}
-\renewcommand\colorframedbordercolorcommand{\color{red!20}}
+\renewcommand\colorframedbordercolorcommand{\color{gray}}
 \end{verbatim}
-\begin{footnotesize}\normalcolor
-  (the above verbatim sets its own colour, and we have switched
-  back to |\normalcolor| here)
+configures the next usage of `framed'.
+
+\setlength{\FrameRule}{5pt}
+\setlength{\FrameSep}{9pt}
+\renewcommand\colorframedbordercolorcommand{\color{gray}}
+\begin{framed}
+  This environment allows indeed customization of the border width
+  and of the separation with contents, via |\FrameRule| and
+  |\FrameSep|.
 
   The length |\FrameSep| influences also `oframed', `shaded', and `shaded*',
-  but `snugshade' and `snugshade*' employ |\fboxsep| rather.  As per `titled-frame'
-  it uses a hard-coded 8pt separation from contents (see its definition).
+  but `snugshade' and `snugshade*' employ |\fboxsep| rather.
 
-  |\FrameRule| influences `framed' and `oframed' but not
-  `titled-frame' which uses a hard-coded 2pt for its border width.\par
-\end{footnotesize}
-  The text colour induced from a |\color{blue}|
-  will not leak out to the frame or to the text following this
-  environment, even in case of a pagebreak.
+  |\FrameRule| influences both `framed' and `oframed'.
 \end{framed}
 
 \section{TODO}
 
+\begin{snugshade}
 The author has developed based upon usage of \ctanpackage{pict2e}
 breakable boxes with round corners, background colour, optional
-shadow (possibly inset), and other goodies and is planning on
-incorporating this environment into the package.
+shadow (possibly inset), and other goodies and was planning on
+incorporating this environment into the package at some time in future.
 %
 Of course, it will remain limited in comparison to the fully
-customizable boxes provided by package \ctanpackage{tcolorbox}
-but our testing showed significant speed-up in build time, which
-may matter for long documents.
+customizable boxes provided by package \ctanpackage{tcolorbox} (ot
+those of \ctanpackage{mdframed}) but our testing showed
+significant speed-up in build time, which may matter for long
+documents.
 
 % Hopefully this addition will be done when time will permit.
 
-\thispagestyle{empty}
-\enlargethispage{2\baselineskip}
+% \thispagestyle{empty}
+% \enlargethispage{2\baselineskip}
 
 %\colorlet{shadecolor}{lightgray!50}
-\footnotesize
-\begin{snugshade}
-  After initial release made it to CTAN on
+% \footnotesize
+  But after initial release made it to CTAN on
   2022/09/22 I became aware of \ctanpackage{longfbox} which
   provides already such \ctanpackage{pict2e} breakable boxes with
   rounded corners (even elliptical arcs), and furthermore with a
   CSS-like interface which is exactly what I had done on my side
   too... I need to check more \ctanpackage{longfbox} before a
   decision is made here!  Perhaps it will be better to keep
-  \colorframed as it is currently and produce another package for
-  extras such as \ctanpackage{pict2e}-based boxes or a key-value
-  interface to `inline' or `display' box macros and environments.
+  \colorframed as it is currently and
+  extras such as new \ctanpackage{pict2e}-based boxes with a key-value
+  interface to `inline' or `display' boxing macros and environments
+  should make it to another package (loading \colorframed of course).
+
 \end{snugshade}
 \centerline{\hrulefill documentation ends here\hrulefill}
 \end{document}
