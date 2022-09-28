@@ -1,0 +1,143 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colorframed}
+\colorlet{TFFrameColor}{teal!20}
+\colorlet{TFTitleColor}{purple}
+\def\colorframedTFconlabcolorcommand{\color{purple}}
+\colorlet{shadecolor}{lightgray!25}
+
+\usepackage{shortvrb}\MakeShortVerb\|
+\usepackage{xspace}
+\def\colorframed{colorframed\xspace}
+
+\usepackage{amssymb}
+\begin{document}
+\vspace*{16cm}
+\hrule
+
+\let\TitleBarFrame\colorframedTitleBarFrame
+\begin{titled-frame}{A list of the environments from package {framed}}
+  This list indicates which boxing macros are
+  used in the original, and their replacement.
+\halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
+%
+  framed & |\fbox| & Replaced by...\cr
+%
+  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|.\cr
+%
+  titled-frame & |\CustomFBox| & \emph{id.}\cr
+%
+  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|.\cr
+%
+  shaded* & |\colorbox| & \emph{id.}\cr
+%
+  snugshade & |\colorbox| & \emph{id.}\cr
+%
+  snugshade* & |\colorbox| & \emph{id.}\cr
+%
+  leftbar & none & This one does not use any boxing macro.\cr
+}
+\end{titled-frame}
+
+\vspace*{10cm}
+\makeatletter
+% Test with modified \fboxsep and \fboxrule and also \bfseries in place of \textbf
+\renewenvironment{titled-frame}[1]{%
+  \def\FrameCommand{\fboxsep10pt\fboxrule12pt
+     \TitleBarFrame{\bfseries #1}}%
+  \def\FirstFrameCommand{\fboxsep10pt\fboxrule12pt
+     \TitleBarFrame[$\blacktriangleright$]{\bfseries#1}}%
+  \def\MidFrameCommand{\fboxsep10pt\fboxrule12pt
+     \TitleBarFrame[$\blacktriangleright$]{\bfseries #1\ (cont)}}%
+  \def\LastFrameCommand{\fboxsep10pt\fboxrule12pt
+     \TitleBarFrame{\bfseries #1\ (cont)}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}}%
+ {\endMakeFramed}
+
+\begin{titled-frame}{A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+
+
+(second par)A list of the environments from package {framed}
+A list of the environments from package {framed}
+}
+  This list indicates which boxing macros are
+  used in the original, and their replacement.
+\halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
+%
+  framed & |\fbox| & Replaced by...\cr
+%
+  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|.\cr
+%
+  titled-frame & |\CustomFBox| & \emph{id.}\cr
+%
+  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|.\cr
+%
+  shaded* & |\colorbox| & \emph{id.}\cr
+%
+  snugshade & |\colorbox| & \emph{id.}\cr
+%
+  snugshade* & |\colorbox| & \emph{id.}\cr
+%
+  leftbar & none & This one does not use any boxing macro.\cr
+}
+\end{titled-frame}
+
+\vspace*{6cm}
+\makeatletter
+% Test with modified \fboxsep and \fboxrule and also \bfseries in place of \textbf
+\renewenvironment{titled-frame}[1]{%
+  \def\FrameCommand{\fboxsep6pt\fboxrule20pt
+     \TitleBarFrame{\bfseries #1}}%
+  \def\FirstFrameCommand{\fboxsep6pt\fboxrule20pt
+     \TitleBarFrame[$\blacktriangleright$]{\bfseries#1}}%
+  \def\MidFrameCommand{\fboxsep6pt\fboxrule20pt
+     \TitleBarFrame[$\blacktriangleright$]{\bfseries #1\ (cont)}}%
+  \def\LastFrameCommand{\fboxsep6pt\fboxrule20pt
+     \TitleBarFrame{\bfseries #1\ (cont)}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}}%
+ {\endMakeFramed}
+
+\begin{titled-frame}{A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+A list of the environments from package {framed}
+
+
+(second par)A list of the environments from package {framed}
+A list of the environments from package {framed}
+}
+  This list indicates which boxing macros are
+  used in the original, and their replacement.
+\halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
+%
+  framed & |\fbox| & Replaced by...\cr
+%
+  oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|.\cr
+%
+  titled-frame & |\CustomFBox| & \emph{id.}\cr
+%
+  shaded & |\colorbox| & Replaced by |\colorframedcolorbox|.\cr
+%
+  shaded* & |\colorbox| & \emph{id.}\cr
+%
+  snugshade & |\colorbox| & \emph{id.}\cr
+%
+  snugshade* & |\colorbox| & \emph{id.}\cr
+%
+  leftbar & none & This one does not use any boxing macro.\cr
+}
+\end{titled-frame}
+
+\end{document}

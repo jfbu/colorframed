@@ -164,4 +164,54 @@
   %}%                              <<<< REMOVED
   \endgroup
 }
+% There are various issues with \TitleBarFrame/\TF@Title/TF@conlab
+% we provide an alternative
+\def\colorframedTFconlabsep{3pt}
+\newcommand\colorframedTitleBarFrame[3][]{\begingroup
+  \ifx\delimiter#1\delimiter
+    \let\TF@conlab\@empty
+  \else
+    \def\TF@conlab{%
+     \nointerlineskip
+     \hbox{\colorframedTFconlabcolorcommand
+                                   % 2\fboxrule, not \fboxrule\fboxsep!
+     \smash{\rlap{\kern\wd\@tempboxa\kern2\fboxrule
+                  \kern\dimexpr\colorframedTFconlabsep\relax #1}}}%
+          }%
+  \fi
+  \def\colorframedbordercolorcommand{\color{TFFrameColor}}%
+  \CustomFBox
+    {\colorframed@TF@Title{#2}}{\TF@conlab}%
+    \fboxrule\fboxrule\fboxrule\fboxrule
+    {#3}%
+  \endgroup
+}
+% The title bar for \colorframedTitleBarFrame, it will wrap its argument
+% as paragraphs in case it is too long, the horizontal placement is improved
+% and it will be suitably vertically centered.
+% For #1 to contain \par the \textbf in titledframe must be replaced by
+% some \bfseries.
+\newcommand\colorframed@TF@Title[1]{%
+  \ifx\delimiter#1\delimiter\else
+  %\kern-0.04pt\relax
+  \kern-.5\fboxrule
+  \begingroup
+  \setbox\@tempboxa\vbox{%
+   \kern0.8ex
+   \hbox{\kern\fboxrule\kern\fboxsep % not only \fboxsep !
+         \vbox{\hsize\dimexpr\linewidth-2\fboxrule-2\fboxsep\relax
+               \noindent\color{TFTitleColor}%
+               #1\par}}%
+   \kern0.8ex}%
+  \hrule\@height\ht\@tempboxa
+  \kern-\ht\@tempboxa
+  \box\@tempboxa
+  \endgroup
+  %\nointerlineskip 
+  %\kern-0.04pt\relax
+  \hrule\@height.5\fboxrule
+  \fi
+}
+% maybe provide a titled-frame variant using the above and acting like
+% snugshade respective to being used in a list?
 \endinput

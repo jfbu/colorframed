@@ -253,16 +253,17 @@ The previous box gives an example of use of `titled-frame' environment.
   and \ghissue{4}).  So \colorframed |0.9b| provides
   |\colorframedTitleBarFrame|, which can be used as a replacement to
   |\TitleBarFrame| in a redefined custom `titled-framed' environment.  Check
-  the source file for some more information.  In particular there is added macro
+  the source code for comments.  In particular there is an added macro
 \begin{verbatim}
 \colorframedTFconlabsep
 \end{verbatim}
   which one can define to expand to some dimension which will be the separation
-  of the continuation label from the right edge of the frame.
+  of the continuation label from the right edge of the frame.  It defaults to |3pt|.
 
-  This is all provided as an exception
+  This variant is still \emph{experimental}.  It is provided as an exception
   to the general rule that this package should take care only of fixing colour
-  problems (addition of new environments may be considered in future).
+  problems (addition of \emph{new} environments may be considered in future,
+  but fixing existing environments will not be done beyond what is described here).
 
 \end{snugshade}
 \end{itemize}
