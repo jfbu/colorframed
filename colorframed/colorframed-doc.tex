@@ -63,6 +63,11 @@
 
 \newcommand\ghissue[2][]{\href{https://github.com/jfbu/colorframed/issues/#2}{#1\##2}}
 
+\makeatletter
+  %\show\verbatim@font % pas changé at begin doc
+  \def\verbatim@font{\normalfont\ttfamily\color{RawSienna}}%
+\makeatother
+
 \begin{document}
 \maketitle
 
@@ -83,6 +88,7 @@
 \vskip-\baselineskip\vskip0pt\relax
 
 \section{Description}
+
 
 This package fixes various colour leaks one encounters with
 the environments from Donald Arseneau's package
@@ -126,7 +132,7 @@ colour stack, hence the fixes work also with \XeLaTeX.
 % preamble does not work)
 \halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
 %
-  framed & |\fbox| & Replaced by specialization of own \rlap{\string\CustomFBox.}\cr
+  framed & |\fbox| & Replaced by specialization of own \rlap{\expandafter|\string\CustomFBox|.}\cr
 %
   oframed & |\CustomFBox| & \colorframed uses a redefined |\CustomFBox|.\cr
 %
@@ -149,7 +155,7 @@ The previous box gives an example of use of `titled-frame' environment.
   frame, which is repeated after a page break with |(cont)|
   appended.  The colours |TFFrameColor| and
   |TFTitleColor| must have been defined by the user.
-  \colorframed add the possibility to colorize separately the continuation
+  \colorframed adds the possibility to colorize separately the continuation
   label (else it inherits the colour of the frame).  For example we used
 \begin{verbatim}
 \renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
@@ -172,7 +178,7 @@ The previous box gives an example of use of `titled-frame' environment.
 \item
 \emph{The current box is an example of \emph{`shaded'}
     environment; The
-    \emph{shadecolor} must have been defined by user. See the
+    |shadecolor| must have been defined by user. See the
     \ghissue[repository issue ]{5} for some comments about how to use
     such environment with list items, if the environment is to start
     at start of the item. }
@@ -180,20 +186,22 @@ The previous box gives an example of use of `titled-frame' environment.
 
 \begin{snugshade}
 \item \emph{This is an example of \emph{`snugshade'}
-    environment. It shares with \emph{`shaded'} the usage of \emph{shadecolor}.}
+    environment. It shares with \emph{`shaded'} the usage of |shadecolor|.}
 \end{snugshade}
 
 \begin{snugshade*}
 \item \emph{This is an example of \emph{`snugshade*'}.}
+\end{snugshade*}
+
+\begin{snugshade}
+\item
 %
   The `titled-frame' environment was in effect broken in recent \LaTeX\ which
   has modified how |\smash| behaves (the continuation label created a blank
   line interrupting the framing); \colorframed fixes this infelicity in
   passing.
-\end{snugshade*}
 
-\begin{snugshade}
-\item  To customize
+  To customize
   further usage of `titled-frame' one must renew its definition,
   which is left untouched by \colorframed.
   Here is its source from \ctanpackage{framed}.sty: (code and
@@ -220,8 +228,7 @@ The previous box gives an example of use of `titled-frame' environment.
   (which despite its name reacts to current text colour setting).
   It requires to
   the best of the author knowledge loading \ctanpackage{amssymb} or
-  some other math symbols package and it is up to user to do it, if
-  its usage is kept.
+  some other math symbols package and it is up to user to do it.
 \end{snugshade}
 
 % \begin{shaded} % nesting does not work
@@ -245,10 +252,17 @@ The previous box gives an example of use of `titled-frame' environment.
   |\TitleBarFrame| has problems (see on this the repository issues \ghissue{3}
   and \ghissue{4}).  So \colorframed |0.9b| provides
   |\colorframedTitleBarFrame|, which can be used as a replacement to
-  |\TitleBarFrame|.  Check the source file for some more information.  This is
-  provided as an exception to the general rule that this package should take
-  care only of fixing colour problems (addition of new environments
-  may be considered in future).
+  |\TitleBarFrame| in a redefined custom `titled-framed' environment.  Check
+  the source file for some more information.  In particular there is added macro
+\begin{verbatim}
+\colorframedTFconlabsep
+\end{verbatim}
+  which one can define to expand to some dimension which will be the separation
+  of the continuation label from the right edge of the frame.
+
+  This is all provided as an exception
+  to the general rule that this package should take care only of fixing colour
+  problems (addition of new environments may be considered in future).
 
 \end{snugshade}
 \end{itemize}
@@ -262,10 +276,14 @@ there is no general intent to modify the existing environments of
 customizability.
 
 \begin{footnotesize}
-  The alternative |\colorframedTitleBarFrame| was added only because the
-  |\TitleBarFrame| has clear problems, notwisthstanding the fact already
+  Despite the fact already
   mentioned that anyhow `titled-frame' had been broken some years ago by an
-  upstream \LaTeX\ change.\par
+  upstream \LaTeX\ change we did not change it beyond
+  fixing this, and the alternative |\colorframedTitleBarFrame| must be
+  opted-for explicitly by user in a re-definition of `titled-frame'
+  environment, the default remaining with the problematic
+  |\TitleBarFrame|. Or the user can do |\let\TitleBarFrame\colorframedTitleBarFrame|.
+  \par
 \end{footnotesize}
 % \color{RawSienna}
 
@@ -273,26 +291,29 @@ Already we have mentioned
 \begin{verbatim}
 \colorframedTFconlabcolorcommand
 \end{verbatim}
-which expands by default to nothing at all (meaning the continuation label
-inherits the TFFrameColor colour).  There is also
+whose default definition let it expands to nothing at all (the continuation label
+then inherits the |TFFrameColor| colour).
+
+Regarding the `framed' environment, \colorframed adds the
 \begin{verbatim}
 \colorframedbordercolorcommand
 \end{verbatim}
-which expands by default to |\normalcolor|.  It influences the colour
-of the framing done by environment `framed',
-the original having no such customizability.  Do not redefine it to do nothing, it always should set a colour, else the colour of some borders may be lost.
+which expands by default to |\normalcolor|.  It influences the colour of the
+framing done by environment `framed', the original having no such
+customizability.  Do not redefine it to do nothing, it always should set some
+colour, else the borders may display colour loss after a page break.
 
 For example
 \begin{verbatim}
 \setlength{\FrameRule}{5pt}
 \setlength{\FrameSep}{9pt}
-\renewcommand\colorframedbordercolorcommand{\color{gray}}
+\renewcommand\colorframedbordercolorcommand{\color{gray!50}}
 \end{verbatim}
 configures the next usage of `framed'.
 
 \setlength{\FrameRule}{5pt}
 \setlength{\FrameSep}{9pt}
-\renewcommand\colorframedbordercolorcommand{\color{gray}}
+\renewcommand\colorframedbordercolorcommand{\color{gray!50}}
 \begin{framed}
   This environment allows indeed customization of the border width
   and of the separation with contents, via |\FrameRule| and
