@@ -326,9 +326,37 @@ configures the next usage of `framed'.
   |\FrameRule| influences both `framed' and `oframed'.
 \end{framed}
 
-\section{TODO}
+\section{Technicalities, musings about future}
 
 \begin{snugshade}
+% The analysis and original workarounds for using framed.sty
+% with colours were developed by me in some contributions I made
+% to the Sphinx project (\url{https://github.com/sphinx-doc/sphinx})
+% and I am transferring here the general idea.
+%
+% The key thing is that the boxes handled by framed.sty may
+% contain isolated colour push or colour pop.  We must make
+% sure an isolated colour push, if followed by colour changes,
+% is always followed by paired ones, and never by a colour pop
+% from a colour command originated "prior".
+%
+% This means we can not ever use things such as \fbox, \colorbox or
+% \fcolorbox as they will cause colour pops after a possibly isolated
+% colour push contained in the (already boxed) contents.  We must
+% reimplement them otherwise.  This is what is done here, without
+% touching the LaTeX internal macros themselves.
+%
+% Apart from that, part of this style file is occupied with the
+% titled-frame environment of framed.sty, which was broken by an
+% upstream LaTeX change related to \smash, and has obvious problems
+% apart from that.
+%
+% Further "obvious problems" do exist for the other framed.sty
+% environments but it is not the matter of this package to fix them.
+% Perhaps in future another package will be provided based upon the
+% work here and adding a completely new environment fixing the "obvious
+% problems" (some of them being simply lack of customizability).
+
 The author has developed based upon usage of \ctanpackage{pict2e}
 breakable boxes with round corners, background colour, optional
 shadow (possibly inset), and other goodies and was planning on
