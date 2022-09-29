@@ -189,12 +189,12 @@
 % The title bar for \colorframedTitleBarFrame, it will wrap its argument
 % as paragraphs in case it is too long, the horizontal placement is improved
 % and it will be suitably vertically centered.
-% For #1 to contain \par the \textbf in titledframe must be replaced by
-% some \bfseries.
-% Add macro to customize horizontal placement, use for example
-% \def\colorframedTFtitleshift{-\fboxsep}
-% if using a high value of border width via \fboxrule setting
-\let\colorframedTFtitleshift\z@
+% Nota Bene: for #1 to be allowed to contain \par, the \textbf in titledframe
+% must be replaced by some \bfseries.
+% Macro to customize the horizontal placement, use for example
+% \def\colorframedTFtitleshift{0pt}
+% if the \fboxrule configures a thick border
+\def\colorframedTFtitlesep{\fboxsep}
 \newcommand\colorframed@TF@Title[1]{%
   \ifx\delimiter#1\delimiter\else
   %\kern-0.04pt\relax
@@ -202,10 +202,10 @@
   \begingroup
   \setbox\@tempboxa\vbox{%
    \kern0.8ex
-   \hbox{\kern\fboxrule\kern\fboxsep % not only \fboxsep !
-         \kern\dimexpr\colorframedTFtitleshift\relax
-         \vbox{\hsize\dimexpr\linewidth-2\fboxrule-2\fboxsep-
-                             2\dimexpr\colorframedTFtitleshift\relax\relax
+   \hbox{\kern\fboxrule
+         \kern\dimexpr\colorframedTFtitlesep\relax
+         \vbox{\hsize\dimexpr\linewidth-2\fboxrule-
+                             2\dimexpr\colorframedTFtitlesep\relax\relax
                \noindent\color{TFTitleColor}%
                #1\par}}%
    \kern0.8ex}%
