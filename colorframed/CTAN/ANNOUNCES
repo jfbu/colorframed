@@ -1,3 +1,32 @@
+
+Release 0.9b du 1er octobre 2022
+
+Téléversé sur CTAN le jeudi 29 septembre vers 19h15
+
+Initial release restored in passing the titled-frame environment
+of framed.sty from a breakage induced some years ago by an
+upstream LaTeX change.  But due to an oversight the (restored)
+layout was not exactly the same as the original.  This is fixed
+here.
+
+Also, as further problems emerged with this environment after I
+had started experimenting with it, a need for some alternative
+macros appeared, and they have been added to the package with no
+change to original.
+
+In the initial announcement it was said the package would be
+enriched at some point by an environment based on pict2e-based
+boxes.  Since then, I have become aware of package longfbox which
+provides precisely such boxes.  How this could or should or would
+interact with the present package is not clear at this time.
+Besides I feel now that if I do any such thing, it should be in
+yet another package.
+
+So development should now be quiet.  Issue reports and feature
+requests are welcome at the repo site.
+
+------------------------------------------------------------------------
+
 Release 0.9a du vendredi 23 septembre 2022
 
 Téléversé sur CTAN vers 13h25 le 23 septembre

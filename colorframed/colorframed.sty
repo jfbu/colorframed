@@ -1,5 +1,5 @@
 % colorframed.sty    v0.9b    2022/10/01
-% Copyright (c) 2022 Jean-François B.
+% Copyright (C) 2022 Jean-François B.
 % Distributed under the terms of the LPPL 1.3c, see README.md
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{colorframed}
@@ -179,12 +179,14 @@
 }
 % The title bar for \colorframedTitleBarFrame, it will wrap its argument
 % as paragraphs in case it is too long, the horizontal placement is improved
-% and it will be suitably vertically centered.
-% Nota Bene: for #1 to be allowed to contain \par, the \textbf in titledframe
-% must be replaced by some \bfseries.
-% Macro to customize the horizontal placement, use for example
+% and it will be suitably vertically centered. Nota Bene: for #1 to be
+% allowed to contain \par, the \textbf in titled-frame must be replaced by
+% some \bfseries.
+% Macro to customize the horizontal placement. For example
 % \def\colorframedTFtitleshift{0pt}
-% if the \fboxrule configures a thick border
+% if \fboxrule is set by the environment to a high value.
+% Don't use negative value, some parts of the title may then be hidden
+% behind the left border.
 \def\colorframedTFtitlesep{\fboxsep}
 \newcommand\colorframed@TF@Title[1]{%
   \ifx\delimiter#1\delimiter\else

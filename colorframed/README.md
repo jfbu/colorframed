@@ -17,7 +17,7 @@ with the environments provided by the
 
 ## Copyright and License
 
-Copyright (c) 2022 Jean-François B.
+Copyright (C) 2022 Jean-François B.
 
 The colorframed [CTAN package](https://ctan.org/pkg/colorframed)
 is distributed under the
