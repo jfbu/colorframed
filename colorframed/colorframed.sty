@@ -226,6 +226,8 @@
 %
 % Tagging
 % Nothing from here on is read by a document not using \DocumentMetadata.
+% More details and observations are in the file TAGGING_MEMO.md of the
+% repository.
 \@ifundefined{tag_mc_add_missing_to_stream:Nn}{\endinput}{}
 % With pdfLaTeX a paragraph continuing on the next page must have its
 % marked content closed at the end of the page and opened again on the
@@ -321,6 +323,8 @@
               \fb@put@frame\LastFrameCommand\MidFrameCommand
   \fi\fi\fi\fi\fi
 }
+% This is \fb@putboxa of framed.sty 0.96 without its debugging lines.
+% The only change is the added \colorframed@fixmc\@tempboxa.
 \def\fb@putboxa#1{%
   \ifvoid\@tempboxa
     \PackageWarning{framed}{Boxa is void -- discard it. }%
@@ -332,6 +336,8 @@
 % framed executes the frame commands on a dummy box to measure the frame.
 % Nothing of this must be tagged (a title may contain mathematics, which
 % would create a structure).
+% This is \fb@sizeofframe of framed.sty 0.96 without its debugging lines.
+% The only change is the added \SuspendTagging.
 \def\fb@sizeofframe#1{\begingroup
  \SuspendTagging{colorframed}%<<<< ADDED
  \setbox\z@\vbox{\vskip-5in \hbox{\hskip-5in
@@ -354,6 +360,17 @@
 % pieces (\MidFrameCommand, \LastFrameCommand) and all continuation labels
 % (argument #1) are artifacts.  \colorframed@artifact is also used for the
 % rules, see below.
+%
+% \colorframed@frameno      numbers the frames (all of them)
+% \colorframed@titlelabel   the label of the current frame; only its
+%                           existence in the previous compilation is used,
+%                           not the value recorded with it
+% \colorframed@titleparent  number of the empty structure created at the
+%                           start of the current frame, empty if there is
+%                           none
+% \ifcolorframed@cont       true from the second piece of a frame on; it
+%                           is set in \fb@put@frame, inside the group which
+%                           \endMakeFramed opens around it
 \newcount\colorframed@frameno
 \newif\ifcolorframed@cont
 \def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
@@ -423,6 +440,9 @@
       {#1}
   }
 \ExplSyntaxOff
+% \MakeFramed (already redefined at the top of this file) gets a prefix.
+% The \par comes first so that the structure of a paragraph in progress is
+% closed before the empty structure is created.
 \let\colorframed@MakeFramed\MakeFramed
 \def\MakeFramed{\par\colorframed@titlestruct\colorframed@MakeFramed}
 % The title of \colorframed@TF@Title is a paragraph in a \vbox: it must not
