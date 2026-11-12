@@ -1,9 +1,15 @@
 
 Release 1.0 du 12 novembre 2026
 
-Téléversé sur CTAN le ...
+Téléversé sur CTAN le 12 novembre 2026 vers 21h10.
 
-Release 1.0 makes the package compatible with tagged PDF.  In a
+Release 1.0 of 2026/11/12 makes the package compatible with tagged
+PDF.  Documents not using \DocumentMetadata are not affected:
+their output is the same as with release 0.9b of October 2022.
+
+
+--- longer version (not used for the actual CTAN announce)
+  In a
 document using \DocumentMetadata with tagging=on, the environments
 of framed.sty, as modified by colorframed, are now correctly tagged
 with pdfLaTeX and LuaLaTeX (this was developed and tested with the
@@ -19,10 +25,9 @@ LaTeX release 2026-11-01):
 - the titles repeated after page breaks, the continuation labels,
   the rules and the coloured backgrounds are marked as artifacts.
 
-Documents not using \DocumentMetadata are not affected: their
-output is the same as with release 0.9b.
-
 The tagging support was written by Claude (Anthropic).
+
+----
 
 ------------------------------------------------------------------------
 

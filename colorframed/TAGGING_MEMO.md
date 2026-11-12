@@ -3,6 +3,9 @@
 State: 2026-11-12, colorframed 1.0, LaTeX 2026-11-01, tagpdf 1.0i,
 framed 0.96.  Facts below were observed with pdflatex and lualatex.
 
+The tagging support (code, tests and their tools, documentation) was written
+by Claude Fable 5.2 (Anthropic) on November 12, 2026.
+
 ## Where the code is
 
 - The tagging code is the last section of `colorframed.sty`.  It starts

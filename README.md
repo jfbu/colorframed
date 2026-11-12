@@ -1,7 +1,5 @@
 # colorframed #
 
-Repository creation date: September 20, 2022.
-
 ## Purpose ##
 
 This is the development repository for LaTeX package
@@ -11,12 +9,10 @@ This package fixes colour leak issues which one encounters
 with the environments provided by the
 [framed](https://ctan.org/pkg/framed) package.
 
-Since release 1.0 these environments can also be used in documents
-producing tagged PDF (`\DocumentMetadata` with `tagging=on`), with
-pdfLaTeX and LuaLaTeX.  The tagging support (code, tests and their tools,
-documentation) was written by Claude (Anthropic) on November 12, 2026.
+Since release 1.0 of 2026/11/12 these environments can also be used in
+documents producing tagged PDF.
 
-It is distributed under the LaTeX Project Public License v1.3c, see
+The package is distributed under the LaTeX Project Public License v1.3c, see
 http://www.latex-project.org/lppl.txt
 
 ## CTAN package build instructions ##

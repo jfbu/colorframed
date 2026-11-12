@@ -15,10 +15,8 @@ The package fixes colour leak issues which one encounters
 with the environments provided by the
 [framed](https://ctan.org/pkg/framed) package.
 
-Since release 1.0 these environments can also be used in documents
-producing tagged PDF (`\DocumentMetadata` with `tagging=on`), with
-pdfLaTeX and LuaLaTeX.  The tagging support was written by Claude
-(Anthropic).
+Since release 1.0 of 2026/11/12 these environments can also be
+used in documents producing tagged PDF.
 
 ## Copyright and License
 
