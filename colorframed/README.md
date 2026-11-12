@@ -1,6 +1,6 @@
-% colorframed 0.9b
+% colorframed 1.0
 % Jean-François B.
-% 2022/10/01
+% 2026/11/12
 
 ## Usage
 
@@ -17,7 +17,7 @@ with the environments provided by the
 
 ## Copyright and License
 
-Copyright (C) 2022 Jean-François B.
+Copyright (C) 2022, 2026 Jean-François B.
 
 The colorframed [CTAN package](https://ctan.org/pkg/colorframed)
 is distributed under the
