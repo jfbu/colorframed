@@ -5,7 +5,7 @@ Package: colorframed 2026/11/12 v1.0 fix `framed' breakable boxes colour leaks
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 Package: tagpdf 2026-10-29 v1.0i  LaTeX kernel code for PDF tagging 
 
-FAIL test_tagging_01.tex: fails the checks (tagchecks.py)
+PASS test_tagging_01.tex
   <Document> [pdf2]
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
@@ -31,13 +31,13 @@ FAIL test_tagging_01.tex: fails the checks (tagchecks.py)
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 7 'text'
+    <P> [pdf2]
+      p1 MCID 8 'Some title'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
-        p1 MCID 8 'text'
-  UNTAGGED p1: 3 text operator(s) outside marked content
-  MISSING 'Some title' is not in the text of the structure tree
-  COUNT   19 structure(s), 9 marked content(s)
-FAIL test_tagging_02.tex: fails the checks (tagchecks.py)
+        p1 MCID 9 'text'
+  COUNT   20 structure(s), 10 marked content(s)
+PASS test_tagging_02.tex
   <Document> [pdf2]
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
@@ -63,6 +63,8 @@ FAIL test_tagging_02.tex: fails the checks (tagchecks.py)
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 7 'text'
+    <P> [pdf2]
+      p1 MCID 8 'Some title'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 9 'As any dedicated reader can cl...'
@@ -71,21 +73,17 @@ FAIL test_tagging_02.tex: fails the checks (tagchecks.py)
         p1 MCID 10 'Let us suppose that the noumen...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
-        p2 MCID 1 'As is shown in the writings of...'
+        p2 MCID 0 'As is shown in the writings of...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
-        p2 MCID 2 'As we have already seen, what ...'
+        p2 MCID 1 'As we have already seen, what ...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
-        p2 MCID 3 'Therefore, we can deduce that ...'
+        p2 MCID 2 'Therefore, we can deduce that ...'
         p3 MCID 0 'is no relation between the Ant...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 1 'The things in themselves are w...'
-    <Formula> [pdf2] /T='math'
-      p1 MCID 8 '▶'
-    <Formula> [pdf2] /T='math'
-      p2 MCID 0 '▶'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 2 'As any dedicated reader can cl...'
@@ -106,11 +104,7 @@ FAIL test_tagging_02.tex: fails the checks (tagchecks.py)
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p5 MCID 1 'The things in themselves are w...'
-  UNTAGGED p1: 3 text operator(s) outside marked content
-  UNTAGGED p2: 5 text operator(s) outside marked content
-  UNTAGGED p3: 5 text operator(s) outside marked content
-  MISSING 'Some title' is not in the text of the structure tree
-  COUNT   43 structure(s), 25 marked content(s)
+  COUNT   42 structure(s), 24 marked content(s)
 PASS test_tagging_03.tex
   <Document> [pdf2]
     <semantic-para> [dflt] -> Part
@@ -133,5 +127,44 @@ PASS test_tagging_03.tex
       <text-block> [dflt] -> P
         p2 MCID 2 'The things in themselves are w...'
   COUNT   13 structure(s), 7 marked content(s)
+PASS test_tagging_04.tex
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 0 'Before.'
+    <P> [pdf2]
+      p1 MCID 1 'A long title for this frame, l...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 2 'As any dedicated reader can cl...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 3 'Let us suppose that the noumen...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 4 'As is shown in the writings of...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 5 'As we have already seen, what ...'
+        p2 MCID 0 'time, in the full sense of the...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 1 'Therefore, we can deduce that ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 2 'The things in themselves are w...'
+        p3 MCID 0 'accordance with the principles...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 1 'Between.'
+    <P> [pdf2]
+      p3 MCID 2 'Second frame'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 3 'As is evident upon close exami...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 4 'After.'
+  COUNT   23 structure(s), 14 marked content(s)
 
-FAIL=2, PASS=1, XFAIL=0, XPASS=0, TOTAL=3
+FAIL=0, PASS=4, XFAIL=0, XPASS=0, TOTAL=4
