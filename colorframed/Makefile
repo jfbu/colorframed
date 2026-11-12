@@ -34,10 +34,14 @@ colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh ctanbuild/makep
 	umask 0022 && cd ctanbuild && zip -r colorframed.zip colorframed
 	@echo 'The colorframed.zip is ready'
 	@echo '********'
-	@echo 'Test coverage is non-existent, improve that!'
+	@echo 'Consider running the tagging tests, if not already done'
+	@echo '********'
+	@echo 'General test coverage is non-existent, improve that!'
 	@echo '********'
 	mv ctanbuild/colorframed.zip CTAN/
 	@echo 'New colorframed.zip now moved to CTAN/ directory.'
+	@echo 'Think hard and recall how you proceed from here,'
+	@echo 'without pushing it to GitHub (cf secret diary).'
 	@echo '********'
 
 ctan: colorframed.zip
