@@ -176,5 +176,103 @@ PASS test_tagging_04.tex
       <text-block> [dflt] -> P
         p3 MCID 8 'After.'
   COUNT   23 structure(s), 20 marked content(s)
+PASS test_tagging_05.tex
+  <Document> [pdf2]
+    <section> [dflt] -> Sect
+      <section-heading> [dflt] -> H1 /T='Nested'
+        <heading-number> [dflt] -> Lbl
+          p1 MCID 0 '1'
+        p1 MCID 1 ''
+        p1 MCID 2 'Nested'
+      <P> [pdf2]
+        p1 MCID 3 'Outer title'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 4 'Outer before.'
+      <P> [pdf2]
+        p1 MCID 5 'Outer title'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 6 'Inside framed.'
+      <P> [pdf2]
+        p1 MCID 7 'Inner title'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 8 'Innermost.'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 9 'Inside leftbar.'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 10 'Outer after.'
+    <section> [dflt] -> Sect
+      <section-heading> [dflt] -> H1 /T='In a list'
+        <heading-number> [dflt] -> Lbl
+          p1 MCID 11 '2'
+        p1 MCID 12 ''
+        p1 MCID 13 'In a list'
+      <semantic-para> [dflt] -> Part
+        <itemize> [dflt] -> L
+          <item> [dflt] -> LI
+            <itemlabel> [dflt] -> Lbl
+              p1 MCID 14 '•'
+            <itembody> [dflt] -> LBody
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p1 MCID 15 'First item.'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p1 MCID 16 'Shaded in item.'
+          <item> [dflt] -> LI
+            <itemlabel> [dflt] -> Lbl
+              p1 MCID 17 '•'
+            <itembody> [dflt] -> LBody
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p1 MCID 18 'Second item.'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p1 MCID 19 'As any dedicated reader can cl...'
+                  p1 MCID 20 'dict, in view of these conside...'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p1 MCID 21 'Let us suppose that the noumen...'
+                  p2 MCID 0 'the transcendental unity of ap...'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p2 MCID 1 'As is shown in the writings of...'
+                  p2 MCID 2 'son, but our a posteriori conc...'
+                  p2 MCID 3 'sis. Space constitutes the who...'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p2 MCID 4 'As we have already seen, what ...'
+                  p2 MCID 5 'eral. Whence comes the archite...'
+                  p2 MCID 6 'stitute the whole content for ...'
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p2 MCID 7 'Therefore, we can deduce that ...'
+                  p2 MCID 8 'sert, however, that this is th...'
+                  p2 MCID 9 ''
+                  p3 MCID 0 'tions, it must not be supposed...'
+                  p3 MCID 1 'dictory rules of metaphysics, ...'
+                  p3 MCID 2 'nish a true and demonstrated s...'
+                  p3 MCID 3 'standing (and it must not be s...'
+          <item> [dflt] -> LI
+            <itemlabel> [dflt] -> Lbl
+              p3 MCID 4 '•'
+            <itembody> [dflt] -> LBody
+              <semantic-para> [dflt] -> Part
+                <text-block> [dflt] -> P
+                  p3 MCID 5 'Third item.'
+    <section> [dflt] -> Sect
+      <section-heading> [dflt] -> H1 /T='Inside a paragraph'
+        <heading-number> [dflt] -> Lbl
+          p3 MCID 6 '3'
+        p3 MCID 7 ''
+        p3 MCID 8 'Inside a paragraph'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 9 'Some text boxed and shaded ins...'
+  COUNT   54 structure(s), 42 marked content(s)
 
-FAIL=0, PASS=4, XFAIL=0, XPASS=0, TOTAL=4
+FAIL=0, PASS=5, XFAIL=0, XPASS=0, TOTAL=5
