@@ -213,4 +213,117 @@
 }
 % maybe provide a titled-frame variant using the above and acting like
 % snugshade respective to being used in a list?
+%
+% Tagging
+% Nothing from here on is read by a document not using \DocumentMetadata.
+\@ifundefined{tag_mc_add_missing_to_stream:Nn}{\endinput}{}
+% With pdfLaTeX a paragraph continuing on the next page must have its
+% marked content closed at the end of the page and opened again on the
+% next one.  tagpdf does this in the output routine, but it can not see
+% inside the boxes which framed has split by itself.  We apply the same
+% tagpdf command to each such piece, and to the last one.  With LuaLaTeX
+% this command does nothing (and nothing is needed).
+%
+% \tag_mc_new_stream:n of tagpdf 1.0i does not create the variable which
+% \tag_mc_add_missing_to_stream:Nn needs, hence the second line.
+\ExplSyntaxOn
+\tag_mc_new_stream:n { colorframed }
+\seq_if_exist:cF { g__tag_mc_colorframed_marks_seq }
+  { \seq_new:c { g__tag_mc_colorframed_marks_seq } }
+\cs_new_protected:Npn \colorframed@fixmc #1
+  { \tag_mc_add_missing_to_stream:Nn #1 { colorframed } }
+\ExplSyntaxOff
+% This is \fb@put@frame of framed.sty 0.96 without its debugging lines.
+% The only change is the added \colorframed@fixmc\tw@.
+\def\fb@put@frame#1#2{\relax
+ \ifdim\pagegoal=\maxdimen \pagegoal\vsize \fi
+ \ifinner
+   \fb@putboxa#1%
+   \fb@afterframe
+ \else
+  \dimen@\pagegoal \advance\dimen@-\pagetotal
+  \ifdim\dimen@<2\baselineskip
+    \eject \fb@adjheight \fb@put@frame#1#2%
+  \else
+     \fb@sizeofframe#1%
+     \begingroup
+     \advance\dimen@.8\pageshrink
+     \advance\dimen@-\fb@frh\relax
+     \expandafter\endgroup
+     \ifdim\dimen@>\ht\@tempboxa
+        \fb@putboxa#1%
+        \fb@afterframe
+     \else
+        \fb@sizeofframe#2%
+        \setbox\@tempboxa\vbox{%
+           \vskip \fb@frh \@plus\pagestretch \@minus.8\pageshrink
+           \kern137sp\kern-137sp\penalty-30
+           \unvbox\@tempboxa}%
+        \edef\fb@resto@set{\boxmaxdepth\the\boxmaxdepth
+                           \splittopskip\the\splittopskip}%
+        \boxmaxdepth\z@ \splittopskip\z@
+        \setbox\tw@\vsplit\@tempboxa to\dimen@
+        \setbox\tw@\vbox{\unvbox\tw@}%
+        \begingroup
+        \advance\dimen@\topskip
+        \expandafter\endgroup
+        \ifdim\dimen@>\pagegoal
+          \dimen@ii\pagegoal
+          \advance\dimen@ii -\topskip
+          \advance\dimen@ii \FrameHeightAdjust\relax
+        \else
+          \advance\dimen@.8\pageshrink
+          \ifdim\ht\tw@>\dimen@
+            \dimen@ii\dimen@
+          \else
+            \dimen@ii\ht\tw@
+          \fi
+        \fi
+        \advance\dimen@ii -\fb@frh
+        \setbox\tw@\vbox to\dimen@ii \bgroup
+        \vskip -\fb@frh \@plus-\pagestretch \@minus-.8\pageshrink
+        \unvbox\tw@ \unpenalty\unpenalty
+        \ifdim\lastkern=-137sp
+           \egroup \fb@resto@set \eject
+           \fb@adjheight
+           \fb@put@frame#1#2%
+        \else
+           \egroup \fb@resto@set
+           \ifvoid\@tempboxa
+              \setbox\@tempboxa\box\tw@
+              \fb@putboxa#1%
+              \fb@afterframe
+           \else
+              \ifdim\wd\tw@>\z@
+                \wd\tw@\wd\@tempboxa
+                \colorframed@fixmc\tw@%<<<< ADDED
+                \centerline{#2{\box\tw@}}%
+              \else
+                \box\tw@
+              \fi
+              \hrule \@height\z@ \@width\hsize
+              \eject
+              \fb@adjheight
+              \fb@put@frame\LastFrameCommand\MidFrameCommand
+  \fi\fi\fi\fi\fi
+}
+\def\fb@putboxa#1{%
+  \ifvoid\@tempboxa
+    \PackageWarning{framed}{Boxa is void -- discard it. }%
+  \else
+    \colorframed@fixmc\@tempboxa%<<<< ADDED
+    \centerline{#1{\box\@tempboxa}}%
+  \fi
+}
+% framed executes the frame commands on a dummy box to measure the frame.
+% Nothing of this must be tagged (a title may contain mathematics, which
+% would create a structure).
+\def\fb@sizeofframe#1{\begingroup
+ \SuspendTagging{colorframed}%<<<< ADDED
+ \setbox\z@\vbox{\vskip-5in \hbox{\hskip-5in
+   #1{\hbox{\vrule \@height 4.7in \@depth.3in \@width 5in}}}%
+   \vskip\z@skip}%
+ \global\fb@frw\wd\z@ \global\fb@frh\ht\z@
+ \endgroup
+}
 \endinput
