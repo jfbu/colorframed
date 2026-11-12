@@ -349,6 +349,12 @@ configures the next usage of `framed'.
 \section{Tagged PDF}
 \label{sec:tagging}
 
+\begin{shaded}
+\emph{The tagging support (the added code, the test files and tools of the
+repository, and the present section) was written by Claude, the AI model of
+Anthropic (Claude Fable 5.2) on 2026/11/12.}
+\end{shaded}
+
 Since release |1.0| the environments of \ctanpackage{framed}, as modified by
 \colorframed, can be used in a document which activates the tagging of the PDF
 via |\DocumentMetadata| (with |tagging=on|).  This was developed and tested
@@ -359,11 +365,6 @@ also compiled with success using \XeLaTeX.
 There is nothing to do on user side, and no new user command.  A document not
 using |\DocumentMetadata| is not concerned at all: none of the code added for
 tagging is executed and the output is the same as with release |0.9b|.
-
-The tagging support (the added code, the test files and tools of the
-repository, and the present section) was written by Claude, the AI model of
-Anthropic (Claude Fable 5.2), in a conversation of 2026/11/12 during which I
-set the goals and reviewed and merged its successive patches.
 
 Here is what happens in a tagged document:
 \begin{itemize}[noitemsep,topsep=3pt,parsep=3pt]
