@@ -1,4 +1,4 @@
-auto/
+.auto/
 .DS_Store
 *.ltx
 *.dvi
@@ -20,6 +20,8 @@ README
 ctanbuild/*
 !ctanbuild/private.sh
 !ctanbuild/makepdf.sh
+build_pdflatex/
+build_lualatex/
 CTAN/*
 !CTAN/ANNOUNCES
 !CTAN/*.zip
