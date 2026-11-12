@@ -83,7 +83,7 @@
                (\ghissue{3}, \ghissue{4})\cr
 \omit&\omit& - add link to \ghissue{5} for usage with list items, other doc improvements
                such as \ghissue{1}\cr
-1.0 & 2026/11/12 & tagging suport\cr
+1.0 & 2026/11/12 & tagging support (section~\ref{sec:tagging})\cr
 }}
 
 \vskip-\baselineskip\vskip0pt\relax
@@ -117,6 +117,9 @@ currently.
 
 The problems are solved here without involving an extra
 colour stack, hence the fixes work also with \XeLaTeX.
+
+Since release |1.0| the environments are also usable in documents
+producing tagged PDF, see section~\ref{sec:tagging}.
 
 \section{The environments from \ctanpackage{framed}}
 
@@ -326,6 +329,83 @@ configures the next usage of `framed'.
 
   |\FrameRule| influences both `framed' and `oframed'.
 \end{framed}
+
+\section{Tagged PDF}
+\label{sec:tagging}
+
+Since release |1.0| the environments of \ctanpackage{framed}, as modified by
+\colorframed, can be used in a document which activates the tagging of the PDF
+via |\DocumentMetadata| (with |tagging=on|).  This was developed and tested
+with pdf\LaTeX{} and \LuaLaTeX, using the \LaTeX{} release |2026-11-01| and
+\ctanpackage{tagpdf} |1.0i|.  Two of the test files of the repository were
+also compiled with success using \XeLaTeX.
+
+There is nothing to do on user side, and no new user command.  A document not
+using |\DocumentMetadata| is not concerned at all: none of the code added for
+tagging is executed and the output is the same as with release |0.9b|.
+
+Here is what happens in a tagged document:
+\begin{itemize}[noitemsep,topsep=3pt,parsep=3pt]
+\item The contents of an environment are tagged as they would be without the
+  environment: no structure is created for the frame itself.
+\item With pdf\LaTeX{} a paragraph which \ctanpackage{framed} had split
+  across two pages was wrongly tagged (its marked content was left open at the
+  bottom of the first page and its continuation on the next page was not
+  tagged at all).  This is fixed.  \LuaLaTeX{} had no such problem.
+\item The title of a `titled-frame' (more generally, the title argument of
+  |\TitleBarFrame| or of |\colorframedTitleBarFrame|) was not tagged.  It is
+  now a paragraph which, in the structure tree, comes before the contents of
+  the frame.  The title may contain mathematics or |\emph|.
+\item The titles repeated after page breaks (those with |(cont)| appended)
+  and the continuation labels are marked as artifacts.  This applies to the
+  titles coming from |\MidFrameCommand| and |\LastFrameCommand|.
+\item The rules and the coloured backgrounds drawn by the environments are
+  marked as artifacts.  This is needed with pdf\LaTeX{} only, as \LuaLaTeX{}
+  does it on its own for all material which is not tagged.
+\end{itemize}
+
+\begin{footnotesize}
+\begin{snugshade}
+  \textbf{Technical notes.}
+\begin{itemize}[noitemsep,topsep=3pt,parsep=3pt]
+\item A title is typeset when the frame is drawn, hence after the contents of
+  the frame.  To let it nevertheless come first in the structure tree, the
+  package must know at the start of the environment that there will be a
+  title, and it knows it only from the previous compilation.  So a document
+  with titled frames needs one more compilation; as long as this information
+  is missing the title is tagged after the contents of its frame and this
+  warning is issued:
+\begin{verbatim}
+Package colorframed Warning: Titles of frames are not at their place in the
+(colorframed)                structure tree. Rerun to get them right.
+\end{verbatim}
+\item All of the above also applies to an environment of your own if its
+  |\FrameCommand| is built with |\CustomFBox| or |\colorframedcolorbox|, or
+  with one of the two title bar macros.  If it is built with |\fbox| or
+  |\fcolorbox| (which should be avoided anyhow, see the next section) then,
+  with pdf\LaTeX, the rules they draw are not marked as artifacts.  This is
+  not specific to frames: with pdf\LaTeX{} the \LaTeX{} kernel currently
+  also leaves the rules of a |tabular| unmarked.
+\item In a tagged document (and only there) \colorframed redefines the
+  `leftbar' environment and these internal macros of
+  \ctanpackage{framed}.sty:
+\begin{verbatim}
+\fb@put@frame, \fb@putboxa, \fb@sizeofframe, \TF@Title
+\end{verbatim}
+  The frame commands which \ctanpackage{framed} executes only to measure the
+  frame are executed with tagging suspended.
+\item Only public commands of \ctanpackage{tagpdf} are used.  One of them
+  needed a workaround (the package creates a variable which
+  \ctanpackage{tagpdf} should have created), see
+  \href{https://github.com/latex3/tagpdf/issues/152}{tagpdf issue \#152}; no
+  update of \colorframed will be needed when it gets fixed.
+\item The repository contains test files (|test_tagging_*.tex|), a script
+  compiling them with both engines and checking the tagging of the resulting
+  PDFs, and a memo (|TAGGING_MEMO.md|) with more details.  The PDFs
+  were not submitted to a PDF/UA validator.
+\end{itemize}
+\end{snugshade}
+\end{footnotesize}
 
 \section{Technicalities, musings about future}
 
