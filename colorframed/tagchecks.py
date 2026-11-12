@@ -10,8 +10,8 @@ Needs structtree.py in the same directory (text extraction, role maps).
              without having been opened (BDC/BMC and EMC operators); typical
              of a paragraph split by other means than the output routine
              with pdflatex
-  UNTAGGED   text in a page outside of any marked content (neither tagged
-             nor artifact)
+  UNTAGGED   text, or drawings (rules, filled areas, images), in a page
+             outside of any marked content (neither tagged nor artifact)
   DUPMC      a marked content (page, MCID) referenced more than once by the
              structure tree
   ORPHMC     a marked content with MCID in a page which is not referenced by
@@ -41,6 +41,7 @@ except ImportError:
 from structtree import Walker, as_list, page_mcid_text
 
 TEXTOPS = ("Tj", "TJ", "'", '"')
+PAINTOPS = ("S", "s", "f", "F", "f*", "B", "B*", "b", "b*", "sh", "Do", "EI")
 CUT = 30
 
 
@@ -54,10 +55,11 @@ def is_elem(x):
 
 
 def page_scan(pdf):
-    """List of (page number, unclosed, unopened, untagged text operators)."""
+    """List of (page number, unclosed, unopened, untagged text operators,
+    untagged drawing operators)."""
     out = []
     for i, page in enumerate(pdf.pages):
-        depth = unopened = untagged = 0
+        depth = unopened = untagged = drawn = 0
         for operands, op in pikepdf.parse_content_stream(page):
             name = str(op)
             if name in ("BDC", "BMC"):
@@ -69,7 +71,9 @@ def page_scan(pdf):
                     unopened += 1
             elif depth == 0 and name in TEXTOPS:
                 untagged += 1
-        out.append((i + 1, depth, unopened, untagged))
+            elif depth == 0 and name in PAINTOPS:
+                drawn += 1
+        out.append((i + 1, depth, unopened, untagged, drawn))
     return out
 
 
@@ -127,12 +131,15 @@ def check(path, listing, expected):
             w.walk(k, 0, None)
         lines = w.out
 
-    for pg, unclosed, unopened, untagged in page_scan(pdf):
+    for pg, unclosed, unopened, untagged, drawn in page_scan(pdf):
         if unclosed or unopened:
             msgs.append(f"UNBALANCED p{pg}: {unclosed} marked content(s) not "
                         f"closed, {unopened} closed without being opened")
         if untagged:
             msgs.append(f"UNTAGGED p{pg}: {untagged} text operator(s) outside "
+                        f"marked content")
+        if drawn:
+            msgs.append(f"UNTAGGED p{pg}: {drawn} drawing operator(s) outside "
                         f"marked content")
 
     seen, dups = set(), []

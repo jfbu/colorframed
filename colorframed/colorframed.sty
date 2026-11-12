@@ -7,6 +7,11 @@
 % Apart from code comments here, documentation is in colorframed-doc.pdf
 \RequirePackage{framed}
 \RequirePackage{color}
+% The next three do something only in a document with tagging, see the end
+% of this file.
+\let\colorframed@artifact\@firstofone
+\let\colorframed@tagtitle\@firstofone
+\let\colorframed@notagpara\relax
 % First we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
   {\MakeFramed{#1}\color@begingroup}
@@ -70,9 +75,10 @@
     % BACKGROUND
     % draw background and move back to reference point
     {\color{#1}%
-     \vrule\@height\ht\@tempboxa
-           \@depth\dp\@tempboxa
-           \@width\wd\@tempboxa
+     \colorframed@artifact
+       {\vrule\@height\ht\@tempboxa
+              \@depth\dp\@tempboxa
+              \@width\wd\@tempboxa}%
      \kern-\wd\@tempboxa
     }%
     % CONTENTS
@@ -101,21 +107,22 @@
     \dp\@tempboxa
        \dimexpr\dp\@tempboxa+\fboxsep+#4\relax
         \setbox\z@\hbox
-                  {\vrule\@width#5\relax
-                   \kern\wd\@tempboxa
-                   \vrule\@width#6\relax
+                  {\colorframed@artifact
+                    {\vrule\@width#5\relax
+                     \kern\wd\@tempboxa
+                     \vrule\@width#6\relax}%
                   }%
             \ht\z@\ht\@tempboxa
             \dp\z@\dp\@tempboxa
     \vbox{%
         \colorframedbordercolorcommand % defaults to \normalcolor
-        \hrule\@height#3\relax
+        \colorframed@artifact{\hrule\@height#3\relax}%
         #1%
         \kern-#3\relax % see discussion of issue #2
         \copy\z@ % deliberate overlap hrules+vrules to avoid anti-aliasing artefacts
         \kern-#4\relax
         #2%
-        \hrule\@height#4\relax
+        \colorframed@artifact{\hrule\@height#4\relax}%
         \kern-\dp\@tempboxa
        }%
     \kern-\wd\z@
@@ -132,11 +139,6 @@
 % Original let the continuation label use same colour as frame.
 % Let make this customizable.
 \let\colorframedTFconlabcolorcommand\empty
-% The next three do something only in a document with tagging, see the end
-% of this file.
-\let\colorframed@artifact\@firstofone
-\let\colorframed@tagtitle\@firstofone
-\let\colorframed@notagpara\relax
 \renewcommand\TitleBarFrame[3][]{\begingroup
   \ifx\delimiter#1\delimiter
     \let\TF@conlab\@empty
@@ -210,13 +212,13 @@
                \noindent\color{TFTitleColor}%
                \colorframed@tagtitle{#1}\par}}%
    \kern0.8ex}%
-  \hrule\@height\ht\@tempboxa
+  \colorframed@artifact{\hrule\@height\ht\@tempboxa}%
   \kern-\ht\@tempboxa
   \box\@tempboxa
   \endgroup
   %\nointerlineskip 
   %\kern-0.04pt\relax
-  \hrule\@height.5\fboxrule
+  \colorframed@artifact{\hrule\@height.5\fboxrule}%
   \fi
 }
 % maybe provide a titled-frame variant using the above and acting like
@@ -233,7 +235,9 @@
 % this command does nothing (and nothing is needed).
 %
 % \tag_mc_new_stream:n of tagpdf 1.0i does not create the variable which
-% \tag_mc_add_missing_to_stream:Nn needs, hence the second line.
+% \tag_mc_add_missing_to_stream:Nn needs, hence the second line; see
+% https://github.com/latex3/tagpdf/issues/152
+% Nothing will have to be changed here once this is fixed in tagpdf.
 \ExplSyntaxOn
 \tag_mc_new_stream:n { colorframed }
 \seq_if_exist:cF { g__tag_mc_colorframed_marks_seq }
@@ -345,7 +349,8 @@
 % Only the title of the first piece of a frame is handled this way (the
 % one from \FrameCommand or \FirstFrameCommand).  Titles of the following
 % pieces (\MidFrameCommand, \LastFrameCommand) and all continuation labels
-% (argument #1) are artifacts.
+% (argument #1) are artifacts.  \colorframed@artifact is also used for the
+% rules, see below.
 \newcount\colorframed@frameno
 \newif\ifcolorframed@cont
 \def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
@@ -384,12 +389,16 @@
   {
     \tag_if_active:TF
       {
-        \tag_mc_begin:n { artifact }
-        \group_begin:
-        \SuspendTagging { colorframed }
-        #1
-        \group_end:
-        \tag_mc_end:
+        \tag_mc_if_in:TF
+          {#1}
+          {
+            \tag_mc_begin:n { artifact }
+            \group_begin:
+            \SuspendTagging { colorframed }
+            #1
+            \group_end:
+            \tag_mc_end:
+          }
       }
       {#1}
   }
@@ -399,11 +408,33 @@
 % The title of \colorframed@TF@Title is a paragraph in a \vbox: it must not
 % get a paragraph structure there.
 \def\colorframed@notagpara{\tagpdfparaOff}
-% \TF@Title of framed.sty typesets the title in an \hbox.
-\let\colorframed@framed@TF@Title\TF@Title
+% This is \TF@Title of framed.sty 0.96, with \colorframed@tagtitle and
+% \colorframed@artifact added.
 \renewcommand\TF@Title[1]{%
   \ifx\delimiter#1\delimiter\else
-    \colorframed@framed@TF@Title{\colorframed@tagtitle{#1}}%
+  \kern-0.04pt\relax
+  \begingroup
+  \setbox\@tempboxa\vbox{%
+   \kern0.8ex
+   \hbox{\kern\fboxsep
+         \textcolor{TFTitleColor}{\colorframed@tagtitle{#1}}\vphantom{Tj)}}%
+   \kern0.8ex}%
+  \colorframed@artifact{\hrule\@height\ht\@tempboxa}%
+  \kern-\ht\@tempboxa
+  \box\@tempboxa
+  \endgroup
+  \nointerlineskip
+  \kern-0.04pt\relax
   \fi
 }
+% Rules and coloured backgrounds.
+% With pdfLaTeX they must be marked as artifacts (LuaLaTeX does it by
+% itself).  In the macros above this is done by \colorframed@artifact,
+% which does nothing if a marked content is already open, as is the case
+% if such a macro is used inside a paragraph.
+% The leftbar environment of framed.sty needs it too.
+\renewenvironment{leftbar}{%
+  \def\FrameCommand{\colorframed@artifact{\vrule width 3pt}\hspace{10pt}}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}}%
+ {\endMakeFramed}
 \endinput

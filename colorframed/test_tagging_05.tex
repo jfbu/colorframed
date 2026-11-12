@@ -1,0 +1,60 @@
+% nested frames, frames in a list, \CustomFBox inside a paragraph,
+% a frame after a heading
+% EXPECT: Outer title
+% EXPECT: Inner title
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage{colorframed,xcolor}
+\usepackage{kantlipsum}
+\usepackage{amssymb}% for  \blacktriangleright
+
+\colorlet{shadecolor}{red!10}
+\colorlet{TFFrameColor}{blue!10}
+\colorlet{TFTitleColor}{blue}
+
+\title{colorframed tagging test - 5}
+
+\begin{document}
+
+\section{Nested}
+
+\begin{titled-frame}{Outer title}
+Outer before.
+\begin{framed}
+Inside framed.
+\begin{titled-frame}{Inner title}
+Innermost.
+\end{titled-frame}
+\end{framed}
+\begin{leftbar}
+Inside leftbar.
+\end{leftbar}
+Outer after.
+\end{titled-frame}
+
+\section{In a list}
+
+\begin{itemize}
+\item First item.
+\begin{snugshade}
+Shaded in item.
+\end{snugshade}
+\item Second item.
+\begin{framed}
+\kant[1-5]
+\end{framed}
+\item Third item.
+\end{itemize}
+
+\section{Inside a paragraph}
+
+Some text \CustomFBox{}{}{1pt}{1pt}{1pt}{1pt}{boxed} and
+\colorframedcolorbox{shadecolor}{shaded} inside a paragraph.
+
+\end{document}
