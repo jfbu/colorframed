@@ -1,0 +1,41 @@
+% titled-frame using \colorframedTitleBarFrame, with a title on two lines,
+% across pages
+% EXPECT: A long title for this frame, long enough
+% EXPECT: to need a second line in the title bar
+% EXPECT: Second frame
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage{colorframed,xcolor}
+\usepackage{kantlipsum}
+\usepackage{amssymb}% for  \blacktriangleright
+
+\colorlet{TFFrameColor}{blue!10}
+\colorlet{TFTitleColor}{blue}
+\let\TitleBarFrame\colorframedTitleBarFrame
+
+\title{colorframed tagging test - 4}
+
+\begin{document}
+
+Before.
+
+\begin{titled-frame}{A long title for this frame, long enough to need a
+    second line in the title bar, and even some more words}
+\kant[1-6]
+\end{titled-frame}
+
+Between.
+
+\begin{titled-frame}{Second frame}
+\kant[7]
+\end{titled-frame}
+
+After.
+
+\end{document}

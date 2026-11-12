@@ -132,6 +132,11 @@
 % Original let the continuation label use same colour as frame.
 % Let make this customizable.
 \let\colorframedTFconlabcolorcommand\empty
+% The next three do something only in a document with tagging, see the end
+% of this file.
+\let\colorframed@artifact\@firstofone
+\let\colorframed@tagtitle\@firstofone
+\let\colorframed@notagpara\relax
 \renewcommand\TitleBarFrame[3][]{\begingroup
   \ifx\delimiter#1\delimiter
     \let\TF@conlab\@empty
@@ -140,7 +145,8 @@
      \nointerlineskip
      \hbox{%<<<< ADDED (needed due to \smash doing \leavevmode nowadays)
            \colorframedTFconlabcolorcommand%<<<< ADDED
-     \smash{\rlap{\kern\wd\@tempboxa\kern\fboxrule\kern\fboxsep #1}}}%
+     \smash{\rlap{\kern\wd\@tempboxa\kern\fboxrule\kern\fboxsep
+                  \colorframed@artifact{#1}}}}%
           }%<<<< ADDED
   \fi
   %\let\TF@savecolor\current@color%<<<< REMOVED
@@ -167,7 +173,8 @@
      \smash{\rlap{\kern\wd\@tempboxa
                   % 2\fboxrule, not \fboxrule\fboxsep!
                   \kern2\fboxrule
-                  \kern\dimexpr\colorframedTFconlabsep\relax #1}}}%
+                  \kern\dimexpr\colorframedTFconlabsep\relax
+                  \colorframed@artifact{#1}}}}%
           }%
   \fi
   \def\colorframedbordercolorcommand{\color{TFFrameColor}}%
@@ -199,8 +206,9 @@
          \kern\dimexpr\colorframedTFtitlesep\relax
          \vbox{\hsize\dimexpr\linewidth-2\fboxrule-
                              2\dimexpr\colorframedTFtitlesep\relax\relax
+               \colorframed@notagpara
                \noindent\color{TFTitleColor}%
-               #1\par}}%
+               \colorframed@tagtitle{#1}\par}}%
    \kern0.8ex}%
   \hrule\@height\ht\@tempboxa
   \kern-\ht\@tempboxa
@@ -234,7 +242,8 @@
   { \tag_mc_add_missing_to_stream:Nn #1 { colorframed } }
 \ExplSyntaxOff
 % This is \fb@put@frame of framed.sty 0.96 without its debugging lines.
-% The only change is the added \colorframed@fixmc\tw@.
+% The only changes are the added \colorframed@fixmc\tw@ and
+% \colorframed@conttrue (see below about the latter).
 \def\fb@put@frame#1#2{\relax
  \ifdim\pagegoal=\maxdimen \pagegoal\vsize \fi
  \ifinner
@@ -304,6 +313,7 @@
               \hrule \@height\z@ \@width\hsize
               \eject
               \fb@adjheight
+              \colorframed@conttrue%<<<< ADDED
               \fb@put@frame\LastFrameCommand\MidFrameCommand
   \fi\fi\fi\fi\fi
 }
@@ -325,5 +335,75 @@
    \vskip\z@skip}%
  \global\fb@frw\wd\z@ \global\fb@frh\ht\z@
  \endgroup
+}
+% Titles (argument #2 of \TitleBarFrame and \colorframedTitleBarFrame).
+% A title is typeset by a frame command, hence after the contents of the
+% frame.  To get it before them in the structure tree, a structure is
+% created at the start of \MakeFramed and the title, when it is typeset, is
+% a marked content with a label, which that structure refers to.  As with
+% all labels this needs one more compilation.
+% Only the title of the first piece of a frame is handled this way (the
+% one from \FrameCommand or \FirstFrameCommand).  Titles of the following
+% pieces (\MidFrameCommand, \LastFrameCommand) and all continuation labels
+% (argument #1) are artifacts.
+\newcount\colorframed@frameno
+\newif\ifcolorframed@cont
+\def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
+\ExplSyntaxOn
+\cs_new_protected:Npn \colorframed@titlestruct
+  {
+    \global\advance\colorframed@frameno\@ne
+    \edef\colorframed@titlelabel{colorframed-title-\the\colorframed@frameno}
+    \tag_if_active:T
+      {
+        \exp_args:No \property_if_recorded:nT { \colorframed@titlelabel }
+          {
+            \tag_struct_begin:n { tag=P }
+            \exp_args:No \tag_mc_use:n { \colorframed@titlelabel }
+            \tag_struct_end:
+          }
+      }
+  }
+\cs_set_protected:Npn \colorframed@tagtitle #1
+  {
+    \tag_if_active:TF
+      {
+        \ifcolorframed@cont
+          \colorframed@artifact {#1}
+        \else
+          \exp_args:No \property_record:nn { \colorframed@titlelabel } { abspage }
+          \exp_args:Ne \tag_mc_begin:n
+            { tag=P, stash, label=\colorframed@titlelabel }
+          #1
+          \tag_mc_end:
+        \fi
+      }
+      {#1}
+  }
+\cs_set_protected:Npn \colorframed@artifact #1
+  {
+    \tag_if_active:TF
+      {
+        \tag_mc_begin:n { artifact }
+        \group_begin:
+        \SuspendTagging { colorframed }
+        #1
+        \group_end:
+        \tag_mc_end:
+      }
+      {#1}
+  }
+\ExplSyntaxOff
+\let\colorframed@MakeFramed\MakeFramed
+\def\MakeFramed{\par\colorframed@titlestruct\colorframed@MakeFramed}
+% The title of \colorframed@TF@Title is a paragraph in a \vbox: it must not
+% get a paragraph structure there.
+\def\colorframed@notagpara{\tagpdfparaOff}
+% \TF@Title of framed.sty typesets the title in an \hbox.
+\let\colorframed@framed@TF@Title\TF@Title
+\renewcommand\TF@Title[1]{%
+  \ifx\delimiter#1\delimiter\else
+    \colorframed@framed@TF@Title{\colorframed@tagtitle{#1}}%
+  \fi
 }
 \endinput
