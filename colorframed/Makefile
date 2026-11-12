@@ -2,7 +2,7 @@ docfiles    = README.md
 sourcefiles = colorframed-doc.tex colorframed.sty
 TEST = 
 
-.PHONY: ctan clean dopdftaggingtests doluataggingtests taggingtests
+.PHONY: doc ctan clean dopdftaggingtests doluataggingtests taggingtests
 
 README: README.md
 	pandoc -t plain -o README README.md
@@ -12,6 +12,8 @@ colorframed-doc.dvi: colorframed-doc.tex colorframed.sty
 
 colorframed-doc.pdf: colorframed-doc.dvi
 	dvipdfmx colorframed-doc.dvi
+
+doc: colorframed-doc.pdf README
 
 # ATTENTION à un truc comme ctanbuild/$(sourcefiles) !
 # le ctanbuild/ ne s'applique qu'au premier !
@@ -44,7 +46,8 @@ colorframed.zip: $(docfiles) $(sourcefiles) ctanbuild/private.sh ctanbuild/makep
 	@echo 'without pushing it to GitHub (cf secret diary).'
 	@echo '********'
 
-ctan: colorframed.zip
+# Let it also create the pdf in the working directory to avoid confusion.
+ctan: doc colorframed.zip
 
 dopdftaggingtests:
 	./dotaggingtests.sh pdflatex
