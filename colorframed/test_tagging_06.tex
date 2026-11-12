@@ -1,0 +1,63 @@
+% titles containing mathematics and emphasis (with both title bars),
+% frames in a float, in a minipage, in multicols
+% EXPECT: First title with
+% EXPECT: and emphasis after
+% EXPECT: Second title with
+% EXPECT: Third title
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage{colorframed,xcolor}
+\usepackage{kantlipsum}
+\usepackage{multicol}
+\usepackage{amssymb}% for  \blacktriangleright
+
+\colorlet{shadecolor}{red!10}
+\colorlet{TFFrameColor}{blue!10}
+\colorlet{TFTitleColor}{blue}
+
+\title{colorframed tagging test - 6}
+
+\begin{document}
+
+Before.
+
+\begin{titled-frame}{First title with $a^2+b^2$ and \emph{emphasis} after}
+Contents of the first frame.
+\end{titled-frame}
+
+\begin{figure}
+\begin{titled-frame}{Third title}
+Float contents.
+\end{titled-frame}
+\caption{A caption}
+\end{figure}
+
+\noindent\begin{minipage}{6cm}
+\begin{shaded}
+In a minipage.
+\end{shaded}
+\end{minipage}
+
+{\let\TitleBarFrame\colorframedTitleBarFrame
+\begin{titled-frame}{Second title with $c^2$ and \emph{emphasis} after}
+Contents of the second frame.
+\end{titled-frame}
+}
+
+\begin{multicols}{2}
+\kant[1]
+\begin{framed}
+\kant[2]
+\end{framed}
+\kant[3-6]
+\end{multicols}
+
+After.
+
+\end{document}

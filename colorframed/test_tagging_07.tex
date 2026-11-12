@@ -1,0 +1,30 @@
+% two columns: a titled frame across columns and pages
+% EXPECT: Two columns
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass[twocolumn]{article}
+\usepackage{colorframed,xcolor}
+\usepackage{kantlipsum}
+\usepackage{amssymb}% for  \blacktriangleright
+
+\colorlet{TFFrameColor}{blue!10}
+\colorlet{TFTitleColor}{blue}
+
+\title{colorframed tagging test - 7}
+
+\begin{document}
+
+\kant[1]
+
+\begin{titled-frame}{Two columns}
+\kant[2-9]
+\end{titled-frame}
+
+\kant[10]
+
+\end{document}

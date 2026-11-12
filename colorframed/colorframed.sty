@@ -342,10 +342,13 @@
 }
 % Titles (argument #2 of \TitleBarFrame and \colorframedTitleBarFrame).
 % A title is typeset by a frame command, hence after the contents of the
-% frame.  To get it before them in the structure tree, a structure is
-% created at the start of \MakeFramed and the title, when it is typeset, is
-% a marked content with a label, which that structure refers to.  As with
-% all labels this needs one more compilation.
+% frame.  To get it before them in the structure tree, an empty structure
+% is created at the start of \MakeFramed, and the structure of the title,
+% when it is typeset, is declared as a child of that one.  The title itself
+% may contain what creates structures (mathematics for example).
+% Whether a frame has a title is only known from the previous compilation
+% (via a label): in a first compilation the title is tagged after the
+% contents of the frame and a warning asks for another compilation.
 % Only the title of the first piece of a frame is handled this way (the
 % one from \FrameCommand or \FirstFrameCommand).  Titles of the following
 % pieces (\MidFrameCommand, \LastFrameCommand) and all continuation labels
@@ -354,17 +357,25 @@
 \newcount\colorframed@frameno
 \newif\ifcolorframed@cont
 \def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
+\let\colorframed@titleparent\@empty
+\def\colorframed@rerunwarning{%
+  \AtEndDocument{\PackageWarningNoLine{colorframed}
+    {Titles of frames are not at their place in the structure\MessageBreak
+     tree. Rerun to get them right}}%
+  \global\let\colorframed@rerunwarning\relax
+}
 \ExplSyntaxOn
 \cs_new_protected:Npn \colorframed@titlestruct
   {
     \global\advance\colorframed@frameno\@ne
     \edef\colorframed@titlelabel{colorframed-title-\the\colorframed@frameno}
+    \let\colorframed@titleparent\@empty
     \tag_if_active:T
       {
         \exp_args:No \property_if_recorded:nT { \colorframed@titlelabel }
           {
-            \tag_struct_begin:n { tag=P }
-            \exp_args:No \tag_mc_use:n { \colorframed@titlelabel }
+            \tag_struct_begin:n { tag=Part }
+            \edef\colorframed@titleparent { \tag_get:n { struct_num } }
             \tag_struct_end:
           }
       }
@@ -377,10 +388,19 @@
           \colorframed@artifact {#1}
         \else
           \exp_args:No \property_record:nn { \colorframed@titlelabel } { abspage }
-          \exp_args:Ne \tag_mc_begin:n
-            { tag=P, stash, label=\colorframed@titlelabel }
+          \tl_if_empty:NTF \colorframed@titleparent
+            {
+              \colorframed@rerunwarning
+              \tag_struct_begin:n { tag=P }
+            }
+            {
+              \exp_args:Ne \tag_struct_begin:n
+                { tag=P, parent=\colorframed@titleparent }
+            }
+          \tag_mc_begin:n { tag=P }
           #1
           \tag_mc_end:
+          \tag_struct_end:
         \fi
       }
       {#1}
