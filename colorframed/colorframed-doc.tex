@@ -3,6 +3,16 @@
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage[straightquotes,ttzdefault]{newtxtt}
+% Copied from xint manual source:
+% In ts1newtxttz.fd 2024/03/03 reference to newtcxttz are made.
+% Presumably tc = text companion but the fonts do not exist.
+% kpathsea: Running mktexmf newtcxttza
+% ! I can't find file `newtcxttza'.
+% The problem is is with \textbullet used by itemize environment.
+% (the \textasciigrave does not occur due to straightquotes
+% option).
+\AtBeginDocument{\def\textbullet{\ensuremath{\bullet}}}
+
 \usepackage{framed}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{colorframed}
@@ -174,17 +184,20 @@ The previous box gives an example of use of `titled-frame' environment.
 % lié à l'emploi du package parskip)
 % \colorlet{shadecolor}{lightgray!25}
 
+
 \begin{footnotesize}
 \begin{itemize}[noitemsep,topsep=3pt,% influences strangely item separation
                          parsep=3pt]
 \begin{shaded}
 \item
-\emph{The current box is an example of \emph{`shaded'}
+\emph{%
+    The current box is an example of \emph{`shaded'}
     environment; The
     |shadecolor| must have been defined by user. See the
     \ghissue[repository issue ]{5} for some comments about how to use
     such environment with list items, if the environment is to start
-    at start of the item, as here. }
+    at start of the item, as here.
+}
 \end{shaded}
 
 \begin{snugshade}
