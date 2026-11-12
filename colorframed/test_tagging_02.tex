@@ -1,0 +1,61 @@
+% à partir de https://github.com/latex3/tagging-project/tree/8a769172a10050fca0994682e125975f52ba9734/tagging-status/testfiles-incompatible/colorframed
+% mardi 24 mars 2026 à 11:34:58
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage{framed,xcolor}
+
+\colorlet{shadecolor}{red!10}
+\colorlet{TFFrameColor}{blue!10}
+\colorlet{TFTitleColor}{blue}
+
+\title{colorframed tagging test - 1b}
+\usepackage{kantlipsum}
+\usepackage{amssymb}% for  \blacktriangleright 
+\begin{document}
+
+text
+
+\begin{framed}
+text
+\end{framed}
+
+\begin{oframed}
+text
+\end{oframed}
+
+\begin{shaded}
+text
+\end{shaded}
+
+\begin{shaded*}
+text
+\end{shaded*}
+
+\begin{leftbar}
+text
+\end{leftbar}
+
+\begin{snugshade}
+text
+\end{snugshade}
+
+\begin{snugshade*}
+text
+\end{snugshade*}
+
+\begin{titled-frame}{Some title}
+\kant[1-6]
+\end{titled-frame}
+
+\begin{framed}
+\kant[1-6]
+\end{framed}
+
+\end{document}
