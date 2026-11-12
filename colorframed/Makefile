@@ -61,3 +61,5 @@ clean:
 	rm -f colorframed-doc.log
 	rm -f colorframed-doc.out
 	rm -f colorframed-doc.toc
+	rm -f colorframed-doc.fdb_latexmk
+	rm -f colorframed-doc.fls
