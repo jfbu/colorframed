@@ -1,0 +1,137 @@
+pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026)
+LaTeX2e <2026-11-01>
+L3 programming layer <2026-09-09>
+Package: colorframed 2026/11/12 v1.0 fix `framed' breakable boxes colour leaks 
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+Package: tagpdf 2026-10-29 v1.0i  LaTeX kernel code for PDF tagging 
+
+FAIL test_tagging_01.tex: fails the checks (tagchecks.py)
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 0 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 1 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 2 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 3 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 4 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 5 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 6 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 7 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 8 'text'
+  UNTAGGED p1: 3 text operator(s) outside marked content
+  MISSING 'Some title' is not in the text of the structure tree
+  COUNT   19 structure(s), 9 marked content(s)
+FAIL test_tagging_02.tex: fails the checks (tagchecks.py)
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 0 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 1 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 2 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 3 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 4 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 5 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 6 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 7 'text'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 9 'As any dedicated reader can cl...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 10 'Let us suppose that the noumen...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 1 'As is shown in the writings of...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 2 'As we have already seen, what ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 3 'Therefore, we can deduce that ...'
+        p3 MCID 0 'is no relation between the Ant...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 1 'The things in themselves are w...'
+    <Formula> [pdf2] /T='math'
+      p1 MCID 8 '▶'
+    <Formula> [pdf2] /T='math'
+      p2 MCID 0 '▶'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 2 'As any dedicated reader can cl...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 3 'Let us suppose that the noumen...'
+        p4 MCID 0 'Ideal stands in need of reason...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p4 MCID 1 'As is shown in the writings of...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p4 MCID 2 'As we have already seen, what ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p4 MCID 3 'Therefore, we can deduce that ...'
+        p5 MCID 0 'The objects in space and time ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p5 MCID 1 'The things in themselves are w...'
+  UNTAGGED p1: 3 text operator(s) outside marked content
+  UNTAGGED p2: 5 text operator(s) outside marked content
+  UNTAGGED p3: 5 text operator(s) outside marked content
+  MISSING 'Some title' is not in the text of the structure tree
+  COUNT   43 structure(s), 25 marked content(s)
+PASS test_tagging_03.tex
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 0 'As any dedicated reader can cl...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 1 'Let us suppose that the noumen...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 2 'As is shown in the writings of...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 3 'As we have already seen, what ...'
+        p2 MCID 0 'occupy part of the sphere of t...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 1 'Therefore, we can deduce that ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 2 'The things in themselves are w...'
+  COUNT   13 structure(s), 7 marked content(s)
+
+FAIL=2, PASS=1, XFAIL=0, XPASS=0, TOTAL=3
