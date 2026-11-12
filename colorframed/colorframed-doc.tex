@@ -162,7 +162,16 @@ producing tagged PDF, see section~\ref{sec:tagging}.
 }
 \end{titled-frame}
 The previous box gives an example of use of `titled-frame' environment.
-  It is an environment with
+\begin{titled-frame}{THE CONTINUATION LABEL NEEDS \ctanpackage{amssymb}!}
+  The continuation label used by the `titled-frame' environment
+  is |$\blacktriangleright$|
+  (which despite its name reacts to current text colour setting).
+  It requires to
+  the best of the author knowledge loading \ctanpackage{amssymb} or
+  some other math symbols package and \textbf{it is up to user to load it.}
+\end{titled-frame}
+%
+  `titled-frame' is an environment with
   one mandatory argument which provides the title of the
   frame, which is repeated after a page break with |(cont)|
   appended.  The colours |TFFrameColor| and
@@ -239,12 +248,6 @@ The previous box gives an example of use of `titled-frame' environment.
 %  could interfere with the width measurement.
  {\endMakeFramed}
 \end{verbatim}
-  The continuation label used in the `titled-frame' environment
-  is |$\blacktriangleright$|
-  (which despite its name reacts to current text colour setting).
-  It requires to
-  the best of the author knowledge loading \ctanpackage{amssymb} or
-  some other math symbols package and it is up to user to do it.
 \end{snugshade}
 
 % \begin{shaded} % nesting does not work
