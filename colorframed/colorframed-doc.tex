@@ -171,6 +171,16 @@ The previous box gives an example of use of `titled-frame' environment.
   It requires to
   the best of the author knowledge loading \ctanpackage{amssymb} or
   some other math symbols package and \textbf{it is up to user to load it.}
+
+  The definition of the `titled-frame' environment by \ctanpackage{framed} is
+  reproduced below, after the discussion of the `snugshade' environment.  It
+  occupies only 11 lines; it is easy, either to use |\renewenvironment| to
+  replace hard-coded things such as |$\blacktriangleright$| by what is
+  preferred, or to define a similar custom environment under a name of one's
+  own choosing.  This is left to user.
+
+  TODO: maybe restructure the documentation so that user does not have
+  to actually read the one of the original \ctanpackage{framed} package.
 \end{titled-frame}
 %
   `titled-frame' is an environment with

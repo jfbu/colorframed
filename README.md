@@ -35,10 +35,11 @@ The results are recorded in `testsummary_pdflatex.txt` and
 `testsummary_lualatex.txt`.  See `dotaggingtests.sh` for the details and
 `TAGGING_MEMO.md` for technical notes on the tagging support.
 
-The testing infrastructure is based upon the one originally developed in 2024
+The testing infrastructure is based upon the one originally developed in 2024-2025
 by the author for the [jfbu/etoc](https://github.com/jfbu/etoc) project, which
-was later (in November 2026) enriched (via the Python scripts using
-[pikepdf](https://pypi.org/project/pikepdf/).) with help by AI assistants.
+was later (in November 2026) enriched with Python scripts (requiring
+[pikepdf](https://pypi.org/project/pikepdf/)) checking the PDF structures.
+Those were provided by AI assistance.
 
 ## Opening a new issue ##
 
