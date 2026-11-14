@@ -5,7 +5,8 @@
 This is the development repository for LaTeX package
 [colorframed](https://ctan.org/pkg/colorframed).
 
-This package fixes colour leak issues which one encounters
+This package was initially released in September 2022 to
+fix the colour leak issues which one encounters
 with the environments provided by the
 [framed](https://ctan.org/pkg/framed) package.
 
@@ -33,6 +34,11 @@ engine only).  This needs Python 3 with [pikepdf](https://pypi.org/project/pikep
 The results are recorded in `testsummary_pdflatex.txt` and
 `testsummary_lualatex.txt`.  See `dotaggingtests.sh` for the details and
 `TAGGING_MEMO.md` for technical notes on the tagging support.
+
+The testing infrastructure is based upon the one originally developed in 2024
+by the author for the [jfbu/etoc](https://github.com/jfbu/etoc) project, which
+was later (in November 2026) enriched (via the Python scripts using
+[pikepdf](https://pypi.org/project/pikepdf/).) with help by AI assistants.
 
 ## Opening a new issue ##
 
