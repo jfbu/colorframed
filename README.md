@@ -29,7 +29,7 @@ included into the archive being in the `ctanbuild/` sub-directory.
 
 In `colorframed/`, `make taggingtests` compiles the files
 `test_tagging_*.tex` with pdfLaTeX and LuaLaTeX and checks the tagging of the
-resulting PDFs (`make dopdftaggingtests` and `make doluataggingtests` for one
+resulting PDFs (`make pdftaggingtests` and `make luataggingtests` for one
 engine only).  This needs Python 3 with [pikepdf](https://pypi.org/project/pikepdf/).
 The results are recorded in `testsummary_pdflatex.txt` and
 `testsummary_lualatex.txt`.  See `dotaggingtests.sh` for the details and
