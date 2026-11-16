@@ -72,6 +72,8 @@
 \def\verbatimpopcolor{\special{color pop}}
 \AddToHook{env/verbatim/before}{\verbatimpushcolor}
 \AddToHook{env/verbatim/end}{\verbatimpopcolor}
+% verbatim blocks (not the inline verbatim) are in \small
+\AddToHook{env/verbatim/begin}{\small}
 
 \newcommand\ghissue[2][]{\href{https://github.com/jfbu/colorframed/issues/#2}{#1\##2}}
 
