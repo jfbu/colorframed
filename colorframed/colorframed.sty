@@ -244,6 +244,37 @@
 % maybe provide a titled-frame variant using the above and acting like
 % snugshade respective to being used in a list?
 %
+% The `titled-frame' environment itself.
+% Its definition in framed.sty hard-codes the continuation mark as
+% $\blacktriangleright$ (an error if no package defining it is loaded), the
+% text " (cont)" appended to the title after a page break, and the \textbf
+% applied to the title.  These three things are now macros; apart from that
+% the definition is the one of framed.sty, and with the defaults the output
+% is unchanged if \blacktriangleright is defined.
+%
+% The mark at the bottom right of a frame continued on the next page.
+\newcommand\colorframedContinuationMark{%
+  \ifdefined\blacktriangleright $\blacktriangleright$\else $\triangleright$\fi}
+% The title of the continuation pieces, from the title of the frame.
+\newcommand\colorframedContinuedTitle[1]{#1\ (cont)}
+% What is applied to the title: a command with one argument.
+\newcommand\colorframedTitleFormat{\textbf}
+\renewenvironment{titled-frame}[1]{%
+  \def\FrameCommand{\fboxsep8pt\fboxrule2pt
+     \TitleBarFrame{\colorframedTitleFormat{#1}}}%
+  \def\FirstFrameCommand{\fboxsep8pt\fboxrule2pt
+     \TitleBarFrame[\colorframedContinuationMark]%
+       {\colorframedTitleFormat{#1}}}%
+  \def\MidFrameCommand{\fboxsep8pt\fboxrule2pt
+     \TitleBarFrame[\colorframedContinuationMark]%
+       {\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
+  \def\LastFrameCommand{\fboxsep8pt\fboxrule2pt
+     \TitleBarFrame{\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
+  \MakeFramed{\advance\hsize-20pt \FrameRestore}}%
+%  note: 8 + 2 + 8 + 2 = 20.  Don't use \width because the frame title
+%  could interfere with the width measurement.
+ {\endMakeFramed}
+%
 % Tagging
 % Nothing from here on is read by a document not using \DocumentMetadata.
 % More details and observations are in the file TAGGING_MEMO.md of the

@@ -164,18 +164,23 @@ producing tagged PDF, see section~\ref{sec:tagging}.
 }
 \end{titled-frame}
 The previous box gives an example of use of `titled-frame' environment.
-\begin{titled-frame}{THE CONTINUATION LABEL NEEDS \ctanpackage{amssymb}!}
-  The continuation label used by the `titled-frame' environment
-  is |$\blacktriangleright$|
+\begin{titled-frame}{THE CONTINUATION LABEL AND \ctanpackage{amssymb}}
+  The continuation label used by the `titled-frame' environment of
+  \ctanpackage{framed} is |$\blacktriangleright$|
   (which despite its name reacts to current text colour setting).
   It requires to
   the best of the author knowledge loading \ctanpackage{amssymb} or
-  some other math symbols package and \textbf{it is up to user to load it.}
+  some other math symbols package, and without it a `titled-frame' crossing
+  a page gave an ``Undefined control sequence'' error.
 
-  The definition of the `titled-frame' environment by \ctanpackage{framed} is
-  reproduced below, after the discussion of the `snugshade' environment.  It
-  occupies only 11 lines; it is easy, either to use |\renewenvironment| to
-  replace hard-coded things such as |$\blacktriangleright$| by what is
+  Since release |1.1| the label is |\colorframedContinuationMark|.  Its
+  default uses |$\blacktriangleright$| if this symbol is defined, and else
+  |$\triangleright$|, which needs no package.
+
+  The definition of the `titled-frame' environment (which \colorframed
+  redefines since |1.1|) is reproduced below, after the discussion of the
+  `snugshade' environment.  It occupies only 13 lines; it is easy, either
+  to use |\renewenvironment| to replace what remains hard-coded by what is
   preferred, or to define a similar custom environment under a name of one's
   own choosing.  This is left to user.
 
@@ -243,23 +248,44 @@ The previous box gives an example of use of `titled-frame' environment.
   line interrupting the framing); \colorframed fixes this infelicity in
   passing.
 
+  Since release |1.1| three things which the definition of `titled-frame'
+  in \ctanpackage{framed}.sty hard-codes are macros.  Here they are with
+  their defaults:
+\begin{verbatim}
+% the mark at the bottom right of a frame continued on the next page
+\newcommand\colorframedContinuationMark{%
+  \ifdefined\blacktriangleright $\blacktriangleright$\else $\triangleright$\fi}
+% the title after a page break, from the title of the frame
+\newcommand\colorframedContinuedTitle[1]{#1\ (cont)}
+% what is applied to the title: a command with one argument
+\newcommand\colorframedTitleFormat{\textbf}
+\end{verbatim}
+  For example:
+\begin{verbatim}
+\renewcommand\colorframedContinuedTitle[1]{#1 (suite)}
+\renewcommand\colorframedTitleFormat[1]{\textsf{\bfseries #1}}
+\end{verbatim}
+  With the defaults, and if |\blacktriangleright| is defined, the output is
+  the same as formerly.
+
   To customize
-  further usage of `titled-frame' one must renew its definition,
-  which is left untouched by \colorframed.
-  Here is its source from \ctanpackage{framed}.sty: (code and
-  comments by Donald Arseneau)%
+  further usage of `titled-frame' one must renew its definition.
+  Here it is: apart from the three macros above it is the source from
+  \ctanpackage{framed}.sty (code and comments by Donald Arseneau)%
 \begin{verbatim}
 % A particular type of titled frame with continuation marks.  
 % Parameter #1 is the title, repeated on each page.
-\newenvironment{titled-frame}[1]{%
+\renewenvironment{titled-frame}[1]{%
   \def\FrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\textbf{#1}}}%
+     \TitleBarFrame{\colorframedTitleFormat{#1}}}%
   \def\FirstFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[$\blacktriangleright$]{\textbf{#1}}}%
+     \TitleBarFrame[\colorframedContinuationMark]%
+       {\colorframedTitleFormat{#1}}}%
   \def\MidFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[$\blacktriangleright$]{\textbf{#1\ (cont)}}}%
+     \TitleBarFrame[\colorframedContinuationMark]%
+       {\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
   \def\LastFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\textbf{#1\ (cont)}}}%
+     \TitleBarFrame{\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
   \MakeFramed{\advance\hsize-20pt \FrameRestore}}%
 %  note: 8 + 2 + 8 + 2 = 20.  Don't use \width because the frame title
 %  could interfere with the width measurement.
