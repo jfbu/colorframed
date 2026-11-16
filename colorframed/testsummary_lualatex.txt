@@ -1,7 +1,7 @@
 This is LuaHBTeX, Version 1.24.0 (TeX Live 2026)
 LaTeX2e <2026-11-01>
 L3 programming layer <2026-09-09>
-Package: colorframed 2026/11/12 v1.0 fix `framed' breakable boxes colour leaks 
+Package: colorframed 2026/12/31 v1.1-dev fix `framed' breakable boxes colour le
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 Package: tagpdf 2026-10-29 v1.0i  LaTeX kernel code for PDF tagging 
 
@@ -10,172 +10,196 @@ PASS test_tagging_01.tex
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 0 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 1 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 2 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 3 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 4 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 5 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 6 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 7 'text'
-    <P> [pdf2]
-      p1 MCID 8 'Some title'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 9 'text'
-  COUNT   20 structure(s), 10 marked content(s)
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 1 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 2 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 3 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 4 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 5 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 6 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 7 'text'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 8 'Some title'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 9 'text'
+  COUNT   29 structure(s), 10 marked content(s)
 PASS test_tagging_02.tex
   <Document> [pdf2]
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 0 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 1 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 2 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 3 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 4 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 5 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 6 'text'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 7 'text'
-    <P> [pdf2]
-      p1 MCID 8 'Some title'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 9 'As any dedicated reader can cl...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 10 'Let us suppose that the noumen...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 0 'As is shown in the writings of...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 1 'As we have already seen, what ...'
-        p2 MCID 2 'ural causes in general. Whence...'
-        p2 MCID 3 'egories? Natural causes (and i...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 4 'Therefore, we can deduce that ...'
-        p3 MCID 0 'is no relation between the Ant...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p3 MCID 1 'The things in themselves are w...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p3 MCID 2 'As any dedicated reader can cl...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p3 MCID 3 'Let us suppose that the noumen...'
-        p4 MCID 0 'Ideal stands in need of reason...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p4 MCID 1 'As is shown in the writings of...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p4 MCID 2 'As we have already seen, what ...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p4 MCID 3 'Therefore, we can deduce that ...'
-        p5 MCID 0 'The objects in space and time ...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p5 MCID 1 'The things in themselves are w...'
-        p5 MCID 2 'tent of knowledge. Our underst...'
-  COUNT   42 structure(s), 27 marked content(s)
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 1 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 2 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 3 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 4 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 5 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 6 'text'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 7 'text'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 8 'Some title'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 9 'As any dedicated reader can cl...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 10 'Let us suppose that the noumen...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 0 'As is shown in the writings of...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 1 'As we have already seen, what ...'
+          p2 MCID 2 'ural causes in general. Whence...'
+          p2 MCID 3 'egories? Natural causes (and i...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 4 'Therefore, we can deduce that ...'
+          p3 MCID 0 'is no relation between the Ant...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 1 'The things in themselves are w...'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 2 'As any dedicated reader can cl...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 3 'Let us suppose that the noumen...'
+          p4 MCID 0 'Ideal stands in need of reason...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p4 MCID 1 'As is shown in the writings of...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p4 MCID 2 'As we have already seen, what ...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p4 MCID 3 'Therefore, we can deduce that ...'
+          p5 MCID 0 'The objects in space and time ...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p5 MCID 1 'The things in themselves are w...'
+          p5 MCID 2 'tent of knowledge. Our underst...'
+  COUNT   52 structure(s), 27 marked content(s)
 PASS test_tagging_03.tex
   <Document> [pdf2]
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 0 'As any dedicated reader can cl...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 1 'Let us suppose that the noumen...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 2 'As is shown in the writings of...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 3 'As we have already seen, what ...'
-        p2 MCID 0 'occupy part of the sphere of t...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 1 'Therefore, we can deduce that ...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 2 'The things in themselves are w...'
-        p2 MCID 3 'tent of knowledge. Our underst...'
-  COUNT   13 structure(s), 8 marked content(s)
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 0 'As any dedicated reader can cl...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 1 'Let us suppose that the noumen...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 2 'As is shown in the writings of...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 3 'As we have already seen, what ...'
+          p2 MCID 0 'occupy part of the sphere of t...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 1 'Therefore, we can deduce that ...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 2 'The things in themselves are w...'
+          p2 MCID 3 'tent of knowledge. Our underst...'
+  COUNT   14 structure(s), 8 marked content(s)
 PASS test_tagging_04.tex
   <Document> [pdf2]
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p1 MCID 0 'Before.'
-    <P> [pdf2]
-      p1 MCID 1 'A long title for this frame, l...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 2 'As any dedicated reader can cl...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 3 'Let us suppose that the noumen...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 4 'As is shown in the writings of...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p1 MCID 5 'As we have already seen, what ...'
-        p2 MCID 0 'time, in the full sense of the...'
-        p2 MCID 1 'ural causes in general. Whence...'
-        p2 MCID 2 'egories? Natural causes (and i...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 3 'Therefore, we can deduce that ...'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p2 MCID 4 'The things in themselves are w...'
-        p3 MCID 0 'accordance with the principles...'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 1 'A long title for this frame, l...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 2 'As any dedicated reader can cl...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 3 'Let us suppose that the noumen...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 4 'As is shown in the writings of...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 5 'As we have already seen, what ...'
+          p2 MCID 0 'time, in the full sense of the...'
+          p2 MCID 1 'ural causes in general. Whence...'
+          p2 MCID 2 'egories? Natural causes (and i...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 3 'Therefore, we can deduce that ...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 4 'The things in themselves are w...'
+          p3 MCID 0 'accordance with the principles...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 1 'Between.'
-    <P> [pdf2]
-      p3 MCID 2 'Second frame'
-    <semantic-para> [dflt] -> Part
-      <text-block> [dflt] -> P
-        p3 MCID 3 'As is evident upon close exami...'
-        p3 MCID 4 'ments, yet the things in thems...'
-        p3 MCID 5 'ment of the Antinomies, in res...'
-        p3 MCID 6 'dictory, and the thing in itse...'
-        p3 MCID 7 'ence would thereby be made to ...'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p3 MCID 2 'Second frame'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 3 'As is evident upon close exami...'
+          p3 MCID 4 'ments, yet the things in thems...'
+          p3 MCID 5 'ment of the Antinomies, in res...'
+          p3 MCID 6 'dictory, and the thing in itse...'
+          p3 MCID 7 'ence would thereby be made to ...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 8 'After.'
-  COUNT   23 structure(s), 20 marked content(s)
+  COUNT   27 structure(s), 20 marked content(s)
 PASS test_tagging_05.tex
   <Document> [pdf2]
     <section> [dflt] -> Sect
@@ -184,27 +208,34 @@ PASS test_tagging_05.tex
           p1 MCID 0 '1'
         p1 MCID 1 ''
         p1 MCID 2 'Nested'
-      <P> [pdf2]
-        p1 MCID 3 'Outer title'
-      <semantic-para> [dflt] -> Part
-        <text-block> [dflt] -> P
-          p1 MCID 4 'Outer before.'
-      <P> [pdf2]
-        p1 MCID 5 'Outer title'
-      <semantic-para> [dflt] -> Part
-        <text-block> [dflt] -> P
-          p1 MCID 6 'Inside framed.'
-      <P> [pdf2]
-        p1 MCID 7 'Inner title'
-      <semantic-para> [dflt] -> Part
-        <text-block> [dflt] -> P
-          p1 MCID 8 'Innermost.'
-      <semantic-para> [dflt] -> Part
-        <text-block> [dflt] -> P
-          p1 MCID 9 'Inside leftbar.'
-      <semantic-para> [dflt] -> Part
-        <text-block> [dflt] -> P
-          p1 MCID 10 'Outer after.'
+      <Sect> [pdf2]
+        <Caption> [pdf2]
+          <P> [pdf2]
+            p1 MCID 3 'Outer title'
+        <semantic-para> [dflt] -> Part
+          <text-block> [dflt] -> P
+            p1 MCID 4 'Outer before.'
+        <Sect> [pdf2]
+          <Caption> [pdf2]
+            <P> [pdf2]
+              p1 MCID 5 'Outer title'
+          <semantic-para> [dflt] -> Part
+            <text-block> [dflt] -> P
+              p1 MCID 6 'Inside framed.'
+          <Sect> [pdf2]
+            <Caption> [pdf2]
+              <P> [pdf2]
+                p1 MCID 7 'Inner title'
+            <semantic-para> [dflt] -> Part
+              <text-block> [dflt] -> P
+                p1 MCID 8 'Innermost.'
+        <Sect> [pdf2]
+          <semantic-para> [dflt] -> Part
+            <text-block> [dflt] -> P
+              p1 MCID 9 'Inside leftbar.'
+        <semantic-para> [dflt] -> Part
+          <text-block> [dflt] -> P
+            p1 MCID 10 'Outer after.'
     <section> [dflt] -> Sect
       <section-heading> [dflt] -> H1 /T='In a list'
         <heading-number> [dflt] -> Lbl
@@ -220,9 +251,10 @@ PASS test_tagging_05.tex
               <semantic-para> [dflt] -> Part
                 <text-block> [dflt] -> P
                   p1 MCID 15 'First item.'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p1 MCID 16 'Shaded in item.'
+              <Sect> [pdf2]
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p1 MCID 16 'Shaded in item.'
           <item> [dflt] -> LI
             <itemlabel> [dflt] -> Lbl
               p1 MCID 17 '•'
@@ -230,33 +262,34 @@ PASS test_tagging_05.tex
               <semantic-para> [dflt] -> Part
                 <text-block> [dflt] -> P
                   p1 MCID 18 'Second item.'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p1 MCID 19 'As any dedicated reader can cl...'
-                  p1 MCID 20 'dict, in view of these conside...'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p1 MCID 21 'Let us suppose that the noumen...'
-                  p2 MCID 0 'the transcendental unity of ap...'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p2 MCID 1 'As is shown in the writings of...'
-                  p2 MCID 2 'son, but our a posteriori conc...'
-                  p2 MCID 3 'sis. Space constitutes the who...'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p2 MCID 4 'As we have already seen, what ...'
-                  p2 MCID 5 'eral. Whence comes the archite...'
-                  p2 MCID 6 'stitute the whole content for ...'
-              <semantic-para> [dflt] -> Part
-                <text-block> [dflt] -> P
-                  p2 MCID 7 'Therefore, we can deduce that ...'
-                  p2 MCID 8 'sert, however, that this is th...'
-                  p2 MCID 9 ''
-                  p3 MCID 0 'tions, it must not be supposed...'
-                  p3 MCID 1 'dictory rules of metaphysics, ...'
-                  p3 MCID 2 'nish a true and demonstrated s...'
-                  p3 MCID 3 'standing (and it must not be s...'
+              <Sect> [pdf2]
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p1 MCID 19 'As any dedicated reader can cl...'
+                    p1 MCID 20 'dict, in view of these conside...'
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p1 MCID 21 'Let us suppose that the noumen...'
+                    p2 MCID 0 'the transcendental unity of ap...'
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p2 MCID 1 'As is shown in the writings of...'
+                    p2 MCID 2 'son, but our a posteriori conc...'
+                    p2 MCID 3 'sis. Space constitutes the who...'
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p2 MCID 4 'As we have already seen, what ...'
+                    p2 MCID 5 'eral. Whence comes the archite...'
+                    p2 MCID 6 'stitute the whole content for ...'
+                <semantic-para> [dflt] -> Part
+                  <text-block> [dflt] -> P
+                    p2 MCID 7 'Therefore, we can deduce that ...'
+                    p2 MCID 8 'sert, however, that this is th...'
+                    p2 MCID 9 ''
+                    p3 MCID 0 'tions, it must not be supposed...'
+                    p3 MCID 1 'dictory rules of metaphysics, ...'
+                    p3 MCID 2 'nish a true and demonstrated s...'
+                    p3 MCID 3 'standing (and it must not be s...'
           <item> [dflt] -> LI
             <itemlabel> [dflt] -> Lbl
               p3 MCID 4 '•'
@@ -273,6 +306,219 @@ PASS test_tagging_05.tex
       <semantic-para> [dflt] -> Part
         <text-block> [dflt] -> P
           p3 MCID 9 'Some text boxed and shaded ins...'
-  COUNT   54 structure(s), 42 marked content(s)
+  COUNT   63 structure(s), 42 marked content(s)
+PASS test_tagging_06.tex
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 4 'Before.'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 5 'First title with'
+          <Formula> [pdf2] /T='math'
+            p1 MCID 6 'a 2 + b 2'
+          p1 MCID 7 'and'
+          <Em> [pdf2]
+            p1 MCID 8 'emphasis'
+          p1 MCID 9 'after'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 10 'Contents of the first frame.'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+      <text-minipage> [dflt] -> Div
+        <Sect> [pdf2]
+          <semantic-para> [dflt] -> Part
+            <text-block> [dflt] -> P
+              p1 MCID 11 'In a minipage.'
+      <text-block> [dflt] -> P
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 12 'Second title with'
+          <Formula> [pdf2] /T='math'
+            p1 MCID 13 'c 2'
+          p1 MCID 14 'and'
+          <Em> [pdf2]
+            p1 MCID 15 'emphasis'
+          p1 MCID 16 'after'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 17 'Contents of the second frame.'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 18 'As any dedicated reader can cl...'
+        p1 MCID 19 'standing. The paralogisms of p...'
+        p1 MCID 20 'tion, reason would thereby be ...'
+        p1 MCID 21 'tions, the Ideal of practical ...'
+        p1 MCID 22 'ena. Necessity depends on, whe...'
+        p1 MCID 23 'ries of empirical conditions, ...'
+        p1 MCID 24 'man reason depends on our sens...'
+        p1 MCID 25 'ceptions, by means of analytic...'
+        p1 MCID 26 'jects in space and time are wh...'
+    <Sect> [pdf2]
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 27 'Let us suppose that the noumen...'
+          p2 MCID 0 'perceptions are by their very ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 1 'As is shown in the writings of...'
+        p2 MCID 2 'totle, the things in themselve...'
+        p2 MCID 3 'fore them the practical employ...'
+        p2 MCID 4 'sary ignorance of the conditio...'
+        p2 MCID 5 'tions. (Our a posteriori knowl...'
+        p2 MCID 6 'pends on, so, our sense percep...'
+        p2 MCID 7 'ceptions, and time occupies pa...'
+        p2 MCID 8 'tence of the objects in space ...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 9 'As we have already seen, what ...'
+        p2 MCID 10 'deed, our problematic judgemen...'
+        p2 MCID 11 'deed, can be treated like our ...'
+        p2 MCID 12 ''
+        p2 MCID 13 'tion, but the phenomena occupy...'
+        p2 MCID 14 'ing the existence of natural c...'
+        p2 MCID 15 'tonic of natural reason, the s...'
+        p2 MCID 16 'ral causes (and it is not at a...'
+        p2 MCID 17 'tain that this is the case) co...'
+        p2 MCID 18 'plete system of transcendental...'
+        p2 MCID 19 'ophy, but in a merely critical...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p2 MCID 20 'Therefore, we can deduce that ...'
+        p2 MCID 21 'sert, however, that this is th...'
+        p2 MCID 22 'essary ignorance of the condit...'
+        p2 MCID 23 'mal logic (and what we have al...'
+        p2 MCID 24 'tions, but the discipline of p...'
+        p2 MCID 25 'dictory rules of metaphysics, ...'
+        p2 MCID 26 'lytic unity, our faculties, th...'
+        p2 MCID 27 'jects in space and time abstra...'
+        p2 MCID 28 'tery why there is no relation ...'
+        p2 MCID 29 'nomies (and it is not at all c...'
+        p3 MCID 0 'discovery of philosophy, becau...'
+        p3 MCID 1 'tonic of pure reason, as is ev...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 2 'The things in themselves are w...'
+        p3 MCID 3 'edge; in view of these conside...'
+        p3 MCID 4 'trary, is the key to understan...'
+        p3 MCID 5 'logic. Let us suppose that, ir...'
+        p3 MCID 6 'tive of all empirical conditio...'
+        p3 MCID 7 'derstanding stands in need of ...'
+        p3 MCID 8 'junctive judgements. As is sho...'
+        p3 MCID 9 'ral reason, abstracts from all...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 10 'After.'
+    <figures> [dflt] -> Sect
+      <float> [dflt] -> Aside
+        <Caption> [pdf2]
+          <Lbl> [pdf2]
+            p1 MCID 2 'Figure 1:'
+          <text-block> [dflt] -> P
+            p1 MCID 3 'A caption'
+        <Sect> [pdf2]
+          <Caption> [pdf2]
+            <P> [pdf2]
+              p1 MCID 0 'Third title'
+          <semantic-para> [dflt] -> Part
+            <text-block> [dflt] -> P
+              p1 MCID 1 'Float contents.'
+  COUNT   49 structure(s), 69 marked content(s)
+PASS test_tagging_07.tex
+  <Document> [pdf2]
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p1 MCID 0 'As any dedicated reader can cl...'
+        p1 MCID 1 'where, the phenomena should on...'
+        p1 MCID 2 'tical employment of the never-...'
+        p1 MCID 3 'lytic unity. There can be no d...'
+    <Sect> [pdf2]
+      <Caption> [pdf2]
+        <P> [pdf2]
+          p1 MCID 4 'Two columns'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 5 'Let us suppose that the noumen...'
+          p1 MCID 6 'ing to do with necessity, sinc...'
+          p1 MCID 7 'scendental unity of appercepti...'
+          p1 MCID 8 'lidity of the Antinomies; what...'
+          p1 MCID 9 'tery why the Ideal stands in n...'
+          p1 MCID 10 'ing before them, in the case o...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 11 'As is shown in the writings of...'
+          p1 MCID 12 'ogisms of natural reason, but ...'
+          p1 MCID 13 'necessary ignorance of the con...'
+          p1 MCID 14 'alogisms would thereby be made...'
+          p1 MCID 15 'dental Deduction has lying bef...'
+          p1 MCID 16 'ples.) So, it must not be supp...'
+          p1 MCID 17 'rience depends on, so, our sen...'
+          p1 MCID 18 'cupies part of the sphere of t...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 19 'As we have already seen, what ...'
+          p1 MCID 20 'jects in space and time, in th...'
+          p1 MCID 21 'ception, but the phenomena occ...'
+          p1 MCID 22 'scendental philosophy, but in ...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p1 MCID 23 'Therefore, we can deduce that ...'
+          p1 MCID 24 'rance of the conditions, it mu...'
+          p2 MCID 0 'that, then, formal logic (and ...'
+          p2 MCID 1 'resentation of the never-endin...'
+          p2 MCID 2 'ries of empirical conditions, ...'
+          p2 MCID 3 'tradictory rules of metaphysic...'
+          p2 MCID 4 'ulties, therefore, can never, ...'
+          p2 MCID 5 'ples; for these reasons, our e...'
+          p2 MCID 6 'jects in space and time abstra...'
+          p2 MCID 7 'tween the Antinomies and the p...'
+          p2 MCID 8 'hension, it is necessary to ex...'
+          p2 MCID 9 'derstanding (and it must not b...'
+          p2 MCID 10 'tectonic of pure reason, as is...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 11 'The things in themselves are w...'
+          p2 MCID 12 'pose that the transcendental u...'
+          p2 MCID 13 'tion abstracts from all conten...'
+          p2 MCID 14 'ing pure logic. Let us suppose...'
+          p2 MCID 15 ''
+          p2 MCID 16 'dance with the principles of t...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 17 'As is evident upon close exami...'
+          p2 MCID 18 'tion of our inductive judgemen...'
+          p2 MCID 19 'trary, the Categories. It rema...'
+          p2 MCID 20 'chitectonic of pure reason, it...'
+          p2 MCID 21 'ment of the objects in space a...'
+          p2 MCID 22 'son (and I assert that this is...'
+          p2 MCID 23 'rience would thereby be made t...'
+          p2 MCID 24 'jects in space and time (and l...'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p2 MCID 25 'Thus, the Antinomies exclude t...'
+          p2 MCID 26 'ily be shown in the next secti...'
+          p3 MCID 0 'the manifold and the noumena. ...'
+          p3 MCID 1 'pirical objects in space and t...'
+          p3 MCID 2 'ence, with the sole exception ...'
+          p3 MCID 3 'scendental unity of appercepti...'
+          p3 MCID 4 'scendental unity of appercepti...'
+          p3 MCID 5 'alytic unity.'
+      <semantic-para> [dflt] -> Part
+        <text-block> [dflt] -> P
+          p3 MCID 6 'In all theoretical sciences, t...'
+    <semantic-para> [dflt] -> Part
+      <text-block> [dflt] -> P
+        p3 MCID 7 'By virtue of natural reason, o...'
+        p3 MCID 8 'ments would thereby be made to...'
+        p3 MCID 9 'cipline of human reason. Becau...'
+        p3 MCID 10 'tent for, still, the Ideal. By...'
+        p3 MCID 11 ''
+        p3 MCID 12 'phy, abstract from all content...'
+        p3 MCID 13 'ful to observe that our sense ...'
+        p3 MCID 14 'ing the existence of the pheno...'
+  COUNT   24 structure(s), 67 marked content(s)
 
-FAIL=0, PASS=5, XFAIL=0, XPASS=0, TOTAL=5
+FAIL=0, PASS=7, XFAIL=0, XPASS=0, TOTAL=7
