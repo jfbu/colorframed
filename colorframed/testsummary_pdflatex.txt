@@ -259,7 +259,7 @@ PASS test_tagging_05.tex
                 <semantic-para> [dflt] -> Part
                   <text-block> [dflt] -> P
                     p1 MCID 20 'Let us suppose that the noumen...'
-                    p2 MCID 0 'the transcendental unity of ap...'
+                    p2 MCID 0 'discipline of natural reason, ...'
                 <semantic-para> [dflt] -> Part
                   <text-block> [dflt] -> P
                     p2 MCID 1 'As is shown in the writings of...'
@@ -269,7 +269,7 @@ PASS test_tagging_05.tex
                 <semantic-para> [dflt] -> Part
                   <text-block> [dflt] -> P
                     p2 MCID 3 'Therefore, we can deduce that ...'
-                    p3 MCID 0 'conditions, it must not be sup...'
+                    p3 MCID 0 'we have alone been able to sho...'
           <item> [dflt] -> LI
             <itemlabel> [dflt] -> Lbl
               p3 MCID 1 '•'
@@ -335,22 +335,22 @@ PASS test_tagging_06.tex
       <semantic-para> [dflt] -> Part
         <text-block> [dflt] -> P
           p1 MCID 21 'Let us suppose that the noumen...'
-          p2 MCID 0 'perceptions are by their very ...'
+          p2 MCID 0 'By means of the Ideal, our sen...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p2 MCID 1 'As is shown in the writings of...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p2 MCID 2 'As we have already seen, what ...'
-        p2 MCID 3 'tion, but the phenomena occupy...'
+        p2 MCID 3 'the transcendental unity of ap...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p2 MCID 4 'Therefore, we can deduce that ...'
-        p3 MCID 0 'discovery of philosophy, becau...'
+        p3 MCID 0 'this is the case) are the clue...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 1 'The things in themselves are w...'
-        p3 MCID 2 'logic. Let us suppose that, ir...'
+        p3 MCID 2 'trary, is the key to understan...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 3 'After.'

@@ -361,7 +361,7 @@ PASS test_tagging_06.tex
       <semantic-para> [dflt] -> Part
         <text-block> [dflt] -> P
           p1 MCID 27 'Let us suppose that the noumen...'
-          p2 MCID 0 'perceptions are by their very ...'
+          p2 MCID 0 'By means of the Ideal, our sen...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p2 MCID 1 'As is shown in the writings of...'
@@ -377,7 +377,7 @@ PASS test_tagging_06.tex
         p2 MCID 9 'As we have already seen, what ...'
         p2 MCID 10 'deed, our problematic judgemen...'
         p2 MCID 11 'deed, can be treated like our ...'
-        p2 MCID 12 ''
+        p2 MCID 12 'the transcendental unity of ap...'
         p2 MCID 13 'tion, but the phenomena occupy...'
         p2 MCID 14 'ing the existence of natural c...'
         p2 MCID 15 'tonic of natural reason, the s...'
@@ -397,14 +397,14 @@ PASS test_tagging_06.tex
         p2 MCID 27 'jects in space and time abstra...'
         p2 MCID 28 'tery why there is no relation ...'
         p2 MCID 29 'nomies (and it is not at all c...'
-        p3 MCID 0 'discovery of philosophy, becau...'
+        p3 MCID 0 'this is the case) are the clue...'
         p3 MCID 1 'tonic of pure reason, as is ev...'
     <semantic-para> [dflt] -> Part
       <text-block> [dflt] -> P
         p3 MCID 2 'The things in themselves are w...'
         p3 MCID 3 'edge; in view of these conside...'
-        p3 MCID 4 'trary, is the key to understan...'
-        p3 MCID 5 'logic. Let us suppose that, ir...'
+        p3 MCID 4 ''
+        p3 MCID 5 'trary, is the key to understan...'
         p3 MCID 6 'tive of all empirical conditio...'
         p3 MCID 7 'derstanding stands in need of ...'
         p3 MCID 8 'junctive judgements. As is sho...'
