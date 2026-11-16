@@ -261,14 +261,19 @@ The previous box gives an example of use of `titled-frame' environment.
 \renewcommand\colorframedContinuedTitle[1]{#1 (suite)}
 \renewcommand\colorframedTitleFormat[1]{\textsf{\bfseries #1}}
 \end{verbatim}
-  With the defaults, and if |\blacktriangleright| is defined, the output is
-  the same as formerly.
 
-  The expert user who has read the origihnal \ctanpackage{framed} package
+  The thickness of the frame and its separation from the contents were
+  hard-coded too, and are now also macros.  They are not length registers:
+  change them with |\renewcommand|, not with |\setlength|.
+\begin{verbatim}
+\newcommand\colorframedTitledFrameRule{2pt}
+\newcommand\colorframedTitledFrameSep{8pt}
+\end{verbatim}
+
+  The expert user who has read the original \ctanpackage{framed} package
   documentation (|texdoc framed|) will have no difficulty starting from the
   actual definition in this package source code of the `titled-frame'
-  environment to define one's own environment, making different choices
-  for some built-in layout dimensional parameters.
+  environment to define one's own environment.
 \end{snugshade}
 
 % \begin{shaded} % nesting does not work
@@ -286,39 +291,49 @@ The previous box gives an example of use of `titled-frame' environment.
 % \end{shaded} % nesting does not work
 
 \begin{snugshade}
-\item To customize the `titled-frame' output, one may simply redefine the
-  environment via suitable changes e.g.\@ to the setting of |\fboxsep| and
-  |\fboxrule|.  But doing so, one quickly discovers that the layout from
-  |\TitleBarFrame| has problems (see on this the repository issues \ghissue{3}
-  and \ghissue{4}).  So \colorframed |0.9b| provides
-  |\colorframedTitleBarFrame|, which can be used as a replacement to
-  |\TitleBarFrame| in a redefined custom `titled-framed' environment.  Check
-  the source code for comments.  This alternative
-  obeys added customizing
-  macros whose defaults are shown here:
+\item The layout of the |\TitleBarFrame| of \ctanpackage{framed} has
+  problems, which show up for example if |\fboxsep| and |\fboxrule| are
+  given other values than those of `titled-frame' (see on this the
+  repository issues \ghissue{3} and \ghissue{4}).  So \colorframed |0.9b|
+  provided a replacement, which handles differently the horizontal and
+  vertical placement of the title, and lets a long title use several lines:
 \begin{verbatim}
-% (such \fboxsep should be set by environment itself, like titled-frame does)
-\def\colorframedTFtitlesep{\fboxsep}% hor. distance of title from left border
-\def\colorframedTFconlabsep{3pt}% hor. distance of continuation label from border
+\colorframedTitleBarFrame
 \end{verbatim}
-  This variant handles differently than its model the horizontal and vertical
-  placement of the title.  It is provided as an exception
-  to the general rule that this package should take care only of fixing colour
-  problems (addition of \emph{new} environments may be considered in future,
-  but fixing existing environments will not be done beyond what is described here).
+
+  {\bfseries Since release |1.1| the `titled-frame' environment uses this
+  replacement:} formerly this had to be opted-for via a redefinition of the
+  environment.  Compared to release |1.0| the title and the continuation
+  mark are thus placed a bit differently.  The former layout is recovered
+  with
+\begin{verbatim}
+\let\colorframedTitleBarFrame\TitleBarFrame
+\end{verbatim}
+
+  The layout of |\colorframedTitleBarFrame| obeys three macros (again not
+  length registers), shown here with their defaults:
+\begin{verbatim}
+% horizontal distance between the frame and the title, on each side
+\newcommand\colorframedTitleBarHSep{\fboxsep}
+% vertical space above and below the title in its bar
+\newcommand\colorframedTitleBarVSep{0.8ex}
+% horizontal distance between the frame and the continuation mark
+\newcommand\colorframedContinuationMarkSep{3pt}
+\end{verbatim}
+  The first and the third replace two macros of release |0.9b|, which
+  are their actual defaults, so that a document redefining these old names
+  still works:
+\begin{verbatim}
+\colorframedTFtitlesep
+\colorframedTFconlabsep
+\end{verbatim}
+  Inside `titled-frame' the value of |\fboxsep| is the separation between
+  frame and contents: with the defaults the title is thus aligned with the
+  contents of the frame.
 
 \end{snugshade}
 \end{itemize}
-  As was already
-  mentioned `titled-frame' had been broken some years ago by an
-  upstream \LaTeX\ change and we did not change it beyond
-  fixing this problem.  The alternative |\colorframedTitleBarFrame| must be
-  opted-for explicitly by user in a re-definition of `titled-frame'
-  environment, the default remaining with the problematic
-  |\TitleBarFrame|. Or the user can do
-  |\let\TitleBarFrame\colorframedTitleBarFrame|
-  and use `titled-frame', not a new environment.
-  \par
+
 %\end{footnotesize}
 
 
@@ -421,16 +436,16 @@ is a macro.
 \end{tabular}
 
 The `titled-frame' environment obeys none of |\FrameRule| and |\FrameSep|:
-its definition sets |\fboxrule| to |2pt| and |\fboxsep| to |8pt|.  The bar
-of `leftbar' (|3pt|) and its distance to the contents (|10pt|) are fixed in
-its definition too.
+it has its own parameters, see next.  The bar of `leftbar' (|3pt|) and its
+distance to the contents (|10pt|) are fixed in its definition.
 
-\subsection{Title and continuation mark of `titled-frame'}
+\subsection{The `titled-frame' environment}
 
 These macros exist since release |1.1| and are changed with
-|\renewcommand|.
+|\renewcommand|.  Those giving dimensions are macros, not length
+registers.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.3\linewidth}l@{}}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.28\linewidth}l@{}}
   \emph{command}&\emph{role}&\emph{default}\\[2pt]
   |\colorframedTitleFormat|&has one argument: is applied to the
      title&|\textbf|\\
@@ -438,10 +453,22 @@ These macros exist since release |1.1| and are changed with
      used after a page break&|#1\ (cont)|\\
   |\colorframedContinuationMark|&the mark at the bottom right of a frame
      which continues on the next page&|$\blacktriangleright$|\\
+  |\colorframedTitledFrameRule|&the thickness of the frame&|2pt|\\
+  |\colorframedTitledFrameSep|&the separation between frame and
+     contents&|8pt|\\
+  |\colorframedTitleBarHSep|&the horizontal distance between the frame and
+     the title, on each side&|\fboxsep|\\
+  |\colorframedTitleBarVSep|&the vertical space above and below the title
+     in its bar&|0.8ex|\\
+  |\colorframedContinuationMarkSep|&the horizontal distance between the
+     frame and the continuation mark&|3pt|\\
 \end{tabular}
 
 The default continuation mark is |$\triangleright$| if |\blacktriangleright|
-is not defined.
+is not defined.  The last three macros are parameters of
+|\colorframedTitleBarFrame|, which draws the frame.  The colours are
+|TFFrameColor| and |TFTitleColor|, and |\colorframedTFconlabcolorcommand|
+for the continuation mark.
 
 \subsection{Commands for defining environments}
 
@@ -474,11 +501,8 @@ And \colorframed adds:
   |\colorframedcolorbox{<colour>}|&a coloured background; to be used in
      place of |\colorbox|\\
   |\colorframedTitleBarFrame|&same syntax as |\TitleBarFrame|: a variant
-     with another placement of the title\\
-  |\colorframedTFtitlesep|&for this variant: the horizontal distance of the
-     title from the left border; default |\fboxsep|\\
-  |\colorframedTFconlabsep|&for this variant: the horizontal distance of
-     the continuation mark from the frame; default |3pt|\\
+     with another placement of the title, used by `titled-frame'; its
+     parameters are listed above\\
 \end{tabular}
 
 A frame command should not use |\fbox|, |\colorbox| or |\fcolorbox|: they

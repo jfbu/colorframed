@@ -185,7 +185,20 @@
 }
 % There are various issues with \TitleBarFrame/\TF@Title/TF@conlab
 % we provide an alternative
+% Since 1.1 it is the one used by `titled-frame', and its layout parameters
+% are the three macros
+%   \colorframedContinuationMarkSep  horizontal distance between the frame
+%                                    and the continuation mark
+%   \colorframedTitleBarHSep         horizontal distance between the frame
+%                                    and the title, on each side
+%   \colorframedTitleBarVSep         vertical space above and below the
+%                                    title in its bar
+% They expand to dimensions (they are not length registers).  The first
+% two default to the macros which release 0.9b provided for this:
+% \colorframedTFconlabsep and \colorframedTFtitlesep are kept only for
+% compatibility.
 \def\colorframedTFconlabsep{3pt}
+\newcommand\colorframedContinuationMarkSep{\colorframedTFconlabsep}
 \newcommand\colorframedTitleBarFrame[3][]{\begingroup
   \ifx\delimiter#1\delimiter
     \let\TF@conlab\@empty
@@ -196,7 +209,7 @@
      \smash{\rlap{\kern\wd\@tempboxa
                   % 2\fboxrule, not \fboxrule\fboxsep!
                   \kern2\fboxrule
-                  \kern\dimexpr\colorframedTFconlabsep\relax
+                  \kern\dimexpr\colorframedContinuationMarkSep\relax
                   \colorframed@artifact{#1}}}}%
           }%
   \fi
@@ -213,26 +226,28 @@
 % allowed to contain \par, the \textbf in titled-frame must be replaced by
 % some \bfseries.
 % Macro to customize the horizontal placement. For example
-% \def\colorframedTFtitleshift{0pt}
+% \renewcommand\colorframedTitleBarHSep{0pt}
 % if \fboxrule is set by the environment to a high value.
 % Don't use negative value, some parts of the title may then be hidden
 % behind the left border.
 \def\colorframedTFtitlesep{\fboxsep}
+\newcommand\colorframedTitleBarHSep{\colorframedTFtitlesep}
+\newcommand\colorframedTitleBarVSep{0.8ex}
 \newcommand\colorframed@TF@Title[1]{%
   \ifx\delimiter#1\delimiter\else
   %\kern-0.04pt\relax
   \kern-.5\fboxrule
   \begingroup
   \setbox\@tempboxa\vbox{%
-   \kern0.8ex
+   \kern\dimexpr\colorframedTitleBarVSep\relax
    \hbox{\kern\fboxrule
-         \kern\dimexpr\colorframedTFtitlesep\relax
+         \kern\dimexpr\colorframedTitleBarHSep\relax
          \vbox{\hsize\dimexpr\linewidth-2\fboxrule-
-                             2\dimexpr\colorframedTFtitlesep\relax\relax
+                             2\dimexpr\colorframedTitleBarHSep\relax\relax
                \colorframed@notagpara
                \noindent\color{TFTitleColor}%
                \colorframed@tagtitle{#1}\par}}%
-   \kern0.8ex}%
+   \kern\dimexpr\colorframedTitleBarVSep\relax}%
   \colorframed@artifact{\hrule\@height\ht\@tempboxa}%
   \kern-\ht\@tempboxa
   \box\@tempboxa
@@ -248,10 +263,11 @@
 % The `titled-frame' environment itself.
 % Its definition in framed.sty hard-codes the continuation mark as
 % $\blacktriangleright$ (an error if no package defining it is loaded), the
-% text " (cont)" appended to the title after a page break, and the \textbf
-% applied to the title.  These three things are now macros; apart from that
-% the definition is the one of framed.sty, and with the defaults the output
-% is unchanged if \blacktriangleright is defined.
+% text " (cont)" appended to the title after a page break, the \textbf
+% applied to the title, the thickness of the frame (2pt) and its separation
+% from the contents (8pt).  These five things are now macros.  And the frame
+% is now drawn by \colorframedTitleBarFrame, not by \TitleBarFrame: this
+% changes the placement of the title and of the continuation mark.
 %
 % The mark at the bottom right of a frame continued on the next page.
 \newcommand\colorframedContinuationMark{%
@@ -260,20 +276,36 @@
 \newcommand\colorframedContinuedTitle[1]{#1\ (cont)}
 % What is applied to the title: a command with one argument.
 \newcommand\colorframedTitleFormat{\textbf}
+% The thickness of the frame, and its separation from the contents.  They
+% expand to dimensions (they are not length registers).
+\newcommand\colorframedTitledFrameRule{2pt}
+\newcommand\colorframedTitledFrameSep{8pt}
 \renewenvironment{titled-frame}[1]{%
-  \def\FrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\colorframedTitleFormat{#1}}}%
-  \def\FirstFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[\colorframedContinuationMark]%
+  \def\FrameCommand{%
+     \fboxsep\dimexpr\colorframedTitledFrameSep\relax
+     \fboxrule\dimexpr\colorframedTitledFrameRule\relax
+     \colorframedTitleBarFrame{\colorframedTitleFormat{#1}}}%
+  \def\FirstFrameCommand{%
+     \fboxsep\dimexpr\colorframedTitledFrameSep\relax
+     \fboxrule\dimexpr\colorframedTitledFrameRule\relax
+     \colorframedTitleBarFrame[\colorframedContinuationMark]%
        {\colorframedTitleFormat{#1}}}%
-  \def\MidFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[\colorframedContinuationMark]%
+  \def\MidFrameCommand{%
+     \fboxsep\dimexpr\colorframedTitledFrameSep\relax
+     \fboxrule\dimexpr\colorframedTitledFrameRule\relax
+     \colorframedTitleBarFrame[\colorframedContinuationMark]%
        {\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
-  \def\LastFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
-  \MakeFramed{\advance\hsize-20pt \FrameRestore}}%
-%  note: 8 + 2 + 8 + 2 = 20.  Don't use \width because the frame title
-%  could interfere with the width measurement.
+  \def\LastFrameCommand{%
+     \fboxsep\dimexpr\colorframedTitledFrameSep\relax
+     \fboxrule\dimexpr\colorframedTitledFrameRule\relax
+     \colorframedTitleBarFrame
+       {\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
+%  The text width is reduced by twice (separation + thickness).  Don't use
+%  \width because the frame title could interfere with the width
+%  measurement.
+  \MakeFramed{\advance\hsize-2\dimexpr\colorframedTitledFrameSep
+                                     +\colorframedTitledFrameRule\relax
+              \FrameRestore}}%
  {\endMakeFramed}
 %
 % Tagging
