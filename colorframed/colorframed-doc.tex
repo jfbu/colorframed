@@ -177,13 +177,6 @@ The previous box gives an example of use of `titled-frame' environment.
   default uses |$\blacktriangleright$| if this symbol is defined, and else
   |$\triangleright$|, which needs no package.
 
-  The definition of the `titled-frame' environment (which \colorframed
-  redefines since |1.1|) is reproduced below, after the discussion of the
-  `snugshade' environment.  It occupies only 13 lines; it is easy, either
-  to use |\renewenvironment| to replace what remains hard-coded by what is
-  preferred, or to define a similar custom environment under a name of one's
-  own choosing.  This is left to user.
-
   TODO: maybe restructure the documentation so that user does not have
   to actually read the one of the original \ctanpackage{framed} package.
 \end{titled-frame}
@@ -268,29 +261,11 @@ The previous box gives an example of use of `titled-frame' environment.
   With the defaults, and if |\blacktriangleright| is defined, the output is
   the same as formerly.
 
-  To customize
-  further usage of `titled-frame' one must renew its definition.
-  Here it is: apart from the three macros above it is the source from
-  \ctanpackage{framed}.sty (code and comments by Donald Arseneau)%
-\begin{verbatim}
-% A particular type of titled frame with continuation marks.  
-% Parameter #1 is the title, repeated on each page.
-\renewenvironment{titled-frame}[1]{%
-  \def\FrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\colorframedTitleFormat{#1}}}%
-  \def\FirstFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[\colorframedContinuationMark]%
-       {\colorframedTitleFormat{#1}}}%
-  \def\MidFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame[\colorframedContinuationMark]%
-       {\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
-  \def\LastFrameCommand{\fboxsep8pt\fboxrule2pt
-     \TitleBarFrame{\colorframedTitleFormat{\colorframedContinuedTitle{#1}}}}%
-  \MakeFramed{\advance\hsize-20pt \FrameRestore}}%
-%  note: 8 + 2 + 8 + 2 = 20.  Don't use \width because the frame title
-%  could interfere with the width measurement.
- {\endMakeFramed}
-\end{verbatim}
+  The expert user who has read the origihnal \ctanpackage{framed} package
+  documentation (|texdoc framed|) will have no difficulty starting from the
+  actual definition in this package source code of the `titled-frame'
+  environment to define one's own environment, making different choices
+  for some built-in layout dimensional parameters.
 \end{snugshade}
 
 % \begin{shaded} % nesting does not work
