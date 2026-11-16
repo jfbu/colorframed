@@ -3,7 +3,7 @@ LaTeX2e <2026-11-01>
 L3 programming layer <2026-09-09>
 Package: colorframed 2026/12/31 v1.1-dev fix `framed' breakable boxes colour le
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-Package: tagpdf 2026-10-29 v1.0i  LaTeX kernel code for PDF tagging 
+Package: tagpdf 2026-11-15 v1.0j  LaTeX kernel code for PDF tagging 
 
 PASS test_tagging_01.tex
   <Document> [pdf2]
