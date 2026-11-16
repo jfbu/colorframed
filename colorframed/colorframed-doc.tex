@@ -22,8 +22,8 @@
 % course
 % titled-frame
 \colorlet{TFFrameColor}{teal!20}
-\colorlet{TFTitleColor}{purple}
-\def\colorframedTFconlabcolorcommand{\color{purple}}
+\definecolor{TFTitleColor}{rgb}{.5,0,.2}
+\def\colorframedTFconlabcolorcommand{\color{TFTitleColor}}
 % shaded
 %\colorlet{shadecolor}{orange!10}
 \colorlet{shadecolor}{lightgray!25}
@@ -66,7 +66,7 @@
 
 % ATTENTION: dvipdfmx syntax here!
 {\makeatletter
-     \sbox0{\color{RawSienna}%
+     \sbox0{\color{Brown}%
             \xdef\verbatimpushcolor{\special{color push \current@color}}}%
 }
 \def\verbatimpopcolor{\special{color pop}}
@@ -79,7 +79,7 @@
 
 \makeatletter
   %\show\verbatim@font % pas changé at begin doc
-  \def\verbatim@font{\normalfont\ttfamily\color{RawSienna}}%
+  \def\verbatim@font{\normalfont\ttfamily\color{Brown}}%
 \makeatother
 
 \begin{document}
@@ -188,15 +188,15 @@ The previous box gives an example of use of `titled-frame' environment.
   frame, which is repeated after a page break with |(cont)|
   appended.  It uses the colours |TFFrameColor| and |TFTitleColor|.  Since
   release |1.1|, if the document does not define them, they default to
-  those used here (|teal!20| and |purple| in \ctanpackage{xcolor}
-  notation); formerly this gave ``Undefined color'' errors.  The same holds
+  those used here (|teal!20| in \ctanpackage{xcolor} notation, and a dark
+  purple, |rgb| |.5,0,.2|); formerly this gave ``Undefined color'' errors.  The same holds
   for |shadecolor| (default |lightgray!25|).  These defaults are set at
   |\begin{document}|, only for those of the three colours which are then
   still undefined: they can not be referred to in the preamble.
   \colorframed adds the possibility to colorize separately the continuation
   label.  For example we used
 \begin{verbatim}
-\renewcommand\colorframedTFconlabcolorcommand{\color{purple}}
+\renewcommand\colorframedTFconlabcolorcommand{\color{TFTitleColor}}
 \end{verbatim}
   and the default definition of this macro is to do nothing (and then the
   symbol obeys the |TFFrameColor|).

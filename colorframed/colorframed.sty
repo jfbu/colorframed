@@ -23,14 +23,15 @@
 %   shadecolor     for `shaded', `shaded*', `snugshade', `snugshade*'
 %   TFFrameColor   for `titled-frame': frame and background of the title
 %   TFTitleColor   for `titled-frame': text of the title
-% In xcolor notation they are lightgray!25, teal!20 and purple.
+% In xcolor notation the first two are lightgray!25 and teal!20.  The third
+% is a dark purple; its contrast ratio with TFFrameColor is 8.16.
 \AtBeginDocument{%
   \@ifundefined{\string\color@shadecolor}
     {\definecolor{shadecolor}{gray}{.9375}}{}%
   \@ifundefined{\string\color@TFFrameColor}
     {\definecolor{TFFrameColor}{rgb}{.8,.9,.9}}{}%
   \@ifundefined{\string\color@TFTitleColor}
-    {\definecolor{TFTitleColor}{rgb}{.75,0,.25}}{}%
+    {\definecolor{TFTitleColor}{rgb}{.5,0,.2}}{}%
 }
 % Now we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
