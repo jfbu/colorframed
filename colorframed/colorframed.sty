@@ -346,15 +346,22 @@
  \global\fb@frw\wd\z@ \global\fb@frh\ht\z@
  \endgroup
 }
-% Titles (argument #2 of \TitleBarFrame and \colorframedTitleBarFrame).
+% Structure of a frame.
+% As tcolorbox does, each frame is a Sect structure, and its title (argument
+% #2 of \TitleBarFrame and \colorframedTitleBarFrame), if any, is a Caption
+% structure which is the first child of the Sect.  The Sect is opened at
+% the start of \MakeFramed and closed at the end of \endMakeFramed.  The
+% leftbar environment is not a box: it gets no Sect.
+%
 % A title is typeset by a frame command, hence after the contents of the
-% frame.  To get it before them in the structure tree, an empty structure
-% is created at the start of \MakeFramed, and the structure of the title,
-% when it is typeset, is declared as a child of that one.  The title itself
-% may contain what creates structures (mathematics for example).
+% frame.  To get it before them in the structure tree, an empty Caption
+% is created at the start of \MakeFramed, and the structure of the title
+% (a P), when it is typeset, is declared as a child of that one.  The title
+% itself may contain what creates structures (mathematics for example).
 % Whether a frame has a title is only known from the previous compilation
-% (via a label): in a first compilation the title is tagged after the
-% contents of the frame and a warning asks for another compilation.
+% (via a label): in a first compilation the Caption is created when the
+% title is typeset, so it comes after the contents of the frame, and a
+% warning asks for another compilation.
 % Only the title of the first piece of a frame is handled this way (the
 % one from \FrameCommand or \FirstFrameCommand).  Titles of the following
 % pieces (\MidFrameCommand, \LastFrameCommand) and all continuation labels
@@ -365,9 +372,13 @@
 % \colorframed@titlelabel   the label of the current frame; only its
 %                           existence in the previous compilation is used,
 %                           not the value recorded with it
-% \colorframed@titleparent  number of the empty structure created at the
+% \colorframed@titleparent  number of the empty Caption created at the
 %                           start of the current frame, empty if there is
 %                           none
+% \colorframed@framestruct  the structure which the next \MakeFramed will
+%                           open, empty for none (leftbar)
+% \colorframed@endstruct    closes the structure of the current frame, if
+%                           there is one
 % \ifcolorframed@cont       true from the second piece of a frame on; it
 %                           is set in \fb@put@frame, inside the group which
 %                           \endMakeFramed opens around it
@@ -375,6 +386,8 @@
 \newif\ifcolorframed@cont
 \def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
 \let\colorframed@titleparent\@empty
+\def\colorframed@framestruct{Sect}
+\let\colorframed@endstruct\relax
 \def\colorframed@rerunwarning{%
   \AtEndDocument{\PackageWarningNoLine{colorframed}
     {Titles of frames are not at their place in the structure\MessageBreak
@@ -382,20 +395,27 @@
   \global\let\colorframed@rerunwarning\relax
 }
 \ExplSyntaxOn
-\cs_new_protected:Npn \colorframed@titlestruct
+\cs_new_protected:Npn \colorframed@beginstruct
   {
     \global\advance\colorframed@frameno\@ne
     \edef\colorframed@titlelabel{colorframed-title-\the\colorframed@frameno}
     \let\colorframed@titleparent\@empty
+    \let\colorframed@endstruct\relax
     \tag_if_active:T
       {
+        \tl_if_empty:NF \colorframed@framestruct
+          {
+            \exp_args:Ne \tag_struct_begin:n { tag=\colorframed@framestruct }
+            \let\colorframed@endstruct\tag_struct_end:
+          }
         \exp_args:No \property_if_recorded:nT { \colorframed@titlelabel }
           {
-            \tag_struct_begin:n { tag=Part }
+            \tag_struct_begin:n { tag=Caption }
             \edef\colorframed@titleparent { \tag_get:n { struct_num } }
             \tag_struct_end:
           }
       }
+    \def\colorframed@framestruct{Sect}
   }
 \cs_set_protected:Npn \colorframed@tagtitle #1
   {
@@ -408,6 +428,7 @@
           \tl_if_empty:NTF \colorframed@titleparent
             {
               \colorframed@rerunwarning
+              \tag_struct_begin:n { tag=Caption }
               \tag_struct_begin:n { tag=P }
             }
             {
@@ -418,6 +439,7 @@
           #1
           \tag_mc_end:
           \tag_struct_end:
+          \tl_if_empty:NT \colorframed@titleparent { \tag_struct_end: }
         \fi
       }
       {#1}
@@ -440,11 +462,14 @@
       {#1}
   }
 \ExplSyntaxOff
-% \MakeFramed (already redefined at the top of this file) gets a prefix.
+% \MakeFramed (already redefined at the top of this file) gets a prefix,
+% and \endMakeFramed a suffix.
 % The \par comes first so that the structure of a paragraph in progress is
-% closed before the empty structure is created.
+% closed before the structure of the frame is opened.
 \let\colorframed@MakeFramed\MakeFramed
-\def\MakeFramed{\par\colorframed@titlestruct\colorframed@MakeFramed}
+\def\MakeFramed{\par\colorframed@beginstruct\colorframed@MakeFramed}
+\let\colorframed@endMakeFramed\endMakeFramed
+\def\endMakeFramed{\colorframed@endMakeFramed\colorframed@endstruct}
 % The title of \colorframed@TF@Title is a paragraph in a \vbox: it must not
 % get a paragraph structure there.
 \def\colorframed@notagpara{\tagpdfparaOff}
@@ -472,9 +497,11 @@
 % itself).  In the macros above this is done by \colorframed@artifact,
 % which does nothing if a marked content is already open, as is the case
 % if such a macro is used inside a paragraph.
-% The leftbar environment of framed.sty needs it too.
+% The leftbar environment of framed.sty needs it too.  It is not a box,
+% hence the \let which tells \MakeFramed not to create a Sect.
 \renewenvironment{leftbar}{%
   \def\FrameCommand{\colorframed@artifact{\vrule width 3pt}\hspace{10pt}}%
+  \let\colorframed@framestruct\@empty
   \MakeFramed {\advance\hsize-\width \FrameRestore}}%
  {\endMakeFramed}
 \endinput
