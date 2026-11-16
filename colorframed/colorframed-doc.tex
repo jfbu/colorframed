@@ -16,7 +16,7 @@
 \AtBeginDocument{\def\textbullet{\ensuremath{\bullet}}}
 
 \usepackage{framed}
-\usepackage[dvipsnames]{xcolor}
+\usepackage[dvipsnames,table]{xcolor}% table: for \rowcolors
 \usepackage{colorframed}
 % we put this here but it does not have to be in preamble of
 % course
@@ -57,7 +57,6 @@
 \setlogokern{eL}{-0.1em}
 %\setlogokern{X2}{0em}
 \usepackage{enumitem}
-\usepackage{array}% for the tables of the summary section
 
 \definecolor{joli}{RGB}{225,95,0}
 \definecolor{JOLI}{RGB}{225,95,0}
@@ -392,38 +391,52 @@ documentation (|texdoc framed|) is the reference for it.
 
 \subsection{Colours}
 
-They are changed with |\definecolor| or |\colorlet|.  The defaults exist
-since release |1.1| and are from \colorframed: they are set at
+The colours (table~\ref{tab:colours}) are changed with |\definecolor| or
+|\colorlet|.  The defaults exist since release |1.1| and are from \colorframed: they are set at
 |\begin{document}| for those of the three colours which the document has not
 defined.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.45\linewidth}l@{}}
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.45\linewidth}l}
   \emph{colour}&\emph{used by}&\emph{default}\\[2pt]
   |shadecolor|&`shaded', `shaded*', `snugshade', `snugshade*': the
                 background&|lightgray!25|\\
   |TFFrameColor|&`titled-frame': the frame and the title bar&|teal!20|\\
   |TFTitleColor|&`titled-frame': the text of the title&|rgb| |.5,0,.2|\\
 \end{tabular}
+\caption{The colours}\label{tab:colours}
+\end{table}
 
-Two commands set colours.  They are changed with |\renewcommand|.
+Two commands set colours (table~\ref{tab:colourcommands}).  They are changed
+with |\renewcommand|.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.3\linewidth}l@{}}
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.3\linewidth}l}
   \emph{command}&\emph{used by}&\emph{default}\\[2pt]
   |\colorframedbordercolorcommand|&`framed', `oframed': the colour of the
      rules&|\normalcolor|\\
   |\colorframedTFconlabcolorcommand|&`titled-frame': the colour of the
      continuation mark&empty\\
 \end{tabular}
+\caption{The commands setting colours}\label{tab:colourcommands}
+\end{table}
 
-The first one must always set a colour.  If the second one is empty, the
-continuation mark has the colour |TFFrameColor|.
+The one for the rules must always set a colour.  If the one for the
+continuation mark is empty, this mark has the colour |TFFrameColor|.
 
 \subsection{Dimensions}
 
-The first four are lengths, to be changed with |\setlength|; the last one
-is a macro.
+In table~\ref{tab:dimensions} the first four are lengths, to be changed with
+|\setlength|; the last one is a macro.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.6\linewidth}l@{}}
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.55\linewidth}l}
   \emph{name}&\emph{used by}&\emph{default}\\[2pt]
   |\FrameRule|&`framed', `oframed': the thickness of the rules&|\fboxrule|\\
   |\FrameSep|&`framed', `oframed', `shaded', `shaded*': the separation
@@ -434,6 +447,8 @@ is a macro.
   |\FrameHeightAdjust|&all environments: the height of the frame above the
      baseline at the top of a page&|6pt|\\
 \end{tabular}
+\caption{The dimensions}\label{tab:dimensions}
+\end{table}
 
 The `titled-frame' environment obeys none of |\FrameRule| and |\FrameSep|:
 it has its own parameters, see next.  The bar of `leftbar' (|3pt|) and its
@@ -441,41 +456,49 @@ distance to the contents (|10pt|) are fixed in its definition.
 
 \subsection{The `titled-frame' environment}
 
-These macros exist since release |1.1| and are changed with
-|\renewcommand|.  Those giving dimensions are macros, not length
-registers.
+The macros of table~\ref{tab:titledframe} exist since release |1.1| and are
+changed with |\renewcommand|.  Those giving dimensions are macros, not
+length registers.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.28\linewidth}l@{}}
-  \emph{command}&\emph{role}&\emph{default}\\[2pt]
-  |\colorframedTitleFormat|&has one argument: is applied to the
-     title&|\textbf|\\
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.52\linewidth}}
+  \emph{command}&\emph{role and default}\\[2pt]
+  |\colorframedTitleFormat|&has one argument: is applied to the title;
+     default |\textbf|\\
   |\colorframedContinuedTitle|&has one argument, the title: gives the title
-     used after a page break&|#1\ (cont)|\\
+     used after a page break; default |#1\ (cont)|\\
   |\colorframedContinuationMark|&the mark at the bottom right of a frame
-     which continues on the next page&|$\blacktriangleright$|\\
-  |\colorframedTitledFrameRule|&the thickness of the frame&|2pt|\\
-  |\colorframedTitledFrameSep|&the separation between frame and
-     contents&|8pt|\\
+     which continues on the next page; default |$\blacktriangleright$|\\
+  |\colorframedTitledFrameRule|&the thickness of the frame; default |2pt|\\
+  |\colorframedTitledFrameSep|&the separation between frame and contents;
+     default |8pt|\\
   |\colorframedTitleBarHSep|&the horizontal distance between the frame and
-     the title, on each side&|\fboxsep|\\
+     the title, on each side; default |\fboxsep|\\
   |\colorframedTitleBarVSep|&the vertical space above and below the title
-     in its bar&|0.8ex|\\
+     in its bar; default |0.8ex|\\
   |\colorframedContinuationMarkSep|&the horizontal distance between the
-     frame and the continuation mark&|3pt|\\
+     frame and the continuation mark; default |3pt|\\
 \end{tabular}
+\caption{The macros of `titled-frame'}\label{tab:titledframe}
+\end{table}
 
 The default continuation mark is |$\triangleright$| if |\blacktriangleright|
-is not defined.  The last three macros are parameters of
-|\colorframedTitleBarFrame|, which draws the frame.  The colours are
-|TFFrameColor| and |TFTitleColor|, and |\colorframedTFconlabcolorcommand|
-for the continuation mark.
+is not defined.  The last three macros of the table are parameters of the
+command which draws the frame (see table~\ref{tab:colorframedcommands}).
+For the colours see tables~\ref{tab:colours} and~\ref{tab:colourcommands}.
 
 \subsection{Commands for defining environments}
 
 See the documentation of \ctanpackage{framed} for the general method.  It
-provides:
+provides the commands of table~\ref{tab:framedcommands}, and \colorframed
+adds those of table~\ref{tab:colorframedcommands}.
 
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.52\linewidth}@{}}
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.52\linewidth}}
   \emph{command}&\emph{role}\\[2pt]
   |\MakeFramed{<settings>}|&starts the framed material\\
   |\endMakeFramed|&ends it\\
@@ -493,10 +516,13 @@ provides:
   |\TitleBarFrame[<mark>]{<title>}|&a frame with a title bar and an
      optional continuation mark (redefined by \colorframed)\\
 \end{tabular}
+\caption{Commands of \ctanpackage{framed} for defining environments}\label{tab:framedcommands}
+\end{table}
 
-And \colorframed adds:
-
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{.52\linewidth}@{}}
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.52\linewidth}}
   \emph{command}&\emph{role}\\[2pt]
   |\colorframedcolorbox{<colour>}|&a coloured background; to be used in
      place of |\colorbox|\\
@@ -504,6 +530,8 @@ And \colorframed adds:
      with another placement of the title, used by `titled-frame'; its
      parameters are listed above\\
 \end{tabular}
+\caption{Commands of \colorframed for defining environments}\label{tab:colorframedcommands}
+\end{table}
 
 A frame command should not use |\fbox|, |\colorbox| or |\fcolorbox|: they
 are what causes the colour leaks which this package fixes.
