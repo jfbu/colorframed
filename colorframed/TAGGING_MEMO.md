@@ -1,10 +1,11 @@
 # Technical memo on tagging support in colorframed
 
-State: 2026-11-12, colorframed 1.0, LaTeX 2026-11-01, tagpdf 1.0i,
-framed 0.96.  Facts below were observed with pdflatex and lualatex.
+State: 2026-11-16, colorframed 1.1-dev, LaTeX 2026-11-01, tagpdf 1.0i and
+1.0j, framed 0.96.  Facts below were observed with pdflatex and lualatex.
 
 The tagging support (code, tests and their tools, documentation) was written
-by Claude Fable 5.2 (Anthropic) on November 12, 2026.
+by Claude Fable 5.2 (Anthropic) on November 12, 2026, and the `Sect` and
+`Caption` structures were added the same way on November 16, 2026.
 
 ## Where the code is
 
@@ -14,10 +15,29 @@ by Claude Fable 5.2 (Anthropic) on November 12, 2026.
 - The earlier code calls three macros which do nothing there
   (`\colorframed@artifact`, `\colorframed@tagtitle` are `\@firstofone`,
   `\colorframed@notagpara` is `\relax`).  Without `\DocumentMetadata` the
-  PDF is byte-identical to the one obtained before tagging support.
+  tagging support changes nothing in the PDF.
 - In a tagged document these macros of `framed.sty` are redefined:
   `\fb@put@frame`, `\fb@putboxa`, `\fb@sizeofframe`, `\TF@Title`, the
-  `leftbar` environment, and `\MakeFramed` gets a prefix.
+  `leftbar` environment; `\MakeFramed` gets a prefix and `\endMakeFramed`
+  a suffix.
+
+## Structure of a frame
+
+- Requested in https://github.com/latex3/tagging-project/pull/1706: the
+  same structures as tcolorbox, i.e. a `Sect` for each box and, under it,
+  a `Caption` for the title.  colorframed 1.0 created no structure for a
+  frame, and the title was a `P` in a `Part` before the contents.
+- The `Sect` is opened by the prefix of `\MakeFramed` (after a `\par`) and
+  closed by the suffix of `\endMakeFramed`.  So all environments get it,
+  `leftbar` included, and also an environment defined by the user with
+  `\MakeFramed`.
+- Why `Sect`: tagpdf refuses a `Caption` under a `Div` which is a child of
+  `Document` (a `Div` is transparent for the parent-child rules, and
+  `Document` → `Caption` is not allowed).  It accepts it under `Sect` and
+  under `Aside`; `Aside` would say that the frame is outside the main flow
+  of the text.
+- A `Sect` is accepted by tagpdf in a list item (`LBody`), in a `minipage`
+  and in a float.
 
 ## Page breaks inside a frame (pdflatex only)
 
@@ -28,11 +48,13 @@ by Claude Fable 5.2 (Anthropic) on November 12, 2026.
 - Fix: `\tag_mc_add_missing_to_stream:Nn <box> {colorframed}` on each piece
   of a split frame and on the last one.  With lualatex this command does
   nothing and nothing is needed.
+- Structures are not concerned by page breaks: the `Sect` of a frame split
+  across pages is one structure.
 - `\tag_mc_new_stream:n` of tagpdf 1.0i creates a variable with a wrong
   name: https://github.com/latex3/tagpdf/issues/152.  The package creates
-  the right one itself if it does not exist.  Nothing has to be changed
-  once tagpdf is fixed.  Without this, a first frame containing no marked
-  content gives a TeX error.
+  the right one itself if it does not exist; without this, a first frame
+  containing no marked content gives a TeX error.  This is fixed in tagpdf
+  1.0j, with which the extra line of the package does nothing.
 
 ## Measuring
 
@@ -45,25 +67,32 @@ by Claude Fable 5.2 (Anthropic) on November 12, 2026.
 
 - A title is typeset by the frame command, after the contents of the
   frame.  tagpdf has no public way to insert a structure before existing
-  siblings.  So an empty `Part` structure is created at the start of
-  `\MakeFramed`, and the title is a `P` structure declared as its child
-  with the `parent` key of `\tag_struct_begin:n`.
+  siblings.  So an empty `Caption` structure is created at the start of
+  `\MakeFramed`, right after the `Sect` is opened, and the title is a `P`
+  structure declared as its child with the `parent` key of
+  `\tag_struct_begin:n`.
 - Whether frame number N has a title is known from the previous
   compilation (property label `colorframed-title-N`).  In a first
-  compilation the title is tagged after the contents, and the package
-  warns "Titles of frames are not at their place in the structure tree.
-  Rerun to get them right".
+  compilation the `Caption` is created when the title is typeset, hence
+  is the last child of the `Sect`, and the package warns "Titles of frames
+  are not at their place in the structure tree.  Rerun to get them right".
+- With tcolorbox the child of the `Caption` is a `text-block` (role `P`)
+  with a `TextAlign` attribute; here it is a plain `P`.
 - A title may contain mathematics or `\emph` (they become `Formula` and
   `Em` children of the `P`).
+- Since 1.1 `titled-frame` uses `\colorframedTitleBarFrame`, whose title is
+  a paragraph in a `\vbox`: paragraph tagging is switched off there
+  (`\colorframed@notagpara`), the `P` being created by the package.
 - Only the title of the first piece of a frame is tagged.  The titles of
-  the following pieces ("... (cont)") and all continuation labels are
+  the following pieces ("... (cont)") and all continuation marks are
   artifacts.
 - An earlier implementation (commit "Tagging: titles of ...") used a
   stashed marked content and `\tag_mc_use:n`.  It failed with mathematics
   in the title (`Parent-Child 'Document' --> 'MC'`) and was replaced.
-- A `framed` environment nested inside `titled-frame` inherits the frame
+- The environments of framed.sty can not really be nested.  For the
+  record: a `framed` environment inside `titled-frame` inherits the frame
   command of the latter, hence shows its title again, on the page and in
-  the structure tree.  This is framed.sty behaviour.
+  the structure tree (as the `Caption` of its own `Sect`).
 
 ## Rules and coloured backgrounds
 
@@ -86,8 +115,9 @@ by Claude Fable 5.2 (Anthropic) on November 12, 2026.
   the marked content of the paragraph is split there.  This happens in any
   document, with or without frames.
 - These situations pass the checks with both engines: frames in a list,
-  nested frames, in a float, in a minipage, in `multicols`, in a
-  `twocolumn` document.
+  in a float, in a minipage, in `multicols`, in a `twocolumn` document.
+- xelatex: `test_tagging_02.tex` and `test_tagging_03.tex` compile without
+  error and without parent-child warning; their PDFs were not checked.
 
 ## Test tools
 
@@ -102,4 +132,6 @@ by Claude Fable 5.2 (Anthropic) on November 12, 2026.
 - `tagchecks.py` messages: `UNBALANCED`, `UNTAGGED` (text or drawings),
   `DUPMC`, `ORPHMC`, `MISSING`, `NOTAGGED`.  Parent-child rules are checked
   by tagpdf itself.
+- The summaries contain the structure trees: a change of the structures
+  changes them, and the script then exits with status 2.
 - veraPDF has not been run.
