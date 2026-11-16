@@ -382,9 +382,9 @@ Here is what happens in a tagged document:
 \begin{itemize}[noitemsep,topsep=3pt,parsep=3pt]
 \item Each environment is a |Sect| structure, which contains what the
   contents of the environment give when tagged as they would be without it.
-  This is what \ctanpackage{tcolorbox} does for its boxes.  The `leftbar'
-  environment is not a box and is the exception: no structure is created
-  for it.  (At release |1.0| no environment had a structure.)
+  This is what \ctanpackage{tcolorbox} does for its boxes.  It applies to
+  all environments, `leftbar' included.  (At release |1.0| no environment
+  had a structure.)
 \item With pdf\LaTeX{} a paragraph which \ctanpackage{framed} had split
   across two pages was wrongly tagged (its marked content was left open at the
   bottom of the first page and its continuation on the next page was not

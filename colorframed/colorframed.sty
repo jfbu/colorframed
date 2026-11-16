@@ -350,8 +350,8 @@
 % As tcolorbox does, each frame is a Sect structure, and its title (argument
 % #2 of \TitleBarFrame and \colorframedTitleBarFrame), if any, is a Caption
 % structure which is the first child of the Sect.  The Sect is opened at
-% the start of \MakeFramed and closed at the end of \endMakeFramed.  The
-% leftbar environment is not a box: it gets no Sect.
+% the start of \MakeFramed and closed at the end of \endMakeFramed.  This
+% applies to all environments, leftbar included.
 %
 % A title is typeset by a frame command, hence after the contents of the
 % frame.  To get it before them in the structure tree, an empty Caption
@@ -375,10 +375,8 @@
 % \colorframed@titleparent  number of the empty Caption created at the
 %                           start of the current frame, empty if there is
 %                           none
-% \colorframed@framestruct  the structure which the next \MakeFramed will
-%                           open, empty for none (leftbar)
-% \colorframed@endstruct    closes the structure of the current frame, if
-%                           there is one
+% \colorframed@endstruct    closes the Sect of the current frame, if one
+%                           was opened (tagging may be suspended)
 % \ifcolorframed@cont       true from the second piece of a frame on; it
 %                           is set in \fb@put@frame, inside the group which
 %                           \endMakeFramed opens around it
@@ -386,7 +384,6 @@
 \newif\ifcolorframed@cont
 \def\colorframed@titlelabel{colorframed-title-0}% if not inside \MakeFramed
 \let\colorframed@titleparent\@empty
-\def\colorframed@framestruct{Sect}
 \let\colorframed@endstruct\relax
 \def\colorframed@rerunwarning{%
   \AtEndDocument{\PackageWarningNoLine{colorframed}
@@ -403,11 +400,8 @@
     \let\colorframed@endstruct\relax
     \tag_if_active:T
       {
-        \tl_if_empty:NF \colorframed@framestruct
-          {
-            \exp_args:Ne \tag_struct_begin:n { tag=\colorframed@framestruct }
-            \let\colorframed@endstruct\tag_struct_end:
-          }
+        \tag_struct_begin:n { tag=Sect }
+        \let\colorframed@endstruct\tag_struct_end:
         \exp_args:No \property_if_recorded:nT { \colorframed@titlelabel }
           {
             \tag_struct_begin:n { tag=Caption }
@@ -415,7 +409,6 @@
             \tag_struct_end:
           }
       }
-    \def\colorframed@framestruct{Sect}
   }
 \cs_set_protected:Npn \colorframed@tagtitle #1
   {
@@ -497,11 +490,9 @@
 % itself).  In the macros above this is done by \colorframed@artifact,
 % which does nothing if a marked content is already open, as is the case
 % if such a macro is used inside a paragraph.
-% The leftbar environment of framed.sty needs it too.  It is not a box,
-% hence the \let which tells \MakeFramed not to create a Sect.
+% The leftbar environment of framed.sty needs it too.
 \renewenvironment{leftbar}{%
   \def\FrameCommand{\colorframed@artifact{\vrule width 3pt}\hspace{10pt}}%
-  \let\colorframed@framestruct\@empty
   \MakeFramed {\advance\hsize-\width \FrameRestore}}%
  {\endMakeFramed}
 \endinput
