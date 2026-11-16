@@ -17,6 +17,8 @@ __pycache__
 *.fls
 *.html
 *.zip
+*.md
+!TAGGING_MEMO.md
 README
 ctanbuild/*
 !ctanbuild/private.sh
