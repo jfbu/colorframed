@@ -1,4 +1,18 @@
 
+Release 1.1 du 16 novembre 2026
+
+Téléversé sur CTAN le 16 novembre 2026 vers 18h.
+
+Release 1.1 improves the tagging support, package documentation,
+and titled-frame customizability.
+
+Breaking change: the title bar of the titled-frame has a slightly
+different height which can (and will) cause layout differences in
+the output.  This change is reversible by user if desired.  The
+horizontal placement of the title was changed, too.
+
+------------------------------------------------------------------------
+
 Release 1.0 du 12 novembre 2026
 
 Téléversé sur CTAN le 12 novembre 2026 vers 21h40.
