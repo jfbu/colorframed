@@ -84,7 +84,7 @@
 % code; but we did not want to keep extra capabilities and have to provide
 % interface for that...
 \def\colorframedcolorbox#1#2{%
-  % #1 is in our usage always "shadecolor" (which has to be defined by user)
+  % #1 is in our usage always "shadecolor"
   % #2 is in our usage always a box or rule
   \leavevmode% this is not needed in our usage
   \hbox{%
@@ -107,7 +107,7 @@
   }%
 }
 %
-% `oframed' and `titled-frame'
+% `framed', `oframed' and `titled-frame'
 % The \CustomFBox redefinition.
 % Refer to framed.sty for significance of the parameters.
 % We have not wrapped #3, #4, #5, #6 thicknesses in \dimexpr.
@@ -153,8 +153,8 @@
   }%
   \endgroup
 }
-% The titled-frame environment depends in part on this macro,
-% whose original in framed.sty has various colour problems.
+% \TitleBarFrame, whose original in framed.sty has various colour problems.
+% It was used by `titled-frame' up to release 1.0 (see below).
 % We have indicated the modifications, additionally to using
 % our modified \CustomFBox.
 % Original let the continuation label use same colour as frame.
@@ -222,9 +222,9 @@
 }
 % The title bar for \colorframedTitleBarFrame, it will wrap its argument
 % as paragraphs in case it is too long, the horizontal placement is improved
-% and it will be suitably vertically centered. Nota Bene: for #1 to be
-% allowed to contain \par, the \textbf in titled-frame must be replaced by
-% some \bfseries.
+% and it will be suitably vertically centered. Nota Bene: for the title of
+% a `titled-frame' to be allowed to contain \par, \colorframedTitleFormat
+% (default \textbf) must be redefined to use some \bfseries.
 % Macro to customize the horizontal placement. For example
 % \renewcommand\colorframedTitleBarHSep{0pt}
 % if \fboxrule is set by the environment to a high value.
@@ -323,7 +323,7 @@
 % \tag_mc_new_stream:n of tagpdf 1.0i does not create the variable which
 % \tag_mc_add_missing_to_stream:Nn needs, hence the second line; see
 % https://github.com/latex3/tagpdf/issues/152
-% Nothing will have to be changed here once this is fixed in tagpdf.
+% This is fixed in tagpdf 1.0j, where the second line does nothing.
 \ExplSyntaxOn
 \tag_mc_new_stream:n { colorframed }
 \seq_if_exist:cF { g__tag_mc_colorframed_marks_seq }

@@ -98,6 +98,16 @@
 \omit&\omit& - add link to \ghissue{5} for usage with list items, other doc improvements
                such as \ghissue{1}\cr
 1.0 & 2026/11/12 & tagging support (section~\ref{sec:tagging})\cr
+1.1 & 2026/12/31 & - tagging: each environment is a |Sect|, the title of a
+                     titled-frame is its |Caption| (\ghissue{6})\cr
+\omit&\omit& - default definitions of |shadecolor|, |TFFrameColor| and
+               |TFTitleColor| (\ghissue{9})\cr
+\omit&\omit& - titled-frame uses |\colorframedTitleBarFrame|: \emph{its
+               layout changes}; new customization macros\cr
+\omit&\omit& - the continuation mark of titled-frame does not require
+               \ctanpackage{amssymb} anymore\cr
+\omit&\omit& - doc: summary of the customization interface
+               (section~\ref{sec:summary})\cr
 }}
 
 \vskip-\baselineskip\vskip0pt\relax
@@ -393,8 +403,8 @@ documentation (|texdoc framed|) is the reference for it.
 
 The colours (table~\ref{tab:colours}) are changed with |\definecolor| or
 |\colorlet|.  The defaults exist since release |1.1| and are from \colorframed: they are set at
-|\begin{document}| for those of the three colours which the document has not
-defined.
+|\begin{document}| for those of the three colours which the preamble has
+not defined.
 
 \begin{table}[!htb]
 \centering
@@ -527,8 +537,8 @@ adds those of table~\ref{tab:colorframedcommands}.
   |\colorframedcolorbox{<colour>}|&a coloured background; to be used in
      place of |\colorbox|\\
   |\colorframedTitleBarFrame|&same syntax as |\TitleBarFrame|: a variant
-     with another placement of the title, used by `titled-frame'; its
-     parameters are listed above\\
+     with another placement of the title, used by `titled-frame'; for its
+     parameters see table~\ref{tab:titledframe}\\
 \end{tabular}
 \caption{Commands of \colorframed for defining environments}\label{tab:colorframedcommands}
 \end{table}
@@ -549,12 +559,13 @@ Since release |1.0| the environments of \ctanpackage{framed}, as modified by
 \colorframed, can be used in a document which activates the tagging of the PDF
 via |\DocumentMetadata| (with |tagging=on|).  This was developed and tested
 with pdf\LaTeX{} and \LuaLaTeX, using the \LaTeX{} release |2026-11-01| and
-\ctanpackage{tagpdf} |1.0i|.  Two of the test files of the repository were
+\ctanpackage{tagpdf} |1.0i| and |1.0j|.  Two of the test files of the repository were
 also compiled with success using \XeLaTeX.
 
 There is nothing to do on user side, and no new user command.  A document not
 using |\DocumentMetadata| is not concerned at all: none of the code added for
-tagging is executed and the output is the same as with release |0.9b|.
+tagging is executed, and its output is the same as if this code did not
+exist.
 
 Here is what happens in a tagged document:
 \begin{itemize}[noitemsep,topsep=3pt,parsep=3pt]
@@ -609,13 +620,16 @@ Package colorframed Warning: Titles of frames are not at their place in the
 \begin{verbatim}
 \fb@put@frame, \fb@putboxa, \fb@sizeofframe, \TF@Title
 \end{verbatim}
+  and it adds code at the start of |\MakeFramed| and at the end of
+  |\endMakeFramed| (for the |Sect| structure).
   The frame commands which \ctanpackage{framed} executes only to measure the
   frame are executed with tagging suspended.
 \item Only public commands of \ctanpackage{tagpdf} are used.  One of them
   needed a workaround (the package creates a variable which
   \ctanpackage{tagpdf} should have created), see
-  \href{https://github.com/latex3/tagpdf/issues/152}{tagpdf issue \#152}; no
-  update of \colorframed will be needed when it gets fixed.
+  \href{https://github.com/latex3/tagpdf/issues/152}{tagpdf issue \#152}.
+  This is fixed in \ctanpackage{tagpdf} |1.0j|; the workaround only acts
+  with |1.0i|.
 \item The repository contains test files (|test_tagging_*.tex|), a script
   compiling them with both engines and checking the tagging of the resulting
   PDFs, and a memo (|TAGGING_MEMO.md|) with more details.  The PDFs
