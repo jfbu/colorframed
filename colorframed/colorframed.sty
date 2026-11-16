@@ -12,7 +12,27 @@
 \let\colorframed@artifact\@firstofone
 \let\colorframed@tagtitle\@firstofone
 \let\colorframed@notagpara\relax
-% First we must make \MakeFramed/\endMakeFramed colour safe.
+% Default colours (repository issue #9).
+% framed.sty defines none of the colours which its environments use, and a
+% document not defining them got "Undefined color" errors.  Those still
+% undefined at \begin{document} now get a definition.  This is delayed to
+% \begin{document} because a colour defined here by the color package
+% becomes unusable if the xcolor package is loaded later on.  A definition
+% by the user, in the preamble (before or after loading colorframed) or in
+% the document body, has precedence.
+%   shadecolor     for `shaded', `shaded*', `snugshade', `snugshade*'
+%   TFFrameColor   for `titled-frame': frame and background of the title
+%   TFTitleColor   for `titled-frame': text of the title
+% In xcolor notation they are lightgray!25, teal!20 and purple.
+\AtBeginDocument{%
+  \@ifundefined{\string\color@shadecolor}
+    {\definecolor{shadecolor}{gray}{.9375}}{}%
+  \@ifundefined{\string\color@TFFrameColor}
+    {\definecolor{TFFrameColor}{rgb}{.8,.9,.9}}{}%
+  \@ifundefined{\string\color@TFTitleColor}
+    {\definecolor{TFTitleColor}{rgb}{.75,0,.25}}{}%
+}
+% Now we must make \MakeFramed/\endMakeFramed colour safe.
 \expandafter\def\expandafter\MakeFramed\expandafter#\expandafter1\expandafter
   {\MakeFramed{#1}\color@begingroup}
 \expandafter\def\expandafter\endMakeFramed\expandafter

@@ -186,8 +186,13 @@ The previous box gives an example of use of `titled-frame' environment.
   `titled-frame' is an environment with
   one mandatory argument which provides the title of the
   frame, which is repeated after a page break with |(cont)|
-  appended.  The colours |TFFrameColor| and
-  |TFTitleColor| must have been defined by the user.
+  appended.  It uses the colours |TFFrameColor| and |TFTitleColor|.  Since
+  release |1.1|, if the document does not define them, they default to
+  those used here (|teal!20| and |purple| in \ctanpackage{xcolor}
+  notation); formerly this gave ``Undefined color'' errors.  The same holds
+  for |shadecolor| (default |lightgray!25|).  These defaults are set at
+  |\begin{document}|, only for those of the three colours which are then
+  still undefined: they can not be referred to in the preamble.
   \colorframed adds the possibility to colorize separately the continuation
   label.  For example we used
 \begin{verbatim}
@@ -214,7 +219,7 @@ The previous box gives an example of use of `titled-frame' environment.
 \emph{%
     The current box is an example of \emph{`shaded'}
     environment; The
-    |shadecolor| must have been defined by user. See the
+    |shadecolor| has a default since release |1.1|. See the
     \ghissue[repository issue ]{5} for some comments about how to use
     such environment with list items, if the environment is to start
     at start of the item, as here.
