@@ -44,7 +44,8 @@ In a minipage.
 \end{shaded}
 \end{minipage}
 
-{\let\TitleBarFrame\colorframedTitleBarFrame
+% since 1.1 \colorframedTitleBarFrame is the one used per default
+{\let\colorframedTitleBarFrame\TitleBarFrame
 \begin{titled-frame}{Second title with $c^2$ and \emph{emphasis} after}
 Contents of the second frame.
 \end{titled-frame}
