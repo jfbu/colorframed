@@ -46,6 +46,15 @@
 %\usepackage{url}\urlstyle{same}
 \usepackage{hyperref}
 \def\ctanpackage#1{\href{https://ctan.org/pkg/#1}{#1}}
+\hypersetup{%
+  breaklinks=true,%
+  colorlinks=true,%
+%  linkcolor={blue},%
+  urlcolor={blue},%
+%  citecolor={red},%
+  pdfstartview=FitH,%
+  pdfpagemode=UseNone,%
+}
 
 \usepackage{amssymb}
 
@@ -89,25 +98,30 @@
 
 {\footnotesize
 \halign{\tabskip1em\bfseries#\unskip&\hfil(#\unskip)\hfil&#\unskip\hfil\cr
-0.9  & 2022/09/22 & initial release\cr
-0.9a & 2022/09/23 & doc fixes, mention \ctanpackage{longfbox}\cr
+0.9  & 2022/09/22 & initial release.\cr
+0.9a & 2022/09/23 & doc fixes, mention \ctanpackage{longfbox}.\cr
 0.9b & 2022/10/01 & - fix "placement of titled-frame title
-                                  is not backwards compatible" (\ghissue{2})\cr
-\omit&\omit& - |\colorframedTitleBarFrame| as workaround to upstream issues with titled-frame
-               (\ghissue{3}, \ghissue{4})\cr
-\omit&\omit& - add link to \ghissue{5} for usage with list items, other doc improvements
-               such as \ghissue{1}\cr
-1.0 & 2026/11/12 & tagging support (section~\ref{sec:tagging})\cr
-1.1 & 2026/12/31 & - tagging: each environment is a |Sect|, the title of a
-                     titled-frame is its |Caption| (\ghissue{6})\cr
-\omit&\omit& - default definitions of |shadecolor|, |TFFrameColor| and
-               |TFTitleColor| (\ghissue{9})\cr
-\omit&\omit& - titled-frame uses |\colorframedTitleBarFrame|: \emph{its
-               layout changes}; new customization macros\cr
-\omit&\omit& - the continuation mark of titled-frame does not require
-               \ctanpackage{amssymb} anymore\cr
-\omit&\omit& - doc: summary of the customization interface
-               (section~\ref{sec:summary})\cr
+                                  is not backwards compatible" (\ghissue{2}).\cr
+\omit&\omit& - |\colorframedTitleBarFrame| as workaround to upstream
+                issues with titled-frame (\ghissue{3}, \ghissue{4}).\cr
+\omit&\omit& - add link to \ghissue{5} for usage with list items,
+               other doc improvements such as \ghissue{1}.\cr
+1.0 & 2026/11/12 & tagging support (section~\ref{sec:tagging}).\cr
+1.1 & 2026/12/31 & tagging: \cr
+\omit&\omit& - each environment (inc.\@ `leftbar') is a |Sect|,\cr
+\omit&\omit& - the title of a
+                     titled-frame is its |Caption| (\ghissue{6}).\cr
+\omit&\omit& titled-frame:\cr
+\omit&\omit& - defaults provided for |shadecolor|, |TFFrameColor| and
+               |TFTitleColor| (\ghissue{9}),\cr
+\omit&\omit& - \emph{\bfseries breaking change} it now uses |\colorframedTitleBarFrame|,
+hence ceases\cr
+\omit&\omit& \phantom{-} producing exact same output as \ctanpackage{framed}'s original (this is reversible by user),\cr
+\omit&\omit& - new customization macros, inclusive of layout parameters,\cr
+\omit&\omit& - the continuation mark does not require \ctanpackage{amssymb} anymore but
+uses its\cr
+\omit&\omit& \phantom{-}  |\blacktriangleright| if loaded.\cr
+\omit&\omit& doc: summary of the customization interface (section~\ref{sec:summary}).\cr
 }}
 
 \vskip-\baselineskip\vskip0pt\relax
@@ -115,45 +129,58 @@
 \section{Description}
 
 
-This package fixes various colour leaks one encounters with
-the environments from Donald Arseneau's package
-\ctanpackage{framed}.  Typically, colour leaks occur if using
-|\color| (at top level or whose scope involves a page break) inside the
-environments, or more subtly also when using |\textcolor| with
-an argument ending up being split at a page break.
+This package, originally delivered in 2022, fixes multiple sources of
+potential colour leaks one encounters with the environments from the original
+package \ctanpackage{framed}.
 
-This latter type of colour leak (or colour disappearance) is the
-more challenging one as the fix requires modifications or
-replacements not only of some of the \ctanpackage{framed}.sty
-macros (such as its |\CustomFBox|, which \colorframed overwrites)
-but also to some \LaTeX{} internals, as some environments of
-\ctanpackage{framed}.sty rely on usage of |\fbox| or |\colorbox|.
-Rather than overwriting internal \LaTeX{} macros such as
-|\@frameb@x| or |\color@b@x|, \colorframed simply replaces |\fbox|
-and |\colorbox| in the \ctanpackage{framed}.sty environments by
-appropriate substitutes.
+In November 2026, with releases |1.0| and |1.1|, it got extended with tagging
+support. Thanks to Fable 5.2, Matthew Bertucci and Ulrike Fischer.
+See section~\ref{sec:tagging}.
 
-I am aware \ctanpackage{tcolorbox} package documentation explains at
-least one colour issue which looks similar to those fixed
-here in \ctanpackage{framed} context, and that the fix overthere uses
-an extra colour stack, hence is not \XeLaTeX{} compatible
-currently.
+Release |1.1| slightly modifies the layout of the `titled-frame' environment
+(earlier releases mentioned to the user some issues with the title rendering
+macro used by the original package, and provided a replacement
+|\colorframedTitleBarFrame| but did not use it per default).
 
-The problems are solved here without involving an extra
-colour stack, hence the fixes work also with \XeLaTeX.
+\begin{titled-frame}{Technical brief on the colour leaks}
+  Typically, colour leaks occurred if using |\color| at top level or with a
+  scope including what will be a page break inside the rendered environments,
+  or more subtly also when using |\textcolor| with an argument ending up being
+  split at a page break.
 
-Since release |1.0| the environments are also usable in documents
-producing tagged PDF, see section~\ref{sec:tagging}.
+  This latter type of colour leak (or colour disappearance) is the
+  more challenging one as the fix requires modifications or
+  replacements not only of some of the \ctanpackage{framed}.sty
+  macros (such as its |\CustomFBox|, which \colorframed overwrites)
+  but also to some \LaTeX{} internals, as some environments of
+  \ctanpackage{framed}.sty rely on usage of |\fbox| or |\colorbox|.
+  Rather than overwriting internal \LaTeX{} macros such as
+  |\@frameb@x| or |\color@b@x|, \colorframed simply replaces |\fbox|
+  and |\colorbox| in the \ctanpackage{framed}.sty environments by
+  appropriate substitutes.
+
+  I am aware \ctanpackage{tcolorbox} package documentation explains at
+  least one colour issue which looks similar to those fixed
+  here in \ctanpackage{framed} context, and that the fix overthere uses
+  an extra colour stack, hence is not \XeLaTeX{} compatible
+  currently.
+
+  The problems are solved here without involving an extra
+  colour stack, hence the fixes work also with \XeLaTeX.  None of the
+  \LaTeX{} internals are modified.
+\end{titled-frame}
 
 \section{The environments from \ctanpackage{framed}}
 
-  We refer the reader to \ctanpackage{framed} for the official
-  documentation and provide here only a few relevant details,
-  particularly
-  regarding the `titled-frame' environment.
+  We advise the reader to first read the \ctanpackage{framed} 
+  documentation to become familiar with the interface, prior to
+  continue with this documentation.  But the people in a hurry can
+  also check directly Section~\ref{sec:summary}.
+
 \begin{titled-frame}{A list of the environments from package \ctanpackage{framed}}
   This list indicates which boxing macros are
-  used in the original, and their replacement.
+  used in the original, and their replacement (this technical information has no
+  direct relevance to user level usage).
 % (investigate later why something such as shortverb |#| in
 % preamble does not work)
 \halign{\bfseries#\hfil&(#\unskip)~\hfil&#\hfil\cr
@@ -175,7 +202,7 @@ producing tagged PDF, see section~\ref{sec:tagging}.
   leftbar & none & This one does not use any boxing macro.\cr
 }
 \end{titled-frame}
-The previous box gives an example of use of `titled-frame' environment.
+The previous box was an example of use of the `titled-frame' environment.
 \begin{titled-frame}{THE CONTINUATION LABEL AND \ctanpackage{amssymb}}
   The continuation label used by the `titled-frame' environment of
   \ctanpackage{framed} is |$\blacktriangleright$|
@@ -186,23 +213,19 @@ The previous box gives an example of use of `titled-frame' environment.
   a page gave an ``Undefined control sequence'' error.
 
   Since release |1.1| the label is |\colorframedContinuationMark|.  Its
-  default uses |$\blacktriangleright$| if this symbol is defined, and else
+  default uses |$\blacktriangleright$| if this symbol is defined at
+  |\begin{document}|, and else
   |$\triangleright$|, which needs no package.
 
-  TODO: maybe restructure the documentation so that user does not have
-  to actually read the one of the original \ctanpackage{framed} package.
+  % TODO: maybe restructure the documentation so that user does not have
+  % to actually read the one of the original \ctanpackage{framed} package.
 \end{titled-frame}
 %
   `titled-frame' is an environment with
   one mandatory argument which provides the title of the
   frame, which is repeated after a page break with |(cont)|
-  appended.  It uses the colours |TFFrameColor| and |TFTitleColor|.  Since
-  release |1.1|, if the document does not define them, they default to
-  those used here (|teal!20| in \ctanpackage{xcolor} notation, and a dark
-  purple, |rgb| |.5,0,.2|); formerly this gave ``Undefined color'' errors.  The same holds
-  for |shadecolor| (default |lightgray!25|).  These defaults are set at
-  |\begin{document}|, only for those of the three colours which are then
-  still undefined: they can not be referred to in the preamble.
+  appended. 
+
   \colorframed adds the possibility to colorize separately the continuation
   label.  For example we used
 \begin{verbatim}
@@ -210,6 +233,21 @@ The previous box gives an example of use of `titled-frame' environment.
 \end{verbatim}
   and the default definition of this macro is to do nothing (and then the
   symbol obeys the |TFFrameColor|).
+ 
+  `titled-frame' uses the colours |TFFrameColor| and |TFTitleColor|.  Since
+  release |1.1|, if the document does not define them, they default to
+  those used here (|teal!20| in \ctanpackage{xcolor} notation, and a dark
+  purple, |rgb| |.5,0,.2|); formerly, and following on the original package,
+  they were left undefined.  Using `titled-frame' in the document
+  without having defined them caused \ctanpackage{color} (or \ctanpackage{xcolor})
+  to report an error.
+
+  Similarly, the original package leaves undefined the |shadecolor| used by
+  the `shaded' and `snugshade' environments. It now defaults to
+  |lightgray!25|.
+
+  These colour defaults are set at |\begin{document}|, if the
+  colours have been left undefined til then.
 
 \medskip
 % check why topsep influences separation of item 1 and 2
@@ -228,8 +266,7 @@ The previous box gives an example of use of `titled-frame' environment.
 \item
 \emph{%
     The current box is an example of \emph{`shaded'}
-    environment; The
-    |shadecolor| has a default since release |1.1|. See the
+    environment. See the
     \ghissue[repository issue ]{5} for some comments about how to use
     such environment with list items, if the environment is to start
     at start of the item, as here.
@@ -245,45 +282,45 @@ The previous box gives an example of use of `titled-frame' environment.
 \item \emph{This is an example of \emph{`snugshade*'}.}
 \end{snugshade*}
 
-\begin{snugshade}
-\item
-%
-  The `titled-frame' environment was in effect broken in recent \LaTeX\ which
-  has modified how |\smash| behaves (the continuation label created a blank
-  line interrupting the framing); \colorframed fixes this infelicity in
-  passing.
+% \begin{snugshade}
+% \item
+% %
+%   The `titled-frame' environment was in effect broken in recent \LaTeX\ which
+%   has modified how |\smash| behaves (the continuation label created a blank
+%   line interrupting the framing); \colorframed fixes this infelicity in
+%   passing.
 
-  Since release |1.1| three things which the definition of `titled-frame'
-  in \ctanpackage{framed}.sty hard-codes are macros.  Here they are with
-  their defaults:
-\begin{verbatim}
-% the mark at the bottom right of a frame continued on the next page
-\newcommand\colorframedContinuationMark{%
-  \ifdefined\blacktriangleright $\blacktriangleright$\else $\triangleright$\fi}
-% the title after a page break, from the title of the frame
-\newcommand\colorframedContinuedTitle[1]{#1\ (cont)}
-% what is applied to the title: a command with one argument
-\newcommand\colorframedTitleFormat{\textbf}
-\end{verbatim}
-  For example:
-\begin{verbatim}
-\renewcommand\colorframedContinuedTitle[1]{#1 (suite)}
-\renewcommand\colorframedTitleFormat[1]{\textsf{\bfseries #1}}
-\end{verbatim}
+%   Since release |1.1| three things which the definition of `titled-frame'
+%   in \ctanpackage{framed}.sty hard-codes are macros.  Here they are with
+%   their defaults:
+% \begin{verbatim}
+% % the mark at the bottom right of a frame continued on the next page
+% \newcommand\colorframedContinuationMark{%
+%   \ifdefined\blacktriangleright $\blacktriangleright$\else $\triangleright$\fi}
+% % the title after a page break, from the title of the frame
+% \newcommand\colorframedContinuedTitle[1]{#1\ (cont)}
+% % what is applied to the title: a command with one argument
+% \newcommand\colorframedTitleFormat{\textbf}
+% \end{verbatim}
+%   For example:
+% \begin{verbatim}
+% \renewcommand\colorframedContinuedTitle[1]{#1 (suite)}
+% \renewcommand\colorframedTitleFormat[1]{\textsf{\bfseries #1}}
+% \end{verbatim}
 
-  The thickness of the frame and its separation from the contents were
-  hard-coded too, and are now also macros.  They are not length registers:
-  change them with |\renewcommand|, not with |\setlength|.
-\begin{verbatim}
-\newcommand\colorframedTitledFrameRule{2pt}
-\newcommand\colorframedTitledFrameSep{8pt}
-\end{verbatim}
+%   The thickness of the frame and its separation from the contents were
+%   hard-coded too, and are now also macros.  They are not length registers:
+%   change them with |\renewcommand|, not with |\setlength|.
+% \begin{verbatim}
+% \newcommand\colorframedTitledFrameRule{2pt}
+% \newcommand\colorframedTitledFrameSep{8pt}
+% \end{verbatim}
 
-  The expert user who has read the original \ctanpackage{framed} package
-  documentation (|texdoc framed|) will have no difficulty starting from the
-  actual definition in this package source code of the `titled-frame'
-  environment to define one's own environment.
-\end{snugshade}
+%   The expert user who has read the original \ctanpackage{framed} package
+%   documentation (|texdoc framed|) will have no difficulty starting from the
+%   actual definition in this package source code of the `titled-frame'
+%   environment to define one's own environment.
+% \end{snugshade}
 
 % \begin{shaded} % nesting does not work
 \begin{framed}
@@ -305,10 +342,9 @@ The previous box gives an example of use of `titled-frame' environment.
   given other values than those of `titled-frame' (see on this the
   repository issues \ghissue{3} and \ghissue{4}).  So \colorframed |0.9b|
   provided a replacement, which handles differently the horizontal and
-  vertical placement of the title, and lets a long title use several lines:
-\begin{verbatim}
-\colorframedTitleBarFrame
-\end{verbatim}
+  vertical placement of the title, and lets a long title use several lines.
+
+  Its name is |\colorframedTitleBarFrame|.
 
   {\bfseries Since release |1.1| the `titled-frame' environment uses this
   replacement:} formerly this had to be opted-for via a redefinition of the
@@ -319,26 +355,26 @@ The previous box gives an example of use of `titled-frame' environment.
 \let\colorframedTitleBarFrame\TitleBarFrame
 \end{verbatim}
 
-  The layout of |\colorframedTitleBarFrame| obeys three macros (again not
-  length registers), shown here with their defaults:
-\begin{verbatim}
-% horizontal distance between the frame and the title, on each side
-\newcommand\colorframedTitleBarHSep{\fboxsep}
-% vertical space above and below the title in its bar
-\newcommand\colorframedTitleBarVSep{0.8ex}
-% horizontal distance between the frame and the continuation mark
-\newcommand\colorframedContinuationMarkSep{3pt}
-\end{verbatim}
-  The first and the third replace two macros of release |0.9b|, which
-  are their actual defaults, so that a document redefining these old names
-  still works:
-\begin{verbatim}
-\colorframedTFtitlesep
-\colorframedTFconlabsep
-\end{verbatim}
-  Inside `titled-frame' the value of |\fboxsep| is the separation between
-  frame and contents: with the defaults the title is thus aligned with the
-  contents of the frame.
+%   The layout of |\colorframedTitleBarFrame| obeys three macros (again not
+%   length registers), shown here with their defaults:
+% \begin{verbatim}
+% % horizontal distance between the frame and the title, on each side
+% \newcommand\colorframedTitleBarHSep{\fboxsep}
+% % vertical space above and below the title in its bar
+% \newcommand\colorframedTitleBarVSep{0.8ex}
+% % horizontal distance between the frame and the continuation mark
+% \newcommand\colorframedContinuationMarkSep{3pt}
+% \end{verbatim}
+%   The first and the third replace two macros of release |0.9b|, which
+%   are their actual defaults, so that a document redefining these old names
+%   still works:
+% \begin{verbatim}
+% \colorframedTFtitlesep
+% \colorframedTFconlabsep
+% \end{verbatim}
+%   Inside `titled-frame' the value of |\fboxsep| is the separation between
+%   frame and contents: with the defaults the title is thus aligned with the
+%   contents of the frame.
 
 \end{snugshade}
 \end{itemize}
@@ -354,16 +390,12 @@ The previous box gives an example of use of `titled-frame' environment.
 % customizability.
 
 Already we have mentioned
-\begin{verbatim}
-\colorframedTFconlabcolorcommand
-\end{verbatim}
+|\colorframedTFconlabcolorcommand|
 whose default definition let it expands to nothing at all (the continuation label
 then inherits the |TFFrameColor| colour).
 
-Regarding the `framed' environment, \colorframed adds the
-\begin{verbatim}
-\colorframedbordercolorcommand
-\end{verbatim}
+Regarding the `framed' environment, \colorframed adds
+|\colorframedbordercolorcommand|
 which expands by default to |\normalcolor|.  It influences the colour of the
 framing done by environment `framed', the original having no such
 customizability.  Do not redefine it to do nothing, it always should set some
@@ -394,10 +426,50 @@ configures the next usage of `framed'.
 \section{Summary of the customization interface}
 \label{sec:summary}
 
-This section lists the colours and the commands which matter for
+This section was written on November 16 by Fable 5.2 (send complaints
+to \url{mailto:fable@anthropic.com}, subhject line |colorframed|).  The human
+intervened minimally afterwards.
+
+It lists the colours and the commands which matter for
 customizing the environments.  What has a name starting with |\colorframed|
 is provided by \colorframed, all the rest by \ctanpackage{framed}, whose
 documentation (|texdoc framed|) is the reference for it.
+
+\subsection{The `titled-frame' environment}
+
+The macros of table~\ref{tab:titledframe} exist since release |1.1| and are
+changed with |\renewcommand|.  Those giving dimensions are macros, not
+length registers.
+
+\begin{table}[!htb]
+\centering
+\rowcolors{2}{}{lightgray!25}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{.52\linewidth}}
+  \emph{command}&\emph{role and default}\\[2pt]
+  |\colorframedTitleFormat|&has one argument: is applied to the title;
+     default |\textbf|\\
+  |\colorframedContinuedTitle|&has one argument, the title: gives the title
+     used after a page break; default |#1\ (cont)|\\
+  |\colorframedContinuationMark|&the mark at the bottom right of a frame
+     which continues on the next page; default |$\blacktriangleright$|\\
+  |\colorframedTitledFrameRule|&the thickness of the frame; default |2pt|\\
+  |\colorframedTitledFrameSep|&the separation between frame and contents;
+     default |8pt|\\
+  |\colorframedTitleBarHSep|&the horizontal distance between the frame and
+     the title, on each side; default |\fboxsep|\\
+  |\colorframedTitleBarVSep|&the vertical space above and below the title
+     in its bar; default |0.8ex|\\
+  |\colorframedContinuationMarkSep|&the horizontal distance between the
+     frame and the continuation mark; default |3pt|\\
+\end{tabular}
+\caption{The macros of `titled-frame'}\label{tab:titledframe}
+\vspace*{2\baselineskip}\hrule height 0pt width \linewidth
+\end{table}
+
+The default continuation mark is |$\triangleright$| if |\blacktriangleright|
+is not defined.  The last three macros of the table are parameters of the
+command which draws the frame (see table~\ref{tab:colorframedcommands}).
+For the colours see tables~\ref{tab:colours} and~\ref{tab:colourcommands}.
 
 \subsection{Colours}
 
@@ -417,6 +489,7 @@ not defined.
   |TFTitleColor|&`titled-frame': the text of the title&|rgb| |.5,0,.2|\\
 \end{tabular}
 \caption{The colours}\label{tab:colours}
+\vspace*{2\baselineskip}\hrule height 0pt width \linewidth
 \end{table}
 
 Two commands set colours (table~\ref{tab:colourcommands}).  They are changed
@@ -464,40 +537,6 @@ The `titled-frame' environment obeys none of |\FrameRule| and |\FrameSep|:
 it has its own parameters, see next.  The bar of `leftbar' (|3pt|) and its
 distance to the contents (|10pt|) are fixed in its definition.
 
-\subsection{The `titled-frame' environment}
-
-The macros of table~\ref{tab:titledframe} exist since release |1.1| and are
-changed with |\renewcommand|.  Those giving dimensions are macros, not
-length registers.
-
-\begin{table}[!htb]
-\centering
-\rowcolors{2}{}{lightgray!25}
-\begin{tabular}{l>{\raggedright\arraybackslash}p{.52\linewidth}}
-  \emph{command}&\emph{role and default}\\[2pt]
-  |\colorframedTitleFormat|&has one argument: is applied to the title;
-     default |\textbf|\\
-  |\colorframedContinuedTitle|&has one argument, the title: gives the title
-     used after a page break; default |#1\ (cont)|\\
-  |\colorframedContinuationMark|&the mark at the bottom right of a frame
-     which continues on the next page; default |$\blacktriangleright$|\\
-  |\colorframedTitledFrameRule|&the thickness of the frame; default |2pt|\\
-  |\colorframedTitledFrameSep|&the separation between frame and contents;
-     default |8pt|\\
-  |\colorframedTitleBarHSep|&the horizontal distance between the frame and
-     the title, on each side; default |\fboxsep|\\
-  |\colorframedTitleBarVSep|&the vertical space above and below the title
-     in its bar; default |0.8ex|\\
-  |\colorframedContinuationMarkSep|&the horizontal distance between the
-     frame and the continuation mark; default |3pt|\\
-\end{tabular}
-\caption{The macros of `titled-frame'}\label{tab:titledframe}
-\end{table}
-
-The default continuation mark is |$\triangleright$| if |\blacktriangleright|
-is not defined.  The last three macros of the table are parameters of the
-command which draws the frame (see table~\ref{tab:colorframedcommands}).
-For the colours see tables~\ref{tab:colours} and~\ref{tab:colourcommands}.
 
 \subsection{Commands for defining environments}
 
@@ -552,7 +591,8 @@ are what causes the colour leaks which this package fixes.
 \begin{shaded}
 \emph{The tagging support (the added code, the test files and tools of the
 repository, and the present section) was written by Claude, the AI model of
-Anthropic (Claude Fable 5.2) on 2026/11/12.}
+Anthropic (Claude Fable 5.2) on 2026/11/12.  It was then finalized by the
+same AI on 2026/11/16.}
 \end{shaded}
 
 Since release |1.0| the environments of \ctanpackage{framed}, as modified by
