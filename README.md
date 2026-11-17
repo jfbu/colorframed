@@ -24,9 +24,12 @@ http://www.latex-project.org/lppl.txt
 Releases (see the [tags](https://github.com/jfbu/colorframed/tags)) are pushed
 to [CTAN](https://ctan.org).
 
-To build: `cd` to `colorframed/` and execute there `make ctan`.  This produces
-`colorframed.zip` to be found in the `CTAN/` sub-directory, the files
-included into the archive being in the `ctanbuild/` sub-directory.
+To only build the PDF documentation execute `make doc` from inside `colorframed/`.
+
+To build the full `colorframed.zip` as used for `CTAN` uploads, execute `make
+ctan` in `colorframed/`.  The `colorframed.zip` will be found in
+`colorframed/CTAN/`.
+
 
 ## Tagging tests ##
 
@@ -37,6 +40,8 @@ engine only).  This needs Python 3 with [pikepdf](https://pypi.org/project/pikep
 The results are recorded in `testsummary_pdflatex.txt` and
 `testsummary_lualatex.txt`.  See `dotaggingtests.sh` for the details and
 `TAGGING_MEMO.md` for technical notes on the tagging support.
+
+The tagging checks are not done by a full validator and are only indicative.
 
 The testing infrastructure is based upon the one originally developed in 2024-2025
 by the author for the [jfbu/etoc](https://github.com/jfbu/etoc) project, which
