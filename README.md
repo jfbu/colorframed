@@ -5,6 +5,9 @@
 This is the development repository for LaTeX package
 [colorframed](https://ctan.org/pkg/colorframed).
 
+**Please ping me from any created issue (with an `@jfbu` in the issue
+description) else I will NOT become aware of it.**
+
 This package was initially released in September 2022 to
 fix the colour leak issues which one encounters
 with the environments provided by the
@@ -40,10 +43,3 @@ by the author for the [jfbu/etoc](https://github.com/jfbu/etoc) project, which
 was later (in November 2026) enriched with Python scripts (requiring
 [pikepdf](https://pypi.org/project/pikepdf/)) checking the PDF structures.
 Those were provided by AI assistance.
-
-## Opening a new issue ##
-
-This is what this repo is for, so don't hesitate doing it.
-
-*Please ping me from the created issue (with an `@jfbu` in the issue
-description).* 
