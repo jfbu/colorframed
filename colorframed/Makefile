@@ -2,10 +2,13 @@ docfiles    = README.md
 sourcefiles = colorframed-doc.tex colorframed.sty
 TEST = 
 
-.PHONY: doc ctan clean pdftaggingtests luataggingtests taggingtests
+.PHONY: doc ctan clean pdftaggingtests luataggingtests taggingtests bump
 
 README: README.md
 	pandoc -t plain -o README README.md
+
+bump:
+	./bumpversion.sh
 
 colorframed-doc.dvi: colorframed-doc.tex colorframed.sty
 	latexmk -halt-on-error -interaction=batchmode colorframed-doc.tex
