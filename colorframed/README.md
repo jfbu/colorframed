@@ -1,6 +1,6 @@
-% colorframed 1.1
+% colorframed 1.2-dev
 % Jean-François B.
-% 2026/11/16
+% 2026/12/31
 
 ## Usage
 
