@@ -19,6 +19,7 @@ __pycache__
 *.zip
 *.md
 !TAGGING_MEMO.md
+!README.md
 README
 ctanbuild/*
 !ctanbuild/private.sh
