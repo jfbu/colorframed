@@ -2,18 +2,8 @@
 \usepackage{babel}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
+% 1.060 is needed but the sty file still holds a 2014 date and version...
 \usepackage[straightquotes,ttzdefault]{newtxtt}
-% Copied from xint manual source:
-% In ts1newtxttz.fd 2024/03/03 reference to newtcxttz are made.
-% Presumably tc = text companion but the fonts do not exist.
-% kpathsea: Running mktexmf newtcxttza
-% ! I can't find file `newtcxttza'.
-% The problem is with \textbullet used by the itemize environment.
-% (the \textasciigrave does not cause problems thanks to using
-% the straightquotes option).
-% As we had no time to really investigate anyfurther we did
-% this at release 1.0 to work around the issue.
-\AtBeginDocument{\def\textbullet{\ensuremath{\bullet}}}
 
 \usepackage{framed}
 \usepackage[dvipsnames,table]{xcolor}% table: for \rowcolors
